@@ -52,6 +52,6 @@
   header nav#nav-esquerda ul.menu-principal li a:hover {
     color: #f5d76e;
     border-bottom: 1px solid #d4af37;
-    opacity: 1;
+    opacity: 2;
   }
 }
