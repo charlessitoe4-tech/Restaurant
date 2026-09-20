@@ -1,4 +1,6 @@
 /* Color Palette */
+
+/*
 #11468C
 #0798F2
 #0F528C
@@ -10,6 +12,7 @@
 #0798F2
 #F2A25C
 #F2CBBD
+*/
 
 @media screen and (max-width: 1200px) {
 
@@ -62,7 +65,7 @@
         width:80px;
         height: 70vh;
         flex-direction:column;
-        background:linear-gradient(rgba(242, 191, 128, 5.5), rgba(242, 191, 128, 5.5)), url(../images/header\ capa.jpg);
+        background:linear-gradient(rgba(242, 191, 128, 0.55), rgba(242, 191, 128, 0.55)), url(../images/header\ capa.jpg);
         padding-top: .5rem;
 
         position: absolute;

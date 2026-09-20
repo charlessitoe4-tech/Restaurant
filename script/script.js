@@ -2,7 +2,7 @@
 
 function mostrarMenu(){
     $('nav#nav-esquerda ul.menu-principal').css('display','flex')
-    $('nav#nav-esquerda ul.menu-principal').addClass('animate_animated animate_fadeInRightanimate_slow');
+    $('nav#nav-esquerda ul.menu-principal').addClass('animate__animated animate__fadeInRight animate__slow');
 
     $('nav#nav-esquerda ul#icone-menu li#menu').css('display','none');
     $('nav#nav-esquerda ul#icone-menu li#menuX').css('display','flex');
@@ -18,11 +18,11 @@ function esconderMenu(){
 let controle=true;
 
 $('nav#nav-esquerda ul#icone-menu li#menu').click(function(){
-    if(controle==true){
+    if(controle == true){
         mostrarMenu();
-        controle=false;
+        controle = false;
     }else{
         esconderMenu();
-        controle=true;
+        controle = true;
     }
 });    
