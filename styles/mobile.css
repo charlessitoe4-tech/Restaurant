@@ -20,3 +20,53 @@
         background-size:cover ;
     }
 }
+
+@media screen and (max-width: 600px) {
+
+    header{
+        background:linear-gradient(rgba(242, 191, 128, 0.5), rgba(242, 191, 128, 0.0)), url(../images/header\ capa.jpg);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size:cover ;
+    }
+}
+
+@media screen and (max-width:1110px){
+    header nav#nav-esquerda ul.menu-principal li a{
+        font-size: 90%;
+    }
+}
+
+@media screen and (max-width:970px){
+    header nav#nav-esquerda div#logo{
+        margin-left: 1rem;
+    }
+
+    header nav#nav-esquerda{
+        justify-content: space-between;
+    }
+
+    header nav#nav-esquerda ul#icone-menu{
+        display:flex;
+    
+    }
+
+    header nav#nav-esquerda ul#icone-menu li#menuX{
+        display: none;
+    }
+
+    /*------menu--------*/
+
+    header nav#nav-esquerda ul.menu-principal{
+        flex-direction:column;
+        width:80px;
+        height: 70vh;
+        flex-direction:column;
+        background:linear-gradient()
+    }
+
+    
+    }
+}
+
+
