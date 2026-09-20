@@ -15,15 +15,19 @@
     display: none;
   }
 
-  /*------ menu mobile --------*/
+  /*------ menu mobile: azul-marinho + dourado --------*/
   header nav#nav-esquerda ul.menu-principal {
     flex-direction: column;
-    width: 220px;                 /* era 80px, estava muito estreito */
+    width: 220px;
     height: 70vh;
-    background: linear-gradient(rgba(242, 191, 128, 0.55), rgba(242, 191, 128, 0.55)),
+    background: linear-gradient(rgba(10, 25, 60, 0.95), rgba(10, 25, 60, 0.95)),
                 url("../images/header capa.jpg");
     background-size: cover;
-    padding-top: .5rem;
+    background-position: center;
+    padding-top: 1rem;
+
+    border-left: 2px solid #d4af37;   /* linha dourada na borda esquerda */
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);
 
     position: absolute;
     top: 7rem;
@@ -39,5 +43,15 @@
 
   header nav#nav-esquerda ul.menu-principal li a {
     font-size: 120%;
+    color: #d4af37;                    /* dourado */
+    text-shadow: 0 0 6px rgba(212, 175, 55, 0.4);
+    font-weight: 600;
+    transition: .3s ease-in-out;
+  }
+
+  header nav#nav-esquerda ul.menu-principal li a:hover {
+    color: #f5d76e;                    /* dourado mais claro */
+    border-bottom: 1px solid #d4af37;
+    opacity: 1;
   }
 }
