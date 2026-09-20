@@ -1,12 +1,3 @@
-/*
-  --cor-1: #F2BF80;
-  --cor-2: #F2C4B3;
-  --preto: #252526;
-  --laranja: #F2A25C;
-  --bege: #F2CBBD;
-*/
-
-
 * {
   padding: 0;
   margin: 0;
@@ -52,7 +43,8 @@ div.chamada a:hover {
 header {
   max-width: 100%;
   height: 90vh;
-  background: linear-gradient(rgba(242, 191, 128, 0.85), rgba(242, 191, 128, 0)), url("../images/header capa.jpg");
+  background: linear-gradient(rgba(242, 191, 128, 0.85), rgba(242, 191, 128, 0)),
+              url("../images/header capa.jpg");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -145,54 +137,34 @@ header div.chamada h2 {
 }
 
 @keyframes HeaderA-moverParaCima {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes HeaderH1-moverParaDireita {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes HeaderH2-moverParaEsquerda {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
-
-@keyframes HeaderH1-moverParaEsquerda {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-/* Responsividade */
 
 @media screen and (max-width: 1200px) {
   header {
-    background: linear-gradient(rgba(242, 191, 128, 0.5), rgba(242, 191, 128, 0.0)), url(../images/header\ capa.jpg);
+    background: linear-gradient(rgba(242, 191, 128, 0.5), rgba(242, 191, 128, 0.0)),
+                url("../images/header capa.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  header {
+    background: linear-gradient(rgba(242, 191, 128, 0.5), rgba(242, 191, 128, 0.0)),
+                url("../images/header capa.jpg");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -202,62 +174,5 @@ header div.chamada h2 {
 @media screen and (max-width: 1110px) {
   header nav#nav-esquerda ul.menu-principal li a {
     font-size: 90%;
-  }
-}
-
-@media screen and (max-width: 970px) {
-  header nav#nav-esquerda div#logo {
-    margin-left: 1.5rem;
-  }
-
-  header nav#nav-esquerda {
-    justify-content: space-between;
-    position: relative;
-  }
-
-  header nav#nav-esquerda ul#icone-menu {
-    display: flex;
-    cursor: pointer;
-    z-index: 1000;
-  }
-
-  header nav#nav-esquerda ul#icone-menu li#menuX {
-    display: none;
-  }
-
-  /*------ Menu Mobile Corrigido --------*/
-  header nav#nav-esquerda ul.menu-principal {
-    display: none; /* Inicialmente escondido */
-    flex-direction: column;
-    width: 220px; /* Largura ajustada para caber os textos */
-    height: auto;
-    min-height: 50vh;
-    background: rgba(0, 0, 0, 0.9); /* Fundo escuro com transparência para dar contraste */
-    border-radius: 0 0 0 15px;
-    padding: 2rem 1rem;
-
-    position: absolute;
-    top: 100%; /* Surge logo abaixo do cabeçalho */
-    right: 0;
-    z-index: 999;
-  }
-
-  header nav#nav-esquerda ul.menu-principal li {
-    margin: 1rem 0;
-    text-align: center;
-  }
-
-  header nav#nav-esquerda ul.menu-principal li a {
-    font-size: 1.2rem;
-    display: block;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  header {
-    background: linear-gradient(rgba(242, 191, 128, 0.5), rgba(242, 191, 128, 0.0)), url(../images/header\ capa.jpg);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
   }
 }
