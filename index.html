@@ -48,10 +48,13 @@
 
     <footer></footer>
 
-    <script src="https://code.jquery.com/jquery-3.12.2.min.js"></script>
+    <!-- CDN oficial do jQuery corrigida -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/shortcuts/sticky.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+
     <script>
         $(document).ready(function () {
             const menu = $('nav#nav-esquerda ul.menu-principal');
@@ -59,7 +62,9 @@
             const btnClose = $('nav#nav-esquerda ul#icone-menu li#menuX');
 
             function mostrarMenu() {
-                menu.css('display', 'flex');
+                menu.css('display', 'flex')
+                    .removeClass('animate__fadeOutRight')
+                    .addClass('animate__animated animate__fadeInRight');
                 btnMenu.css('display', 'none');
                 btnClose.css('display', 'flex');
             }
@@ -79,6 +84,5 @@
             });
         });
     </script>
-    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
 </body>
 </html>
