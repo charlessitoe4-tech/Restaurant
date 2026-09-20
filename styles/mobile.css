@@ -15,12 +15,12 @@
     display: none;
   }
 
-  /*------ menu mobile: azul-marinho escuro + dourado --------*/
+  /*------ menu mobile: marrom café #654321 + letras douradas --------*/
   header nav#nav-esquerda ul.menu-principal {
     flex-direction: column;
     width: 220px;
     height: 70vh;
-    background: linear-gradient(rgba(3, 8, 22, 0.97), rgba(3, 8, 22, 0.97)),
+    background: linear-gradient(rgba(101, 67, 33, 0.97), rgba(101, 67, 33, 0.97)),
                 url("../images/header capa.jpg");
     background-size: cover;
     background-position: center;
@@ -41,17 +41,26 @@
     margin: .5rem 1rem;
   }
 
-  header nav#nav-esquerda ul.menu-principal li a {
+  /* TODAS as letras douradas */
+  header nav#nav-esquerda ul.menu-principal li a,
+  header nav#nav-esquerda ul.menu-principal li a:visited,
+  header nav#nav-esquerda ul.menu-principal li a:link {
+    color: #d4af37 !important;
     font-size: 120%;
-    color: #d4af37;
-    text-shadow: 0 0 6px rgba(212, 175, 55, 0.4);
-    font-weight: 600;
+    font-weight: 700;
+    text-decoration: none;
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.6),
+                 1px 1px 2px #000;
     transition: .3s ease-in-out;
   }
 
-  header nav#nav-esquerda ul.menu-principal li a:hover {
-    color: #f5d76e;
+  /* Hover — dourado brilhante */
+  header nav#nav-esquerda ul.menu-principal li a:hover,
+  header nav#nav-esquerda ul.menu-principal li a:focus {
+    color: #ffd700 !important;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.9),
+                 1px 1px 3px #000;
     border-bottom: 1px solid #d4af37;
-    opacity: 2;
+    opacity: 1;
   }
 }
