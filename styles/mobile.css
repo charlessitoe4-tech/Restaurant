@@ -10,3 +10,13 @@
 #0798F2
 #F2A25C
 #F2CBBD
+
+@media screen and (max-width: 1200px) {
+
+    header{
+        background:linear-gradient(rgba(242, 191, 128, 0.5), rgba(242, 191, 128, 0.0)), url(../images/header\ capa.jpg);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size:cover ;
+    }
+}
