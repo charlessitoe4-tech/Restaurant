@@ -62,10 +62,21 @@
         width:80px;
         height: 70vh;
         flex-direction:column;
-        background:linear-gradient()
-    }
+        background:linear-gradient(rgba(242, 191, 128, 5.5), rgba(242, 191, 128, 5.5)), url(../images/header\ capa.jpg);
+        padding-top: .5rem;
 
-    
+        position: absolute;
+        top: 7rem;
+        right:0;
+        z-index: 999;
+
+        display:none;
+    }
+    header nav#nav-esquerda ul.menu-principal li{
+        margin: .5rem;
+    }
+    header nav#nav-esquerda ul.menu-principal li a{
+        font-size: 120%;
     }
 }
 
