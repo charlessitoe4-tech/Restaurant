@@ -1,86 +1,43 @@
-/* Color Palette */
+@media screen and (max-width: 970px) {
+  header nav#nav-esquerda div#logo {
+    margin-left: 1rem;
+  }
 
-/*
-#11468C
-#0798F2
-#0F528C
-#F2BF80
-#F2C4B3
+  header nav#nav-esquerda {
+    justify-content: space-between;
+  }
 
-#252526
-#084F8C
-#0798F2
-#F2A25C
-#F2CBBD
-*/
+  header nav#nav-esquerda ul#icone-menu {
+    display: flex;
+  }
 
-@media screen and (max-width: 1200px) {
+  header nav#nav-esquerda ul#icone-menu li#menuX {
+    display: none;
+  }
 
-    header{
-        background:linear-gradient(rgba(242, 191, 128, 0.5), rgba(242, 191, 128, 0.0)), url(../images/header\ capa.jpg);
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size:cover ;
-    }
+  /*------ menu mobile --------*/
+  header nav#nav-esquerda ul.menu-principal {
+    flex-direction: column;
+    width: 220px;                 /* era 80px, estava muito estreito */
+    height: 70vh;
+    background: linear-gradient(rgba(242, 191, 128, 0.55), rgba(242, 191, 128, 0.55)),
+                url("../images/header capa.jpg");
+    background-size: cover;
+    padding-top: .5rem;
+
+    position: absolute;
+    top: 7rem;
+    right: 0;
+    z-index: 999;
+
+    display: none;
+  }
+
+  header nav#nav-esquerda ul.menu-principal li {
+    margin: .5rem 1rem;
+  }
+
+  header nav#nav-esquerda ul.menu-principal li a {
+    font-size: 120%;
+  }
 }
-
-@media screen and (max-width: 600px) {
-
-    header{
-        background:linear-gradient(rgba(242, 191, 128, 0.5), rgba(242, 191, 128, 0.0)), url(../images/header\ capa.jpg);
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size:cover ;
-    }
-}
-
-@media screen and (max-width:1110px){
-    header nav#nav-esquerda ul.menu-principal li a{
-        font-size: 90%;
-    }
-}
-
-@media screen and (max-width:970px){
-    header nav#nav-esquerda div#logo{
-        margin-left: 1rem;
-    }
-
-    header nav#nav-esquerda{
-        justify-content: space-between;
-    }
-
-    header nav#nav-esquerda ul#icone-menu{
-        display:flex;
-    
-    }
-
-    header nav#nav-esquerda ul#icone-menu li#menuX{
-        display: none;
-    }
-
-    /*------menu--------*/
-
-    header nav#nav-esquerda ul.menu-principal{
-        flex-direction:column;
-        width:80px;
-        height: 70vh;
-        flex-direction:column;
-        background:linear-gradient(rgba(242, 191, 128, 0.55), rgba(242, 191, 128, 0.55)), url(../images/header\ capa.jpg);
-        padding-top: .5rem;
-
-        position: absolute;
-        top: 7rem;
-        right:0;
-        z-index: 999;
-
-        display:none;
-    }
-    header nav#nav-esquerda ul.menu-principal li{
-        margin: .5rem;
-    }
-    header nav#nav-esquerda ul.menu-principal li a{
-        font-size: 120%;
-    }
-}
-
-
