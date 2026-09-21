@@ -151,28 +151,16 @@ header div.chamada h2 {
   to   { opacity: 1; transform: translateX(0); }
 }
 
-@media screen and (max-width: 1200px) {
-  header {
-    background: linear-gradient(rgba(242, 191, 128, 0.5), rgba(242, 191, 128, 0.0)),
-                url("../images/header capa.jpg");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-  }
+/*sobre  --------*/
+
+section.sobre {
+  width: 100%;
+  padding-top: 60px;
+  padding-bottom:30px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-@media screen and (max-width: 600px) {
-  header {
-    background: linear-gradient(rgba(242, 191, 128, 0.5), rgba(242, 191, 128, 0.0)),
-                url("../images/header capa.jpg");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-  }
-}
-
-@media screen and (max-width: 1110px) {
-  header nav#nav-esquerda ul.menu-principal li a {
-    font-size: 90%;
-  }
-}
+section.sobre div.sobre-meste{
+  text-align: center;
+  margin-bottom:40px;
