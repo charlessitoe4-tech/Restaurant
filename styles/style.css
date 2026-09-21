@@ -168,3 +168,78 @@ section.sobre div.sobre-meste{
 
 section.sobre img.bd-placeholder-img {
   object-fit: cover;
+}
+
+.pagina-interna {
+  background: #fffaf3;
+}
+
+.cabecalho-interno {
+  height: 380px;
+  background: linear-gradient(rgba(101, 67, 33, .78), rgba(101, 67, 33, .45)),
+              url("../images/header capa.jpg") center / cover;
+}
+
+.cabecalho-interno nav#nav-esquerda {
+  padding-right: 2rem;
+}
+
+.cabecalho-interno #logo a {
+  display: block;
+}
+
+.aviso-conteudo,
+.pedido-em-breve {
+  margin: 0 auto 2rem;
+  max-width: 760px;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  background: #f2bf80;
+}
+
+.categorias-menu {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0 4rem;
+}
+
+.categorias-menu article {
+  padding: 2rem 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .12);
+}
+
+.categorias-menu h2,
+.pedido-em-breve h2 {
+  font-size: 1.8rem;
+}
+
+.galeria-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.galeria-grid figure {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .12);
+}
+
+.galeria-grid img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.galeria-grid figcaption {
+  padding: .8rem;
+  text-align: center;
+  font-weight: 700;
