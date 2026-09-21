@@ -29,8 +29,10 @@ $('nav#nav-esquerda ul#icone-menu li#menu').click(function(){
 const botaoSobre = document.getElementById("sobre");
 const secaoSobre = document.getElementById("sobre-section");
 
-botaoSobre.addEventListener("click", () => {
-    secaoSobre.scrollIntoView({
-        behavior: "smooth"
+if (botaoSobre && secaoSobre) {
+    botaoSobre.addEventListener("click", () => {
+        secaoSobre.scrollIntoView({
+            behavior: "smooth"
+        });
     });
-});
+}
