@@ -26,3 +26,11 @@ $('nav#nav-esquerda ul#icone-menu li#menu').click(function(){
         controle = true;
     }
 });    
+const botaoSobre = document.getElementById("sobre");
+const secaoSobre = document.getElementById("sobre-section");
+
+botaoSobre.addEventListener("click", () => {
+    secaoSobre.scrollIntoView({
+        behavior: "smooth"
+    });
+});
