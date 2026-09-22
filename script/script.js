@@ -20,5 +20,4 @@ $(function () {
 
     btnMenu.on('click', mostrarMenu);
     btnClose.on('click', esconderMenu);
-    menu.find('a').on('click', esconderMenu);
 });
