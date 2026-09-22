@@ -152,7 +152,7 @@ $(function () {
                 ['Margarita', 420], ['Margarita de morango', 450], ['Daiquiri de ananás', 420],
                 ['Cuba libre', 380], ['Whisky com gelo', 450], ['Rum com cola', 350],
                 ['Tequila', 350], ['Amarula com gelo', 420], ['Licor de café', 350],
-                ['Cocktail da casa', 500], ['Jarro de sangria', 1100]
+                ['Cocktail da casa', 500], ['Jarro de sangria', 1100], ['Ponche de fruta', 450]
             ]
         }
     };
