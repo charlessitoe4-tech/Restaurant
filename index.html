@@ -21,23 +21,23 @@
 </head>
 
 <body>
-    <header>
+    <header id="inicio">
         <nav id="nav-esquerda">
             <div id="logo">
                 <img src="./images/Charles Down.png" alt="Logo">
             </div>
 
             <ul id="icone-menu">
-                <li id="menu"><ion-icon name="menu-outline"></ion-icon></li>
-                <li id="menuX"><ion-icon name="close-outline"></ion-icon></li>
+                <li id="menu-toggle"><ion-icon name="menu-outline"></ion-icon></li>
+                <li id="menu-close"><ion-icon name="close-outline"></ion-icon></li>
             </ul>
 
             <ul class="menu-principal">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Sobre</a></li>
-                <li><a href="#">Menu</a></li>
-                <li><a href="#">Galeria</a></li>
-                <li><a href="#">Contato</a></li>
+                <li><a href="#inicio">Home</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#galeria">Galeria</a></li>
+                <li><a href="#contato">Contato</a></li>
             </ul>
         </nav>
 
@@ -49,7 +49,7 @@
     </header>
 
     <main>
-        <section class="sobre">
+        <section id="sobre" class="sobre">
             <div class="sobre-meste">
             <div class="row">
 
@@ -58,7 +58,7 @@
                         width="140" height="140">
                     <h2 class="fw-normal">Missão</h2>
                     <p>Servir comida deliciosa e de qualidade, com atendimento rápido e preços acessíveis.</p>
-                    <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+                    <p><a class="btn btn-secondary" href="#menu">Ver o menu &raquo;</a></p>
                 </div><!-- /.col-lg-4 -->
 
                 <div class="col-lg-4">
@@ -66,7 +66,7 @@
                         width="140" height="140">
                     <h2 class="fw-normal">Visão</h2>
                     <p>Ser a fast food mais querida da região, reconhecida pelo sabor e pela experiência.</p>
-                    <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+                    <p><a class="btn btn-secondary" href="#galeria">Ver a galeria &raquo;</a></p>
                 </div><!-- /.col-lg-4 -->
 
                 <div class="col-lg-4">
@@ -74,13 +74,34 @@
                         width="140" height="140">
                     <h2 class="fw-normal">Valores</h2>
                     <p>Qualidade, rapidez, respeito ao cliente e paixão pela comida bem feita.</p>
-                    <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+                    <p><a class="btn btn-secondary" href="#contato">Fale connosco &raquo;</a></p>
                 </div><!-- /.col-lg-4 -->
                 </div>
             </div>
         </section>
+        <section id="menu" class="conteudo-secao">
+            <h2>Menu</h2>
+            <p>Escolha o seu prato favorito e peça já.</p>
+            <a class="btn btn-primary" href="#contato">Fazer um pedido</a>
+        </section>
+
+        <section id="galeria" class="conteudo-secao">
+            <h2>Galeria</h2>
+            <div class="galeria-imagens">
+                <img src="./images/Pizza Mexicana.jpg" alt="Pizza mexicana">
+                <img src="./images/kebab com iogurte e limão e salada.jpg" alt="Kebab com salada">
+                <img src="./images/massa italiana.jpg" alt="Massa italiana">
+            </div>
+            <a class="btn btn-secondary" href="#inicio">Voltar ao início</a>
+        </section>
+
+        <section id="contato" class="conteudo-secao">
+            <h2>Contato</h2>
+            <p>Faça a sua encomenda pelo telefone <a href="tel:+351000000000">+351 000 000 000</a>.</p>
+            <a class="btn btn-secondary" href="#inicio">Voltar ao início</a>
+        </section>
     </main>
-    <footer></footer>
+    <footer><a href="#inicio">Voltar ao início</a></footer>
 
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -94,35 +115,7 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            const menu = $('nav#nav-esquerda ul.menu-principal');
-            const btnMenu = $('nav#nav-esquerda ul#icone-menu li#menu');
-            const btnClose = $('nav#nav-esquerda ul#icone-menu li#menuX');
-
-            function mostrarMenu() {
-                menu.css('display', 'flex')
-                    .removeClass('animate__fadeOutRight')
-                    .addClass('animate__animated animate__fadeInRight animate__slow');
-                btnMenu.css('display', 'none');
-                btnClose.css('display', 'flex');
-            }
-
-            function esconderMenu() {
-                menu.removeClass('animate__fadeInRight')
-                    .addClass('animate__fadeOutRight')
-                    .one('animationend', function () {
-                        menu.css('display', 'none')
-                            .removeClass('animate__animated animate__fadeOutRight');
-                    });
-                btnMenu.css('display', 'flex');
-                btnClose.css('display', 'none');
-            }
-
-            btnMenu.on('click', mostrarMenu);
-            btnClose.on('click', esconderMenu);
-        });
-    </script>
+    <script src="./script/script.js"></script>
 </body>
 
 </html>

@@ -168,3 +168,37 @@ section.sobre div.sobre-meste{
 
 section.sobre img.bd-placeholder-img {
   object-fit: cover;
+}
+
+.conteudo-secao {
+  padding: 5rem 2rem;
+  text-align: center;
+  scroll-margin-top: 1rem;
+}
+
+.conteudo-secao h2 {
+  margin-bottom: 1rem;
+}
+
+.galeria-imagens {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  margin: 2rem auto;
+}
+
+.galeria-imagens img {
+  width: min(30%, 18rem);
+  height: 12rem;
+  object-fit: cover;
+  border-radius: .75rem;
+}
+
+footer {
+  padding: 2rem;
+  text-align: center;
+  background: #654321;
+}
+
+footer a {
+  color: #fff;

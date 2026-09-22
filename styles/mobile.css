@@ -6,6 +6,69 @@
     background-position: center center;
     background-size: cover;
   }
+
+  header div.chamada {
+    width: min(100% - 2rem, 640px);
+    height: auto;
+    top: 54%;
+  }
+
+  header div.chamada h1 {
+    font-size: clamp(2.75rem, 13vw, 4.5rem);
+  }
+
+  header div.chamada h2 {
+    font-size: clamp(1.25rem, 6vw, 2rem);
+    margin-bottom: 2rem;
+  }
+
+  div.chamada a {
+    max-width: 100%;
+    padding: .9rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  section.sobre {
+    padding: 3rem 1rem 1rem;
+  }
+
+  section.sobre .row {
+    row-gap: 2.5rem;
+  }
+
+  .conteudo-secao {
+    padding: 3rem 1rem;
+    text-align: center;
+  }
+
+  .galeria-imagens {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1.5rem auto;
+    max-width: 22rem;
+  }
+
+  .galeria-imagens img {
+    width: 100%;
+    height: 12rem;
+    object-fit: cover;
+    border-radius: .75rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  header {
+    min-height: 570px;
+  }
+
+  header nav#nav-esquerda div#logo {
+    width: 76px;
+  }
+
+  header nav#nav-esquerda ul#icone-menu li ion-icon {
+    margin-right: .75rem;
+  }
 }
 
 @media screen and (max-width: 1110px) {
@@ -15,38 +78,69 @@
 }
 
 @media screen and (max-width: 970px) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  header {
+    min-height: 620px;
+    height: 88vh;
+  }
+
   header nav#nav-esquerda div#logo {
-    margin-left: 1rem;
+    width: 90px;
+    margin-left: 1.25rem;
   }
 
   header nav#nav-esquerda {
+    height: 96px;
     justify-content: space-between;
   }
 
   header nav#nav-esquerda ul#icone-menu {
     display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
   }
 
-  header nav#nav-esquerda ul#icone-menu li#menuX {
+  header nav#nav-esquerda ul#icone-menu li#menu-close {
     display: none;
+  }
+
+  header nav#nav-esquerda ul#icone-menu li {
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  header nav#nav-esquerda ul#icone-menu li ion-icon {
+    font-size: 42px;
+    margin-right: 1.25rem;
   }
 
   /*------ menu mobile: marrom café #654321 + letras douradas --------*/
   header nav#nav-esquerda ul.menu-principal {
     flex-direction: column;
-    width: 220px;
-    height: 70vh;
+    width: min(78vw, 280px);
+    min-height: 280px;
+    height: auto;
+    max-height: calc(100vh - 110px);
+    overflow-y: auto;
     background: linear-gradient(rgba(101, 67, 33, 0.97), rgba(101, 67, 33, 0.97)),
                 url("../images/header capa.jpg");
     background-size: cover;
     background-position: center;
-    padding-top: 1rem;
+    padding: 1rem 0 1.25rem;
 
     border-left: 2px solid #d4af37;
     box-shadow: -4px 0 20px rgba(0, 0, 0, 0.8);
 
     position: absolute;
-    top: 7rem;
+    top: 96px;
     right: 0;
     z-index: 999;
 
@@ -54,7 +148,13 @@
   }
 
   header nav#nav-esquerda ul.menu-principal li {
-    margin: .5rem 1rem;
+    width: 100%;
+    margin: 0;
+  }
+
+  header nav#nav-esquerda ul.menu-principal li a {
+    display: block;
+    padding: .75rem 1.5rem;
   }
 
   /* TODAS as letras douradas */
