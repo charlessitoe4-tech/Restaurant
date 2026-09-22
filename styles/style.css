@@ -278,7 +278,9 @@ section.sobre img.bd-placeholder-img {
 }
 
 .aceite-taxa input {
+  flex: 0 0 auto;
   width: auto;
+  height: 1rem;
   margin-top: .25rem;
 }
 

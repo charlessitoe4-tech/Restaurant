@@ -61,8 +61,20 @@ if (dataReserva) {
 if (formularioReserva) {
     formularioReserva.addEventListener("submit", (evento) => {
         evento.preventDefault();
+        const aceiteTaxa = document.getElementById("aceite-taxa");
         const dados = new FormData(formularioReserva);
         const mensagem = document.getElementById("mensagem-reserva");
+
+        if (!formularioReserva.checkValidity()) {
+            formularioReserva.reportValidity();
+            return;
+        }
+
+        if (!aceiteTaxa.checked) {
+            mensagem.textContent = "Confirme o pagamento da taxa de reserva de 350 MT para continuar.";
+            return;
+        }
+
         mensagem.textContent = `Reserva recebida para ${dados.get("pessoas")} pessoa(s), no dia ${dados.get("data")} às ${dados.get("hora")}. A taxa de 350 MT e a referência serão validadas pelo restaurante antes da confirmação.`;
         formularioReserva.reset();
         dataReserva.min = new Date().toISOString().split("T")[0];
