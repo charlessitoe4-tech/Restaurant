@@ -81,36 +81,18 @@
         </section>
         <section id="menu" class="conteudo-secao">
             <h2>Menu</h2>
-            <p>Escolha o seu prato favorito e peça já.</p>
-            <div class="menu-pratos">
-                <article class="prato">
-                    <img src="./images/Pizza Mexicana.jpg" alt="Pizza mexicana">
-                    <div class="prato-conteudo">
-                        <h3>Pizza Mexicana</h3>
-                        <p>Pizza com sabores intensos e ingredientes frescos.</p>
-                        <strong>550 MT</strong>
-                        <a class="btn btn-primary" href="#contato">Pedir este prato</a>
-                    </div>
-                </article>
-                <article class="prato">
-                    <img src="./images/Bife de vitela.jpg" alt="Bife de vitela">
-                    <div class="prato-conteudo">
-                        <h3>Bife de Vitela</h3>
-                        <p>Bife tenro, preparado na hora e acompanhado.</p>
-                        <strong>700 MT</strong>
-                        <a class="btn btn-primary" href="#contato">Pedir este prato</a>
-                    </div>
-                </article>
-                <article class="prato">
-                    <img src="./images/massa italiana.jpg" alt="Massa italiana">
-                    <div class="prato-conteudo">
-                        <h3>Massa Italiana</h3>
-                        <p>Massa artesanal com molho caseiro.</p>
-                        <strong>500 MT</strong>
-                        <a class="btn btn-primary" href="#contato">Pedir este prato</a>
-                    </div>
-                </article>
+            <p>Explore as nossas opções e peça pelo telefone <strong>+258 87 6964 663</strong>.</p>
+            <div class="categorias-menu" role="tablist" aria-label="Categorias do menu">
+                <button class="categoria-btn ativo" type="button" role="tab" aria-selected="true" data-categoria="pequeno-almoco">Pequeno-almoço</button>
+                <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="fast-food">Fast food</button>
+                <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="almoco">Almoço</button>
+                <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="jantar">Jantar</button>
+                <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="sobremesas">Sobremesas</button>
+                <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="bebidas-sem-alcool">Bebidas sem álcool</button>
+                <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="bebidas-com-alcool">Bebidas com álcool</button>
             </div>
+            <p id="categoria-descricao" class="categoria-descricao" aria-live="polite"></p>
+            <div id="menu-pratos" class="menu-pratos" aria-live="polite"></div>
             <a class="btn btn-secondary" href="#contato">Ver opções de contacto</a>
         </section>
 
