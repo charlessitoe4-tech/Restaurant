@@ -1,38 +1,52 @@
-//ativando o meu mobile
+const pedidos = [];
 
-function mostrarMenu(){
-    $('nav#nav-esquerda ul.menu-principal').css('display','flex')
-    $('nav#nav-esquerda ul.menu-principal').addClass('animate__animated animate__fadeInRight animate__slow');
+function atualizarResumo() {
+    const resumo = document.getElementById("resumo-pedido");
+    if (!resumo) return;
 
-    $('nav#nav-esquerda ul#icone-menu li#menu').css('display','none');
-    $('nav#nav-esquerda ul#icone-menu li#menuX').css('display','flex');
-}
-
-function esconderMenu(){
-    $('nav#nav-esquerda ul.menu-principal').css('display','none');
-
-    $('nav#nav-esquerda ul#icone-menu li#menu').css('display','flex');
-    $('nav#nav-esquerda ul#icone-menu li#menuX').css('display','none');
-}
-
-let controle=true;
-
-$('nav#nav-esquerda ul#icone-menu li#menu').click(function(){
-    if(controle == true){
-        mostrarMenu();
-        controle = false;
-    }else{
-        esconderMenu();
-        controle = true;
+    if (pedidos.length === 0) {
+        resumo.innerHTML = '<p class="pedido-vazio">Ainda não adicionou nenhum item.</p>';
+        return;
     }
-});    
-const botaoSobre = document.getElementById("sobre");
-const secaoSobre = document.getElementById("sobre-section");
 
-if (botaoSobre && secaoSobre) {
-    botaoSobre.addEventListener("click", () => {
-        secaoSobre.scrollIntoView({
-            behavior: "smooth"
+    const total = pedidos.reduce((soma, item) => soma + item.preco, 0);
+    resumo.innerHTML = pedidos.map((item, indice) =>
+        `<div class="linha-pedido"><span>${item.nome}</span><strong>${item.preco} MT</strong><button type="button" data-remover="${indice}" aria-label="Remover ${item.nome}">Remover</button></div>`
+    ).join("") + `<p class="total-pedido">Total: <strong>${total} MT</strong></p>`;
+
+    resumo.querySelectorAll("[data-remover]").forEach((botao) => {
+        botao.addEventListener("click", () => {
+            pedidos.splice(Number(botao.dataset.remover), 1);
+            atualizarResumo();
         });
+    });
+}
+
+document.querySelectorAll(".btn-adicionar").forEach((botao) => {
+    botao.addEventListener("click", () => {
+        pedidos.push({
+            nome: botao.dataset.nome,
+            preco: Number(botao.dataset.preco)
+        });
+        atualizarResumo();
+        document.getElementById("pedido").scrollIntoView({ behavior: "smooth" });
+    });
+});
+
+const formulario = document.getElementById("form-pedido");
+if (formulario) {
+    formulario.addEventListener("submit", (evento) => {
+        evento.preventDefault();
+        const mensagem = document.getElementById("mensagem-pedido");
+
+        if (pedidos.length === 0) {
+            mensagem.textContent = "Adicione pelo menos um item antes de confirmar.";
+            return;
+        }
+
+        mensagem.textContent = "Pedido preparado com sucesso. A ligação à cozinha/garçom será ativada com o servidor.";
+        formulario.reset();
+        pedidos.length = 0;
+        atualizarResumo();
     });
 }
