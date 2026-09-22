@@ -200,22 +200,24 @@ section.sobre img.bd-placeholder-img {
 }
 
 .categoria-btn {
-  border: 1px solid #654321;
+  border: 1px solid #d4af37;
   border-radius: 2rem;
   padding: .65rem 1rem;
-  background: #fff;
-  color: #654321;
+  background: #654321;
+  color: #d4af37;
   font-weight: 700;
   cursor: pointer;
-  transition: background-color .2s ease, color .2s ease, transform .2s ease;
+  box-shadow: 0 3px 8px rgba(101, 67, 33, .25);
+  transition: background-color .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
 }
 
 .categoria-btn:hover,
 .categoria-btn:focus-visible,
 .categoria-btn.ativo {
-  background: #654321;
-  color: #fff;
+  background: #4b2f17;
+  color: #ffd700;
   transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(101, 67, 33, .35);
 }
 
 .categoria-descricao {
@@ -238,6 +240,13 @@ section.sobre img.bd-placeholder-img {
   border-radius: .75rem;
   box-shadow: 0 4px 16px rgba(0, 0, 0, .15);
   border-top: 4px solid #d4af37;
+}
+
+.prato-imagem {
+  display: block;
+  width: 100%;
+  height: 10rem;
+  object-fit: cover;
 }
 
 .prato-conteudo {

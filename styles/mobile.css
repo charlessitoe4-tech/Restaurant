@@ -41,6 +41,19 @@
     text-align: center;
   }
 
+  .categorias-menu {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .65rem;
+  }
+
+  .categoria-btn {
+    width: 100%;
+    min-height: 3rem;
+    padding: .7rem .5rem;
+    font-size: .9rem;
+  }
+
   .menu-pratos {
     grid-template-columns: 1fr;
     max-width: 24rem;
@@ -52,6 +65,10 @@
 
   .prato > img {
     height: 13rem;
+  }
+
+  .prato-imagem {
+    height: 11rem;
   }
 
   .galeria-imagens {

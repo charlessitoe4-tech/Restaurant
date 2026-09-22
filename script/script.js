@@ -159,6 +159,18 @@ $(function () {
 
     const lista = $('#menu-pratos');
     const descricao = $('#categoria-descricao');
+    const imagens = {
+        'Pizza': './images/Pizza Mexicana.jpg',
+        'Bife': './images/Bife de vitela.jpg',
+        'Massa': './images/massa italiana.jpg',
+        'Esparguete': './images/spaghetti.jpg',
+        'Sushi': './images/Sushi.jpg',
+        'Kebab': './images/kebab com iogurte e limão e salada.jpg',
+        'Wrap': './images/kebab com iogurte e limão e salada.jpg',
+        'Camarão': './images/kebab com iogurte e limão e salada.jpg',
+        'Peixe': './images/Bife de vitela.jpg',
+        'Frango': './images/Bife de vitela.jpg'
+    };
 
     function mostrarCategoria(chave) {
         const categoria = categorias[chave];
@@ -169,6 +181,14 @@ $(function () {
         categoria.itens.forEach(([nome, preco]) => {
             const cartao = $('<article>', { class: 'prato' });
             const conteudo = $('<div>', { class: 'prato-conteudo' });
+            const imagem = Object.entries(imagens).find(([termo]) => nome.includes(termo));
+            if (imagem) {
+                $('<img>', {
+                    class: 'prato-imagem',
+                    src: imagem[1],
+                    alt: nome
+                }).appendTo(cartao);
+            }
             $('<span>', { class: 'prato-categoria', text: categoria.nome }).appendTo(conteudo);
             $('<h3>', { text: nome }).appendTo(conteudo);
             $('<p>', { text: categoria.frase }).appendTo(conteudo);
