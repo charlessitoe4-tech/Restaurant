@@ -180,6 +180,53 @@ section.sobre img.bd-placeholder-img {
   margin-bottom: 1rem;
 }
 
+.menu-pratos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  max-width: 72rem;
+  margin: 2rem auto;
+}
+
+.prato {
+  overflow: hidden;
+  text-align: left;
+  background: #fff;
+  border-radius: .75rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .15);
+}
+
+.prato > img {
+  width: 100%;
+  height: 11rem;
+  object-fit: cover;
+}
+
+.prato-conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  padding: 1.25rem;
+}
+
+.prato-conteudo h3 {
+  margin: 0;
+}
+
+.prato-conteudo p {
+  min-height: 3rem;
+  margin: 0;
+}
+
+.prato-conteudo strong {
+  font-size: 1.2rem;
+  color: #654321;
+}
+
+.prato-conteudo .btn {
+  align-self: flex-start;
+}
+
 .galeria-imagens {
   display: flex;
   justify-content: center;

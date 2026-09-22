@@ -41,6 +41,19 @@
     text-align: center;
   }
 
+  .menu-pratos {
+    grid-template-columns: 1fr;
+    max-width: 24rem;
+  }
+
+  .prato {
+    text-align: left;
+  }
+
+  .prato > img {
+    height: 13rem;
+  }
+
   .galeria-imagens {
     display: grid;
     grid-template-columns: 1fr;
