@@ -33,7 +33,8 @@
     <main class="container py-5">
         <section class="reserva-card" aria-labelledby="titulo-reserva">
             <h2 id="titulo-reserva">Reserve uma mesa</h2>
-            <p>Preencha os dados abaixo. A reserva ficará pendente de confirmação do restaurante.</p>
+            <p>Preencha os dados abaixo. Para validar a reserva, será necessária uma taxa de <strong>350 MT</strong>,
+                não reembolsável em caso de não comparência.</p>
             <form id="form-reserva">
                 <div class="campos-reserva">
                     <div>
@@ -56,10 +57,26 @@
                         <label for="pessoas-reserva">Número de pessoas</label>
                         <input id="pessoas-reserva" name="pessoas" type="number" min="1" max="20" required>
                     </div>
+                    <div>
+                        <label for="metodo-pagamento">Método de pagamento</label>
+                        <select id="metodo-pagamento" name="metodo" required>
+                            <option value="">Selecione uma opção</option>
+                            <option value="M-Pesa">M-Pesa</option>
+                            <option value="e-Mola">e-Mola</option>
+                            <option value="Cartão">Cartão</option>
+                        </select>
+                    </div>
                 </div>
                 <label for="observacoes-reserva">Observações (opcional)</label>
                 <textarea id="observacoes-reserva" name="observacoes" rows="4"
                     placeholder="Ex.: aniversário, cadeira de bebé..."></textarea>
+                <label for="referencia-pagamento">Referência ou comprovativo do pagamento</label>
+                <input id="referencia-pagamento" name="referencia" type="text" required
+                    placeholder="Informe a referência da transação">
+                <label class="aceite-taxa">
+                    <input id="aceite-taxa" name="aceite" type="checkbox" required>
+                    Confirmo o pagamento da taxa de reserva de 350 MT e aceito os termos.
+                </label>
                 <button class="btn-confirmar" type="submit">Solicitar reserva</button>
             </form>
             <p id="mensagem-reserva" class="mensagem-pedido" role="status" aria-live="polite"></p>

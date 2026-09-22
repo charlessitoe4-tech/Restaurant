@@ -257,7 +257,8 @@ section.sobre img.bd-placeholder-img {
 }
 
 .reserva-card input,
-.reserva-card textarea {
+.reserva-card textarea,
+.reserva-card select {
   display: block;
   width: 100%;
   padding: .65rem;
@@ -267,6 +268,18 @@ section.sobre img.bd-placeholder-img {
 
 .reserva-card textarea {
   resize: vertical;
+}
+
+.aceite-taxa {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+  margin-top: .5rem;
+}
+
+.aceite-taxa input {
+  width: auto;
+  margin-top: .25rem;
 }
 
 .linha-pedido {

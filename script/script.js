@@ -56,7 +56,7 @@ if (formulario) {
                 evento.preventDefault();
                 const dados = new FormData(formularioReserva);
                 const mensagem = document.getElementById("mensagem-reserva");
-                mensagem.textContent = `Pedido de reserva recebido para ${dados.get("pessoas")} pessoa(s), no dia ${dados.get("data")} às ${dados.get("hora")}. A confirmação será feita pelo restaurante.`;
+                mensagem.textContent = `Reserva recebida para ${dados.get("pessoas")} pessoa(s), no dia ${dados.get("data")} às ${dados.get("hora")}. A taxa de 350 MT e a referência serão validadas pelo restaurante antes da confirmação.`;
                 formularioReserva.reset();
                 dataReserva.min = new Date().toISOString().split("T")[0];
             });
