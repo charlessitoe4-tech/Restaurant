@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu | Fast Food</title>
+    <link rel="stylesheet" href="./bootstrap-5.3.8-dist/bootstrap-5.3.8-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/mobile.css">
+</head>
+
+<body class="pagina-interna">
+    <header class="cabecalho-interno">
+        <nav id="nav-esquerda">
+            <div id="logo">
+                <a href="./index.html"><img src="./images/Charles Down.png" alt="Fast Food"></a>
+            </div>
+            <ul class="menu-principal">
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./index.html#sobre">Sobre</a></li>
+                <li><a href="./menu.html">Menu</a></li>
+                <li><a href="./galeria.html">Galeria</a></li>
+            </ul>
+        </nav>
+        <div class="chamada">
+            <h1>Nosso menu</h1>
+            <h2>Escolha os seus sabores favoritos</h2>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <p class="aviso-conteudo">Menu demonstrativo: nomes e preços fictícios para visualizar a experiência.
+            Substituiremos estes dados pelos produtos reais do restaurante.</p>
+
+        <section class="categoria-menu" aria-labelledby="comidas">
+            <h2 id="comidas">Comidas</h2>
+            <div class="itens-menu">
+                <article class="item-menu">
+                    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80" alt="Hambúrguer artesanal">
+                    <div><h3>Hambúrguer da Casa</h3><p>Pão brioche, carne grelhada, queijo, alface e molho especial.</p><strong>550 MT</strong><button class="btn-adicionar" type="button" data-nome="Hambúrguer da Casa" data-preco="550">Adicionar ao pedido</button></div>
+                </article>
+                <article class="item-menu">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80" alt="Pizza artesanal">
+                    <div><h3>Pizza Mediterrânica</h3><p>Molho de tomate, mozzarella, tomate-cereja e manjericão.</p><strong>650 MT</strong><button class="btn-adicionar" type="button" data-nome="Pizza Mediterrânica" data-preco="650">Adicionar ao pedido</button></div>
+                </article>
+                <article class="item-menu">
+                    <img src="./images/spaghetti.jpg" alt="Spaghetti à bolonhesa">
+                    <div><h3>Spaghetti à Bolonhesa</h3><p>Massa, molho de tomate, carne e parmesão.</p><strong>600 MT</strong><button class="btn-adicionar" type="button" data-nome="Spaghetti à Bolonhesa" data-preco="600">Adicionar ao pedido</button></div>
+                </article>
+            </div>
+        </section>
+
+        <section class="categoria-menu" aria-labelledby="bebidas">
+            <h2 id="bebidas">Bebidas</h2>
+            <div class="itens-menu">
+                <article class="item-menu">
+                    <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=600&q=80" alt="Limonada fresca">
+                    <div><h3>Limonada Fresca</h3><p>Limão, água, gelo e hortelã.</p><strong>150 MT</strong><button class="btn-adicionar" type="button" data-nome="Limonada Fresca" data-preco="150">Adicionar ao pedido</button></div>
+                </article>
+                <article class="item-menu">
+                    <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80" alt="Sumo tropical">
+                    <div><h3>Sumo Tropical</h3><p>Manga, maracujá e laranja.</p><strong>200 MT</strong><button class="btn-adicionar" type="button" data-nome="Sumo Tropical" data-preco="200">Adicionar ao pedido</button></div>
+                </article>
+                <article class="item-menu">
+                    <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80" alt="Café com leite">
+                    <div><h3>Café com Leite</h3><p>Expresso intenso com leite cremoso.</p><strong>100 MT</strong><button class="btn-adicionar" type="button" data-nome="Café com Leite" data-preco="100">Adicionar ao pedido</button></div>
+                </article>
+            </div>
+        </section>
+
+        <section class="categoria-menu" aria-labelledby="sobremesas">
+            <h2 id="sobremesas">Sobremesas</h2>
+            <div class="itens-menu">
+                <article class="item-menu">
+                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80" alt="Fatia de bolo de chocolate">
+                    <div><h3>Bolo de Chocolate</h3><p>Fatia de bolo húmido com cobertura de chocolate.</p><strong>250 MT</strong><button class="btn-adicionar" type="button" data-nome="Bolo de Chocolate" data-preco="250">Adicionar ao pedido</button></div>
+                </article>
+                <article class="item-menu">
+                    <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=600&q=80" alt="Donuts com cobertura">
+                    <div><h3>Donuts da Casa</h3><p>Donuts macios com cobertura e confeitos.</p><strong>200 MT</strong><button class="btn-adicionar" type="button" data-nome="Donuts da Casa" data-preco="200">Adicionar ao pedido</button></div>
+                </article>
+                <article class="item-menu">
+                    <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=600&q=80" alt="Taça de frutas">
+                    <div><h3>Taça de Frutas</h3><p>Frutas frescas da estação com iogurte.</p><strong>300 MT</strong><button class="btn-adicionar" type="button" data-nome="Taça de Frutas" data-preco="300">Adicionar ao pedido</button></div>
+                </article>
+            </div>
+        </section>
+
+        <section id="pedido" class="pedido-em-breve">
+            <h2>Quero pedir um prato</h2>
+            <p>Adicione os itens, indique a mesa e confirme o pedido.</p>
+            <div id="resumo-pedido" class="resumo-pedido">
+                <p class="pedido-vazio">Ainda não adicionou nenhum item.</p>
+            </div>
+            <form id="form-pedido">
+                <label for="nome-cliente">Nome</label>
+                <input id="nome-cliente" name="nome" type="text" required>
+                <label for="numero-mesa">Número da mesa</label>
+                <input id="numero-mesa" name="mesa" type="text" required>
+                <button class="btn-confirmar" type="submit">Confirmar pedido</button>
+            </form>
+            <p id="mensagem-pedido" class="mensagem-pedido" role="status" aria-live="polite"></p>
+        </section>
+    </main>
+    <script src="./script/script.js"></script>
+</body>
+
+</html>
