@@ -22,7 +22,8 @@
   @media screen and (max-width: 700px) {
     .categorias-menu,
     .galeria-grid,
-    .itens-menu {
+    .itens-menu,
+    .campos-reserva {
       grid-template-columns: 1fr;
     }
 

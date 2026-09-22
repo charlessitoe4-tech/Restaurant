@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva | Fast Food</title>
+    <link rel="stylesheet" href="./bootstrap-5.3.8-dist/bootstrap-5.3.8-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/mobile.css">
+</head>
+
+<body class="pagina-interna">
+    <header class="cabecalho-interno">
+        <nav id="nav-esquerda">
+            <div id="logo">
+                <a href="./index.html"><img src="./images/Charles Down.png" alt="Fast Food"></a>
+            </div>
+            <ul class="menu-principal">
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./index.html#sobre">Sobre</a></li>
+                <li><a href="./menu.html">Menu</a></li>
+                <li><a href="./galeria.html">Galeria</a></li>
+                <li><a href="./reserva.html">Reserva</a></li>
+            </ul>
+        </nav>
+        <div class="chamada">
+            <h1>Faça a sua reserva</h1>
+            <h2>Garanta o seu lugar no restaurante</h2>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <section class="reserva-card" aria-labelledby="titulo-reserva">
+            <h2 id="titulo-reserva">Reserve uma mesa</h2>
+            <p>Preencha os dados abaixo. A reserva ficará pendente de confirmação do restaurante.</p>
+            <form id="form-reserva">
+                <div class="campos-reserva">
+                    <div>
+                        <label for="nome-reserva">Nome completo</label>
+                        <input id="nome-reserva" name="nome" type="text" required>
+                    </div>
+                    <div>
+                        <label for="contacto-reserva">Telefone ou e-mail</label>
+                        <input id="contacto-reserva" name="contacto" type="text" required>
+                    </div>
+                    <div>
+                        <label for="data-reserva">Data</label>
+                        <input id="data-reserva" name="data" type="date" required>
+                    </div>
+                    <div>
+                        <label for="hora-reserva">Hora</label>
+                        <input id="hora-reserva" name="hora" type="time" required>
+                    </div>
+                    <div>
+                        <label for="pessoas-reserva">Número de pessoas</label>
+                        <input id="pessoas-reserva" name="pessoas" type="number" min="1" max="20" required>
+                    </div>
+                </div>
+                <label for="observacoes-reserva">Observações (opcional)</label>
+                <textarea id="observacoes-reserva" name="observacoes" rows="4"
+                    placeholder="Ex.: aniversário, cadeira de bebé..."></textarea>
+                <button class="btn-confirmar" type="submit">Solicitar reserva</button>
+            </form>
+            <p id="mensagem-reserva" class="mensagem-pedido" role="status" aria-live="polite"></p>
+        </section>
+    </main>
+    <script src="./script/script.js"></script>
+</body>
+
+</html>

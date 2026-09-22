@@ -230,6 +230,45 @@ section.sobre img.bd-placeholder-img {
   border-radius: 5px;
 }
 
+.reserva-card {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .12);
+}
+
+.reserva-card h2 {
+  color: #654321;
+  font-size: 2rem;
+}
+
+.campos-reserva {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.reserva-card form {
+  display: grid;
+  gap: .5rem;
+  margin-top: 1.5rem;
+}
+
+.reserva-card input,
+.reserva-card textarea {
+  display: block;
+  width: 100%;
+  padding: .65rem;
+  border: 1px solid #b99a78;
+  border-radius: 5px;
+}
+
+.reserva-card textarea {
+  resize: vertical;
+}
+
 .linha-pedido {
   display: flex;
   align-items: center;
