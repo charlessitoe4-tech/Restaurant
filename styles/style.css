@@ -218,6 +218,54 @@ section.sobre img.bd-placeholder-img {
   font-size: 1.8rem;
 }
 
+.categoria-menu {
+  margin-bottom: 3rem;
+}
+
+.categoria-menu > h2 {
+  margin-bottom: 1.5rem;
+  color: #654321;
+  text-align: center;
+}
+
+.itens-menu {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.item-menu {
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .12);
+}
+
+.item-menu img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.item-menu div {
+  padding: 1rem;
+}
+
+.item-menu h3 {
+  margin-bottom: .5rem;
+}
+
+.item-menu p {
+  min-height: 3rem;
+  margin-bottom: .75rem;
+}
+
+.item-menu strong {
+  color: #654321;
+  font-size: 1.2rem;
+}
+
 .galeria-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
