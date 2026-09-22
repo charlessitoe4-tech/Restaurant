@@ -58,6 +58,9 @@ header nav#nav-esquerda {
   flex-flow: row;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 header nav#nav-esquerda div#logo {
