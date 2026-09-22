@@ -44,27 +44,27 @@ if (formulario) {
             return;
         }
 
-        const formularioReserva = document.getElementById("form-reserva");
-        const dataReserva = document.getElementById("data-reserva");
-
-        if (dataReserva) {
-            dataReserva.min = new Date().toISOString().split("T")[0];
-        }
-
-        if (formularioReserva) {
-            formularioReserva.addEventListener("submit", (evento) => {
-                evento.preventDefault();
-                const dados = new FormData(formularioReserva);
-                const mensagem = document.getElementById("mensagem-reserva");
-                mensagem.textContent = `Reserva recebida para ${dados.get("pessoas")} pessoa(s), no dia ${dados.get("data")} às ${dados.get("hora")}. A taxa de 350 MT e a referência serão validadas pelo restaurante antes da confirmação.`;
-                formularioReserva.reset();
-                dataReserva.min = new Date().toISOString().split("T")[0];
-            });
-        }
-
         mensagem.textContent = "Pedido preparado com sucesso. A ligação à cozinha/garçom será ativada com o servidor.";
         formulario.reset();
         pedidos.length = 0;
         atualizarResumo();
+    });
+}
+
+const formularioReserva = document.getElementById("form-reserva");
+const dataReserva = document.getElementById("data-reserva");
+
+if (dataReserva) {
+    dataReserva.min = new Date().toISOString().split("T")[0];
+}
+
+if (formularioReserva) {
+    formularioReserva.addEventListener("submit", (evento) => {
+        evento.preventDefault();
+        const dados = new FormData(formularioReserva);
+        const mensagem = document.getElementById("mensagem-reserva");
+        mensagem.textContent = `Reserva recebida para ${dados.get("pessoas")} pessoa(s), no dia ${dados.get("data")} às ${dados.get("hora")}. A taxa de 350 MT e a referência serão validadas pelo restaurante antes da confirmação.`;
+        formularioReserva.reset();
+        dataReserva.min = new Date().toISOString().split("T")[0];
     });
 }
