@@ -1,0 +1,170 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-family: 'Mynerve', cursive;
+  text-shadow: 4px 4px 6px #000;
+  font-weight: 700;
+  font-size: max(44px, 5.2vw);
+}
+
+h2 {
+  font-family: 'Mynerve', cursive;
+  text-shadow: 4px 4px 6px #464646;
+  font-weight: 700;
+  font-size: max(20px, 2.8vw);
+}
+
+/* Botão chamada */
+div.chamada a {
+  font-size: max(16px, 1.8vw);
+  color: #fff;
+  text-decoration: none;
+  padding: 20px 80px;
+  border-radius: 50px;
+  font-weight: 600;
+  background: linear-gradient(rgba(242, 191, 128, 0.5), rgba(242, 191, 128, 0.5));
+  display: inline-block;
+  animation-name: HeaderA-moverParaCima;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: backwards;
+  transition: .3s ease-in-out;
+}
+
+div.chamada a:hover {
+  opacity: .8;
+}
+
+header {
+  max-width: 100%;
+  height: 90vh;
+  background: linear-gradient(rgba(242, 191, 128, 0.85), rgba(242, 191, 128, 0)),
+              url("../images/header capa.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  position: relative;
+}
+
+header nav#nav-esquerda {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header nav#nav-esquerda div#logo {
+  max-width: 120px;
+  margin-left: 5rem;
+}
+
+header nav#nav-esquerda div#logo img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+header nav#nav-esquerda ul#icone-menu {
+  display: none;
+}
+
+header nav#nav-esquerda ul#icone-menu li {
+  list-style: none;
+}
+
+header nav#nav-esquerda ul#icone-menu li ion-icon {
+  font-size: 50px;
+  color: #fff;
+  margin-right: 2rem;
+}
+
+header nav#nav-esquerda ul.menu-principal {
+  margin-left: 5rem;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+header nav#nav-esquerda ul.menu-principal li {
+  list-style: none;
+  margin-right: 2rem;
+}
+
+header nav#nav-esquerda ul.menu-principal li a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 110%;
+  text-shadow: 4px 6px 10px #000;
+  padding-bottom: 10px;
+  transition: .3s ease-in-out;
+}
+
+header nav#nav-esquerda ul.menu-principal li a:hover {
+  opacity: .6;
+  border-bottom: 1px solid #ffffff;
+}
+
+header div.chamada {
+  position: absolute;
+  width: 100%;
+  height: 300px;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+header div.chamada h1 {
+  color: #fff;
+  animation-name: HeaderH1-moverParaDireita;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+}
+
+header div.chamada h2 {
+  color: #ffffff;
+  margin-bottom: 55px;
+  animation-name: HeaderH2-moverParaEsquerda;
+  animation-duration: 2s;
+  animation-delay: 0.5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: backwards;
+}
+
+@keyframes HeaderA-moverParaCima {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes HeaderH1-moverParaDireita {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes HeaderH2-moverParaEsquerda {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/*sobre  --------*/
+
+section.sobre {
+  width: 100%;
+  padding-top: 60px;
+  padding-bottom:30px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+section.sobre div.sobre-meste{
+  text-align: center;
+  margin-bottom:40px;
+}
+
+section.sobre img.bd-placeholder-img {
+  object-fit: cover;

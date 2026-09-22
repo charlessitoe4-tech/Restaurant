@@ -1,0 +1,82 @@
+@media screen and (max-width: 1200px) {
+  header {
+    background: linear-gradient(rgba(242, 191, 128, 0.5), rgba(242, 191, 128, 0)),
+                url("../images/header capa.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+}
+
+@media screen and (max-width: 1110px) {
+  header nav#nav-esquerda ul.menu-principal li a {
+    font-size: 90%;
+  }
+}
+
+@media screen and (max-width: 970px) {
+  header nav#nav-esquerda div#logo {
+    margin-left: 1rem;
+  }
+
+  header nav#nav-esquerda {
+    justify-content: space-between;
+  }
+
+  header nav#nav-esquerda ul#icone-menu {
+    display: flex;
+  }
+
+  header nav#nav-esquerda ul#icone-menu li#menuX {
+    display: none;
+  }
+
+  /*------ menu mobile: marrom café #654321 + letras douradas --------*/
+  header nav#nav-esquerda ul.menu-principal {
+    flex-direction: column;
+    width: 220px;
+    height: 70vh;
+    background: linear-gradient(rgba(101, 67, 33, 0.97), rgba(101, 67, 33, 0.97)),
+                url("../images/header capa.jpg");
+    background-size: cover;
+    background-position: center;
+    padding-top: 1rem;
+
+    border-left: 2px solid #d4af37;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.8);
+
+    position: absolute;
+    top: 7rem;
+    right: 0;
+    z-index: 999;
+
+    display: none;
+  }
+
+  header nav#nav-esquerda ul.menu-principal li {
+    margin: .5rem 1rem;
+  }
+
+  /* TODAS as letras douradas */
+  header nav#nav-esquerda ul.menu-principal li a,
+  header nav#nav-esquerda ul.menu-principal li a:visited,
+  header nav#nav-esquerda ul.menu-principal li a:link {
+    color: #d4af37 !important;
+    font-size: 120%;
+    font-weight: 700;
+    text-decoration: none;
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.6),
+                 1px 1px 2px #000;
+    transition: .3s ease-in-out;
+  }
+
+  /* Hover — dourado brilhante */
+  header nav#nav-esquerda ul.menu-principal li a:hover,
+  header nav#nav-esquerda ul.menu-principal li a:focus {
+    color: #ffd700 !important;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.9),
+                 1px 1px 3px #000;
+    border-bottom: 1px solid #d4af37;
+    opacity: 1;
+  }
+}
