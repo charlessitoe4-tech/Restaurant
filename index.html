@@ -103,12 +103,38 @@
             <h2>Pedido rápido</h2>
             <div class="pedido-resumo">
                 <p>Selecione quantos pratos quer e confirme quando terminar.</p>
+                <div class="pedido-opcoes-entrega">
+                    <label>
+                        <input type="radio" name="tipo-pedido" value="mesa" checked>
+                        Consumir no restaurante
+                    </label>
+                    <label>
+                        <input type="radio" name="tipo-pedido" value="delivery">
+                        Delivery
+                    </label>
+                </div>
+                <div class="pedido-campos">
+                    <label>
+                        Nome do cliente
+                        <input type="text" id="nome-pedido" placeholder="Digite o seu nome" required>
+                    </label>
+                    <label>
+                        Mesa / endereço de entrega
+                        <input type="text" id="local-pedido" placeholder="Mesa 5 ou endereço completo" required>
+                    </label>
+                </div>
+                <button id="btn-localizacao" type="button" class="btn btn-secondary">Usar localização para entrega</button>
+                <p id="localizacao-status" class="localizacao-status" aria-live="polite"></p>
                 <ul id="pedido-resumo-lista" class="pedido-resumo-lista">
                     <li>Nenhum prato adicionado ainda.</li>
                 </ul>
                 <div class="pedido-total">
                     <span>Total estimado:</span>
                     <strong id="pedido-total">0 MT</strong>
+                </div>
+                <div class="pedido-entrega-total">
+                    <span>Taxa de delivery:</span>
+                    <strong id="taxa-delivery">0 MT</strong>
                 </div>
             </div>
         </section>

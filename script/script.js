@@ -171,6 +171,11 @@ $(function () {
     const botaoVerMais = $('#mostrar-mais');
     const pedidoLista = $('#pedido-resumo-lista');
     const pedidoTotal = $('#pedido-total');
+    const taxaDelivery = $('#taxa-delivery');
+    const btnLocalizacao = $('#btn-localizacao');
+    const statusLocalizacao = $('#localizacao-status');
+    const nomePedido = $('#nome-pedido');
+    const localPedido = $('#local-pedido');
     const pedido = [];
     const imagens = {
         'Pizza': 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80',
@@ -294,6 +299,7 @@ $(function () {
         if (!pedido.length) {
             pedidoLista.html('<li>Nenhum prato adicionado ainda.</li>');
             pedidoTotal.text('0 MT');
+            taxaDelivery.text('0 MT');
             return;
         }
 
@@ -309,7 +315,36 @@ $(function () {
         });
 
         pedidoTotal.text(`${total} MT`);
+
+        const tipoPedido = $('input[name="tipo-pedido"]:checked').val();
+        const taxa = tipoPedido === 'delivery' ? 150 : 0;
+        taxaDelivery.text(`${taxa} MT`);
     }
+
+    $('input[name="tipo-pedido"]').on('change', atualizarResumoPedido);
+
+    btnLocalizacao.on('click', function () {
+        if (!navigator.geolocation) {
+            statusLocalizacao.text('Geolocalização não suportada pelo navegador.');
+            return;
+        }
+
+        statusLocalizacao.text('A obter a sua localização...');
+        navigator.geolocation.getCurrentPosition(function (position) {
+            const latitude = position.coords.latitude.toFixed(5);
+            const longitude = position.coords.longitude.toFixed(5);
+            localPedido.val(`Delivery em: Lat ${latitude}, Lng ${longitude}`);
+            statusLocalizacao.text('Localização obtida. O restaurante vai confirmar o melhor ponto de entrega.');
+            $('#tipo-pedido-delivery').prop('checked', true);
+            atualizarResumoPedido();
+        }, function () {
+            statusLocalizacao.text('Não foi possível obter a localização. Digite o endereço manualmente.');
+        }, {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
+        });
+    });
 
     $('#form-reserva').on('submit', function (event) {
         event.preventDefault();

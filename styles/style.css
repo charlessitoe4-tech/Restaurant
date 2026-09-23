@@ -355,6 +355,53 @@ section.sobre img.bd-placeholder-img {
   box-shadow: 0 10px 24px rgba(101, 67, 33, 0.08);
 }
 
+.pedido-opcoes-entrega {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.pedido-opcoes-entrega label {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-weight: 600;
+  color: #654321;
+}
+
+.pedido-campos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.pedido-campos label {
+  display: grid;
+  gap: .5rem;
+  text-align: left;
+  color: #654321;
+  font-weight: 600;
+}
+
+.pedido-campos input,
+#btn-localizacao {
+  width: 100%;
+}
+
+#btn-localizacao {
+  margin-bottom: .5rem;
+}
+
+.localizacao-status {
+  min-height: 1.5rem;
+  margin-bottom: 1rem;
+  color: #3d6b2f;
+  font-weight: 700;
+}
+
 .pedido-resumo-lista {
   list-style: none;
   display: grid;
@@ -371,13 +418,20 @@ section.sobre img.bd-placeholder-img {
   border-bottom: 1px solid #f0e3c6;
 }
 
-.pedido-total {
+.pedido-total,
+.pedido-entrega-total {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 1.1rem;
   font-weight: 700;
   color: #654321;
+}
+
+.pedido-entrega-total {
+  margin-top: .75rem;
+  padding-top: .75rem;
+  border-top: 1px solid #f0e3c6;
 }
 
 .form-reserva {
