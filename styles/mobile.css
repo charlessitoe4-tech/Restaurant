@@ -71,6 +71,15 @@
     height: 11rem;
   }
 
+  .campo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pedido-resumo,
+  .form-reserva {
+    padding: 1rem;
+  }
+
   .galeria-imagens {
     display: grid;
     grid-template-columns: 1fr;

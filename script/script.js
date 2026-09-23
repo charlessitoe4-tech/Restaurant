@@ -169,6 +169,9 @@ $(function () {
     const lista = $('#menu-pratos');
     const descricao = $('#categoria-descricao');
     const botaoVerMais = $('#mostrar-mais');
+    const pedidoLista = $('#pedido-resumo-lista');
+    const pedidoTotal = $('#pedido-total');
+    const pedido = [];
     const imagens = {
         'Pizza': 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80',
         'Bife': 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80',
@@ -211,6 +214,46 @@ $(function () {
             const cartao = $('<article>', { class: 'prato' });
             const conteudo = $('<div>', { class: 'prato-conteudo' });
             const imagem = obterImagem(nome);
+            const quantidadeWrap = $('<div>', { class: 'quantidade-controle' });
+            const btnMenos = $('<button>', { type: 'button', class: 'btn-quantidade', text: '−' });
+            const inputQuantidade = $('<input>', {
+                type: 'number',
+                min: 1,
+                max: 99,
+                value: 1,
+                'aria-label': `Quantidade de ${nome}`
+            });
+            const btnMais = $('<button>', { type: 'button', class: 'btn-quantidade', text: '+' });
+            const btnPedido = $('<button>', {
+                type: 'button',
+                class: 'btn btn-primary',
+                text: 'Adicionar ao pedido',
+                'aria-label': `Adicionar ${nome} ao pedido`
+            });
+
+            btnMenos.on('click', function () {
+                const valor = Number(inputQuantidade.val()) || 1;
+                inputQuantidade.val(Math.max(1, valor - 1));
+            });
+
+            btnMais.on('click', function () {
+                const valor = Number(inputQuantidade.val()) || 1;
+                inputQuantidade.val(Math.min(99, valor + 1));
+            });
+
+            btnPedido.on('click', function () {
+                const qtd = Number(inputQuantidade.val()) || 1;
+                const itemExistente = pedido.find(item => item.nome === nome);
+
+                if (itemExistente) {
+                    itemExistente.quantidade += qtd;
+                } else {
+                    pedido.push({ nome, preco, quantidade: qtd });
+                }
+
+                atualizarResumoPedido();
+                $('html, body').animate({ scrollTop: $('#pedido').offset().top - 80 }, 500);
+            });
 
             $('<img>', {
                 class: 'prato-imagem',
@@ -224,12 +267,10 @@ $(function () {
             $('<h3>', { text: nome }).appendTo(conteudo);
             $('<p>', { text: categoria.frase }).appendTo(conteudo);
             $('<strong>', { text: `${preco} MT` }).appendTo(conteudo);
-            $('<a>', {
-                class: 'btn btn-primary',
-                href: '#contato',
-                text: 'Pedir este prato',
-                'aria-label': `Pedir ${nome}`
-            }).appendTo(conteudo);
+
+            quantidadeWrap.append(btnMenos, inputQuantidade, btnMais);
+            quantidadeWrap.appendTo(conteudo);
+            btnPedido.appendTo(conteudo);
 
             conteudo.appendTo(cartao);
             cartao.appendTo(lista);
@@ -249,10 +290,51 @@ $(function () {
         mostrarCategoria($(this).data('categoria'));
     });
 
+    function atualizarResumoPedido() {
+        if (!pedido.length) {
+            pedidoLista.html('<li>Nenhum prato adicionado ainda.</li>');
+            pedidoTotal.text('0 MT');
+            return;
+        }
+
+        let total = 0;
+        pedidoLista.empty();
+
+        pedido.forEach(item => {
+            const valorItem = item.preco * item.quantidade;
+            total += valorItem;
+            $('<li>', {
+                html: `<span>${item.nome} x${item.quantidade}</span><strong>${valorItem} MT</strong>`
+            }).appendTo(pedidoLista);
+        });
+
+        pedidoTotal.text(`${total} MT`);
+    }
+
+    $('#form-reserva').on('submit', function (event) {
+        event.preventDefault();
+        const nome = $('#nome-reserva').val().trim();
+        const telefone = $('#telefone-reserva').val().trim();
+        const data = $('#data-reserva').val();
+        const hora = $('#hora-reserva').val();
+        const pessoas = $('#pessoas-reserva').val();
+        const taxa = 200;
+
+        if (!nome || !telefone || !data || !hora || !pessoas) {
+            $('#reserva-mensagem').text('Preencha todos os campos da reserva.');
+            return;
+        }
+
+        $('#reserva-mensagem').text(`Reserva confirmada para ${nome} para ${pessoas} pessoas em ${data} às ${hora}. Taxa de confirmação: ${taxa} MT.`);
+        this.reset();
+        $('#pessoas-reserva').val('2');
+    });
+
     botaoVerMais.on('click', function () {
         itensExibidos = Math.min(itensExibidos + 8, categorias[categoriaAtual].itens.length);
         mostrarCategoria(categoriaAtual, false);
     });
 
     mostrarCategoria('pequeno-almoco');
+    atualizarResumoPedido();
 });

@@ -99,6 +99,20 @@
             <a class="btn btn-secondary" href="#contato">Ver opções de contacto</a>
         </section>
 
+        <section id="pedido" class="conteudo-secao">
+            <h2>Pedido rápido</h2>
+            <div class="pedido-resumo">
+                <p>Selecione quantos pratos quer e confirme quando terminar.</p>
+                <ul id="pedido-resumo-lista" class="pedido-resumo-lista">
+                    <li>Nenhum prato adicionado ainda.</li>
+                </ul>
+                <div class="pedido-total">
+                    <span>Total estimado:</span>
+                    <strong id="pedido-total">0 MT</strong>
+                </div>
+            </div>
+        </section>
+
         <section id="galeria" class="conteudo-secao">
             <h2>Galeria</h2>
             <div class="galeria-imagens">
@@ -112,6 +126,37 @@
         <section id="contato" class="conteudo-secao">
             <h2>Contacto</h2>
             <p>Faça a sua encomenda pelo telefone <a href="tel:+258876964663">+258 87 6964 663</a>.</p>
+
+            <form id="form-reserva" class="form-reserva">
+                <div class="campo-grid">
+                    <label>
+                        Nome
+                        <input type="text" id="nome-reserva" name="nome" placeholder="Seu nome" required>
+                    </label>
+                    <label>
+                        Telefone
+                        <input type="tel" id="telefone-reserva" name="telefone" placeholder="+258 ..." required>
+                    </label>
+                    <label>
+                        Data
+                        <input type="date" id="data-reserva" name="data" required>
+                    </label>
+                    <label>
+                        Hora
+                        <input type="time" id="hora-reserva" name="hora" required>
+                    </label>
+                    <label>
+                        Pessoas
+                        <input type="number" id="pessoas-reserva" name="pessoas" min="1" max="30" value="2" required>
+                    </label>
+                    <label>
+                        Taxa de confirmação
+                        <input type="text" value="200 MT" readonly>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary">Reservar mesa</button>
+                <p id="reserva-mensagem" class="reserva-mensagem" aria-live="polite"></p>
+            </form>
         </section>
     </main>
     <footer><a href="#inicio">Voltar ao início</a></footer>
