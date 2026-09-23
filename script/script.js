@@ -72,8 +72,7 @@ $(function () {
                 ['Camarão à alho', 760], ['Lulas grelhadas', 680], ['Peixe grelhado', 600],
                 ['Peixe à escabeche', 560], ['Peixe com molho de coco', 620], ['Bife à casa', 700],
                 ['Bife com pimenta', 720], ['Bife de vitela', 700], ['Bife acebolado', 680],
-                ['Costeleta de porco', 620], ['Carne de porco à africana', 600], ['Caril de carne',
-                580], ['Guisado de carne', 560], ['Estufado de vaca', 650], ['Lasanha de carne', 550],
+                ['Costeleta de porco', 620], ['Carne de porco à africana', 600], ['Caril de carne', 580], ['Guisado de carne', 560], ['Estufado de vaca', 650], ['Lasanha de carne', 550],
                 ['Esparguete à bolonhesa', 500], ['Massa de camarão', 680], ['Risoto de cogumelos', 520],
                 ['Arroz de marisco', 850], ['Xima com caril de cabrito', 650], ['Chima com caril de peixe', 580],
                 ['Feijoada à transmontana', 580], ['Prato vegetariano da casa', 480]
@@ -91,8 +90,7 @@ $(function () {
                 ['Risoto de camarão', 720], ['Risoto de frango', 560], ['Risoto de peixe', 650],
                 ['Arroz de frango no forno', 520], ['Arroz de pato', 680], ['Arroz de marisco', 850],
                 ['Bacalhau à brás', 720], ['Bacalhau com natas', 750], ['Peixe ao molho de limão', 620],
-                ['Peixe no forno com legumes', 650], ['Camarão ao molho de coco', 780], ['Caril de cabrito',
-                700], ['Cabrito assado', 750], ['Costelas barbecue', 680], ['Bife à portuguesa', 760],
+                ['Peixe no forno com legumes', 650], ['Camarão ao molho de coco', 780], ['Caril de cabrito', 700], ['Cabrito assado', 750], ['Costelas barbecue', 680], ['Bife à portuguesa', 760],
                 ['Medalhões de filé', 850], ['Lombo de porco assado', 650], ['Massa carbonara', 550],
                 ['Massa ao pesto', 520], ['Massa de marisco', 780], ['Pizza italiana', 620],
                 ['Pizza mexicana', 550], ['Prato do chefe', 900]
@@ -159,36 +157,58 @@ $(function () {
 
     const lista = $('#menu-pratos');
     const descricao = $('#categoria-descricao');
+    const botaoVerMais = $('#mostrar-mais');
     const imagens = {
-        'Pizza': './images/Pizza Mexicana.jpg',
-        'Bife': './images/Bife de vitela.jpg',
-        'Massa': './images/massa italiana.jpg',
-        'Esparguete': './images/spaghetti.jpg',
-        'Sushi': './images/Sushi.jpg',
-        'Kebab': './images/kebab com iogurte e limão e salada.jpg',
-        'Wrap': './images/kebab com iogurte e limão e salada.jpg',
-        'Camarão': './images/kebab com iogurte e limão e salada.jpg',
-        'Peixe': './images/Bife de vitela.jpg',
-        'Frango': './images/Bife de vitela.jpg'
+        'Pizza': 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80',
+        'Bife': 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80',
+        'Massa': 'https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?auto=format&fit=crop&w=900&q=80',
+        'Esparguete': 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80',
+        'Sushi': 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=900&q=80',
+        'Kebab': 'https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=900&q=80',
+        'Wrap': 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=900&q=80',
+        'Camarão': 'https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=900&q=80',
+        'Peixe': 'https://images.unsplash.com/photo-1534939561126-855b8675edd7?auto=format&fit=crop&w=900&q=80',
+        'Frango': 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=900&q=80',
+        'Sobremesa': 'https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=900&q=80',
+        'Bebida': 'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80'
     };
 
-    function mostrarCategoria(chave) {
+    let categoriaAtual = 'pequeno-almoco';
+    let itensExibidos = 15;
+
+    function obterImagem(nome) {
+        const imagem = Object.entries(imagens).find(([termo]) => nome.toLowerCase().includes(termo.toLowerCase()));
+        return imagem ? imagem[1] : 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80';
+    }
+
+    function mostrarCategoria(chave, resetar = true) {
         const categoria = categorias[chave];
         if (!categoria) return;
 
-        descricao.text(`${categoria.descricao} ${categoria.itens.length} opções disponíveis.`);
+        categoriaAtual = chave;
+        if (resetar) {
+            itensExibidos = 15;
+        }
+
+        const totalItens = categoria.itens.length;
+        const itensMostrados = Math.min(itensExibidos, totalItens);
+
+        descricao.text(`${categoria.descricao} ${itensMostrados} de ${totalItens} opções exibidas.`);
         lista.empty();
-        categoria.itens.forEach(([nome, preco]) => {
+
+        categoria.itens.slice(0, itensMostrados).forEach(([nome, preco]) => {
             const cartao = $('<article>', { class: 'prato' });
             const conteudo = $('<div>', { class: 'prato-conteudo' });
-            const imagem = Object.entries(imagens).find(([termo]) => nome.includes(termo));
-            if (imagem) {
-                $('<img>', {
-                    class: 'prato-imagem',
-                    src: imagem[1],
-                    alt: nome
-                }).appendTo(cartao);
-            }
+            const imagem = obterImagem(nome);
+
+            $('<img>', {
+                class: 'prato-imagem',
+                src: imagem,
+                alt: nome,
+                loading: 'lazy',
+                decoding: 'async'
+            }).appendTo(cartao);
+
             $('<span>', { class: 'prato-categoria', text: categoria.nome }).appendTo(conteudo);
             $('<h3>', { text: nome }).appendTo(conteudo);
             $('<p>', { text: categoria.frase }).appendTo(conteudo);
@@ -199,15 +219,28 @@ $(function () {
                 text: 'Pedir este prato',
                 'aria-label': `Pedir ${nome}`
             }).appendTo(conteudo);
+
             conteudo.appendTo(cartao);
             cartao.appendTo(lista);
         });
+
+        if (itensMostrados >= totalItens) {
+            botaoVerMais.attr('hidden', true);
+        } else {
+            botaoVerMais.removeAttr('hidden');
+            botaoVerMais.text(`Ver mais (${Math.min(8, totalItens - itensMostrados)} a mais)`);
+        }
     }
 
     $('.categoria-btn').on('click', function () {
         $('.categoria-btn').removeClass('ativo').attr('aria-selected', 'false');
         $(this).addClass('ativo').attr('aria-selected', 'true');
         mostrarCategoria($(this).data('categoria'));
+    });
+
+    botaoVerMais.on('click', function () {
+        itensExibidos = Math.min(itensExibidos + 8, categorias[categoriaAtual].itens.length);
+        mostrarCategoria(categoriaAtual, false);
     });
 
     mostrarCategoria('pequeno-almoco');

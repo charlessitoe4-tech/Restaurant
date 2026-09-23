@@ -22,9 +22,11 @@
 
 <body>
     <header id="inicio">
-        <nav id="nav-esquerda">
+        <nav id="nav-esquerda" aria-label="Navegação principal">
             <div id="logo">
-                <img src="./images/Charles Down.png" alt="Logo">
+                <a href="#inicio" aria-label="Voltar ao início">
+                    <img src="./images/Charles Down.png" alt="Logo">
+                </a>
             </div>
 
             <ul id="icone-menu">
@@ -93,6 +95,7 @@
             </div>
             <p id="categoria-descricao" class="categoria-descricao" aria-live="polite"></p>
             <div id="menu-pratos" class="menu-pratos" aria-live="polite"></div>
+            <button id="mostrar-mais" type="button" class="btn btn-secondary" hidden>Ver mais pratos</button>
             <a class="btn btn-secondary" href="#contato">Ver opções de contacto</a>
         </section>
 
