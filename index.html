@@ -98,6 +98,8 @@
             const menu = $('nav#nav-esquerda ul.menu-principal');
             const btnMenu = $('nav#nav-esquerda ul#icone-menu li#menu');
             const btnClose = $('nav#nav-esquerda ul#icone-menu li#menuX');
+            const nav = $('nav#nav-esquerda');
+            let lastScrollTop = 0;
 
             function mostrarMenu() {
                 menu.css('display', 'flex')
@@ -117,6 +119,18 @@
                 btnMenu.css('display', 'flex');
                 btnClose.css('display', 'none');
             }
+
+            $(window).on('scroll', function () {
+                const currentScroll = $(window).scrollTop();
+
+                if (currentScroll > lastScrollTop && currentScroll > 120) {
+                    nav.addClass('nav-hidden');
+                } else {
+                    nav.removeClass('nav-hidden');
+                }
+
+                lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+            });
 
             btnMenu.on('click', mostrarMenu);
             btnClose.on('click', esconderMenu);
