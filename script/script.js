@@ -2,6 +2,17 @@ $(function () {
     const menu = $('nav#nav-esquerda ul.menu-principal');
     const btnMenu = $('#menu-toggle');
     const btnClose = $('#menu-close');
+    const nav = $('#nav-esquerda');
+    let ultimoScroll = 0;
+
+    function atualizarPosicaoNav() {
+        const scrollAtual = $(window).scrollTop();
+        const deslocamento = scrollAtual > ultimoScroll ? 18 : -10;
+        nav.css('transform', `translateX(-50%) translateY(${deslocamento}px)`);
+        ultimoScroll = scrollAtual;
+    }
+
+    $(window).on('scroll', atualizarPosicaoNav);
 
     function mostrarMenu() {
         menu.css('display', 'flex')
