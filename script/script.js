@@ -1,11 +1,29 @@
 $(function () {
     const STORAGE_KEY = 'restaurante_estado_v1';
+    const USERS_KEY = 'restaurante_usuarios_v1';
     let usuarioLogado = null;
-    const USERS = [
-        { nome: 'Garçom', usuario: 'garcom', senha: '123', role: 'garcom' },
-        { nome: 'Delivery', usuario: 'delivery', senha: '123', role: 'delivery' },
-        { nome: 'Admin', usuario: 'admin', senha: '123', role: 'admin' }
-    ];
+
+    function carregarUsuarios() {
+        const usuariosSalvos = JSON.parse(localStorage.getItem(USERS_KEY) || 'null');
+        const usuariosPadrao = [
+            { nome: 'Garçom', usuario: 'garcom', email: 'garcom@restaurante.com', senha: '123', role: 'garcom' },
+            { nome: 'Delivery', usuario: 'delivery', email: 'delivery@restaurante.com', senha: '123', role: 'delivery' },
+            { nome: 'Admin', usuario: 'admin', email: 'admin@restaurante.com', senha: '123', role: 'admin' }
+        ];
+
+        if (Array.isArray(usuariosSalvos) && usuariosSalvos.length) {
+            return usuariosSalvos;
+        }
+
+        localStorage.setItem(USERS_KEY, JSON.stringify(usuariosPadrao));
+        return usuariosPadrao;
+    }
+
+    const USERS = carregarUsuarios();
+
+    function salvarUsuarios() {
+        localStorage.setItem(USERS_KEY, JSON.stringify(USERS));
+    }
 
     $('body').removeClass('logado');
 
@@ -390,13 +408,13 @@ $(function () {
     }
 
     function entrarNoSistema(usuario, senha) {
-        const conta = USERS.find(item => item.usuario === usuario && item.senha === senha);
+        const conta = USERS.find(item => (item.usuario === usuario || item.email === usuario) && item.senha === senha);
         if (!conta) {
             $('#login-mensagem').text('Utilizador ou palavra-passe inválidos.');
             return;
         }
 
-        usuarioLogado = { nome: conta.nome, usuario: conta.usuario, role: conta.role };
+        usuarioLogado = { nome: conta.nome, usuario: conta.usuario, email: conta.email, role: conta.role };
         $('body').addClass('logado');
         $('#usuario-ativo').text(`${conta.nome} (${conta.role})`);
         $('#dashboard').removeClass('oculto').show();
@@ -416,11 +434,32 @@ $(function () {
         renderCaixa();
     }
 
+    function redefinirSenha(identificador, novaSenha) {
+        const conta = USERS.find(item => item.usuario === identificador || item.email === identificador);
+
+        if (!conta) {
+            $('#login-mensagem').text('Não foi encontrado nenhum utilizador com esses dados.');
+            return false;
+        }
+
+        if (!novaSenha || novaSenha.length < 4) {
+            $('#login-mensagem').text('A nova palavra-passe deve ter pelo menos 4 caracteres.');
+            return false;
+        }
+
+        conta.senha = novaSenha;
+        salvarUsuarios();
+        $('#login-mensagem').text(`Palavra-passe redefinida com sucesso para ${conta.nome}.`);
+        return true;
+    }
+
     function sairDoSistema() {
         usuarioLogado = null;
         $('body').removeClass('logado');
         $('#dashboard').addClass('oculto').hide();
         $('#form-login')[0].reset();
+        $('#recuperar-senha-box').addClass('oculto');
+        $('#form-recuperar-senha')[0].reset();
         $('#login-mensagem').text('Sessão terminada.');
     }
 
@@ -632,6 +671,35 @@ $(function () {
         });
 
         $('#btn-logout').on('click', sairDoSistema);
+
+        $('#btn-recuperar-senha').on('click', function () {
+            $('#recuperar-senha-box').removeClass('oculto');
+            $('#usuario-recuperar').focus();
+        });
+
+        $('#btn-cancelar-recuperacao').on('click', function () {
+            $('#recuperar-senha-box').addClass('oculto');
+            $('#form-recuperar-senha')[0].reset();
+        });
+
+        $('#form-recuperar-senha').on('submit', function (event) {
+            event.preventDefault();
+            const identificador = $('#usuario-recuperar').val().trim().toLowerCase();
+            const novaSenha = $('#nova-senha').val().trim();
+
+            if (!identificador || !novaSenha) {
+                $('#login-mensagem').text('Preencha o utilizador/e-mail e a nova palavra-passe.');
+                return;
+            }
+
+            const redefiniu = redefinirSenha(identificador, novaSenha);
+            if (redefiniu) {
+                $('#recuperar-senha-box').addClass('oculto');
+                $('#form-recuperar-senha')[0].reset();
+                $('#usuario-login').val(identificador);
+                $('#senha-login').val(novaSenha);
+            }
+        });
 
         $('.dashboard-tab').on('click', function () {
             const role = $(this).data('role');

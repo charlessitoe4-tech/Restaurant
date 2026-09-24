@@ -35,6 +35,28 @@
                 </label>
                 <button type="submit" class="btn btn-primary">Entrar</button>
             </form>
+
+            <div class="login-extra">
+                <button type="button" id="btn-recuperar-senha" class="btn-link">Esqueci-me da palavra-passe</button>
+            </div>
+
+            <div id="recuperar-senha-box" class="recuperar-senha-box oculto">
+                <form id="form-recuperar-senha" class="form-login form-recuperacao">
+                    <label>
+                        Utilizador ou e-mail
+                        <input type="text" id="usuario-recuperar" placeholder="garcom ou email@restaurante.com" required>
+                    </label>
+                    <label>
+                        Nova palavra-passe
+                        <input type="password" id="nova-senha" placeholder="Digite a nova senha" required>
+                    </label>
+                    <div class="login-actions">
+                        <button type="submit" class="btn btn-primary">Redefinir senha</button>
+                        <button type="button" id="btn-cancelar-recuperacao" class="btn btn-secondary">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
             <p id="login-mensagem" class="login-mensagem" aria-live="polite"></p>
         </div>
 
