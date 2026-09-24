@@ -560,6 +560,43 @@ section.sobre img.bd-placeholder-img {
   font-weight: 700;
 }
 
+.login-extra {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.btn-link {
+  border: none;
+  background: transparent;
+  color: #654321;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.recuperar-senha-box {
+  max-width: 34rem;
+  margin: 1.25rem auto 0;
+}
+
+.form-recuperacao {
+  padding: 1.2rem;
+  border: 1px solid #ead9a7;
+  border-radius: 1rem;
+  background: #fffaf0;
+}
+
+.login-actions {
+  display: flex;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+
+.oculto {
+  display: none !important;
+}
+
 .dashboard {
   display: none;
   padding: 1.5rem;
