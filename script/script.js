@@ -1,10 +1,13 @@
 $(function () {
     const STORAGE_KEY = 'restaurante_estado_v1';
+    let usuarioLogado = null;
     const USERS = [
         { nome: 'Garçom', usuario: 'garcom', senha: '123', role: 'garcom' },
         { nome: 'Delivery', usuario: 'delivery', senha: '123', role: 'delivery' },
         { nome: 'Admin', usuario: 'admin', senha: '123', role: 'admin' }
     ];
+
+    $('body').removeClass('logado');
 
     const categorias = {
         'pequeno-almoco': {
@@ -352,6 +355,7 @@ $(function () {
             total: order.total,
             itens: order.itens,
             data: new Date().toLocaleString(),
+            usuarioResponsavel: usuarioLogado ? usuarioLogado.nome : 'Sistema',
             enviadoEmail: false
         };
 
@@ -367,9 +371,9 @@ $(function () {
     }
 
     function enviarReciboPorEmail(email, nome, reciboOriginal) {
-        const recibo = reciboOriginal || { cliente: nome, email, data: new Date().toLocaleString(), tipoPedido: 'pedido', total: 0, itens: [], enviadoEmail: false };
+        const recibo = reciboOriginal || { cliente: nome, email, data: new Date().toLocaleString(), tipoPedido: 'pedido', total: 0, itens: [], usuarioResponsavel: usuarioLogado ? usuarioLogado.nome : 'Sistema', enviadoEmail: false };
         const assunto = encodeURIComponent('Recibo digital da sua compra');
-        const corpo = encodeURIComponent(`Olá ${nome},\n\nSegue o seu recibo digital:\n\n${recibo.itens.map(item => `${item.nome} x${item.quantidade} - ${formatarMoeda(item.preco * item.quantidade)}`).join('\n')}\n\nTotal: ${formatarMoeda(recibo.total)}\n\nObrigado pela preferência!`);
+        const corpo = encodeURIComponent(`Olá ${nome},\n\nSegue o seu recibo digital:\n\nEmitido por: ${recibo.usuarioResponsavel}\n\n${recibo.itens.map(item => `${item.nome} x${item.quantidade} - ${formatarMoeda(item.preco * item.quantidade)}`).join('\n')}\n\nTotal: ${formatarMoeda(recibo.total)}\n\nObrigado pela preferência!`);
 
         if (email) {
             window.location.href = `mailto:${email}?subject=${assunto}&body=${corpo}`;
@@ -392,6 +396,8 @@ $(function () {
             return;
         }
 
+        usuarioLogado = { nome: conta.nome, usuario: conta.usuario, role: conta.role };
+        $('body').addClass('logado');
         $('#usuario-ativo').text(`${conta.nome} (${conta.role})`);
         $('#dashboard').removeClass('oculto').show();
         $('#login-mensagem').text(`Bem-vindo(a), ${conta.nome}.`);
@@ -411,6 +417,8 @@ $(function () {
     }
 
     function sairDoSistema() {
+        usuarioLogado = null;
+        $('body').removeClass('logado');
         $('#dashboard').addClass('oculto').hide();
         $('#form-login')[0].reset();
         $('#login-mensagem').text('Sessão terminada.');

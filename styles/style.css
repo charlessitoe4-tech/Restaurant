@@ -4,6 +4,26 @@
   box-sizing: border-box;
 }
 
+body {
+  background: #fffaf0;
+}
+
+body:not(.logado) #site-aplicacao {
+  display: none;
+}
+
+body.logado #login-sistema {
+  display: none;
+}
+
+body:not(.logado) #login-sistema {
+  display: block;
+}
+
+#site-aplicacao {
+  display: block;
+}
+
 h1 {
   font-family: 'Mynerve', cursive;
   text-shadow: 4px 4px 6px #000;

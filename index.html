@@ -21,295 +21,297 @@
 </head>
 
 <body>
-    <header id="inicio">
-        <nav id="nav-esquerda" aria-label="Navegação principal">
-            <div id="logo">
-                <a href="#inicio" aria-label="Voltar ao início">
-                    <img src="./images/Charles Down.png" alt="Logo">
-                </a>
-            </div>
-
-            <ul id="icone-menu">
-                <li id="menu-toggle"><ion-icon name="menu-outline"></ion-icon></li>
-                <li id="menu-close"><ion-icon name="close-outline"></ion-icon></li>
-            </ul>
-
-            <ul class="menu-principal">
-                <li><a href="#inicio">Home</a></li>
-                <li><a href="#sobre">Sobre</a></li>
-                <li><a href="#menu">Menu</a></li>
-                <li><a href="#galeria">Galeria</a></li>
-                <li><a href="#contato">Contacto</a></li>
-            </ul>
-        </nav>
-
-        <div class="chamada">
-            <h1>Fast Food</h1>
-            <h2>O sabor que você ama</h2>
-            <a href="#menu" class="btn-pedir-prato">Quero pedir um prato</a>
-        </div>
-    </header>
-
-    <main>
-        <section id="sobre" class="sobre">
-            <div class="sobre-meste">
-            <div class="row">
-
-                <div class="col-lg-4">
-                    <img src="./images/Bife de vitela.jpg" alt="Bife de vitela" class="bd-placeholder-img rounded-circle"
-                        width="140" height="140">
-                    <h2 class="fw-normal">Missão</h2>
-                    <p>Servir comida deliciosa e de qualidade, com atendimento rápido e preços acessíveis.</p>
-                    <p><a class="btn btn-secondary" href="#menu">Ver o menu &raquo;</a></p>
-                </div><!-- /.col-lg-4 -->
-
-                <div class="col-lg-4">
-                    <img src="./images/Sushi.jpg" alt="Sushi" class="bd-placeholder-img rounded-circle"
-                        width="140" height="140">
-                    <h2 class="fw-normal">Visão</h2>
-                    <p>Ser a fast food mais querida da região, reconhecida pelo sabor e pela experiência.</p>
-                    <p><a class="btn btn-secondary" href="#galeria">Ver a galeria &raquo;</a></p>
-                </div><!-- /.col-lg-4 -->
-
-                <div class="col-lg-4">
-                    <img src="./images/spaghetti.jpg" alt="Spaghetti" class="bd-placeholder-img rounded-circle"
-                        width="140" height="140">
-                    <h2 class="fw-normal">Valores</h2>
-                    <p>Qualidade, rapidez, respeito ao cliente e paixão pela comida bem feita.</p>
-                    <p><a class="btn btn-secondary" href="#contato">Fale connosco &raquo;</a></p>
-                </div><!-- /.col-lg-4 -->
-                </div>
-            </div>
-        </section>
-        <section id="menu" class="conteudo-secao">
-            <h2>Menu</h2>
-            <p>Explore as nossas opções e peça pelo telefone <strong>+258 87 6964 663</strong>.</p>
-            <div class="categorias-menu" role="tablist" aria-label="Categorias do menu">
-                <button class="categoria-btn ativo" type="button" role="tab" aria-selected="true" data-categoria="pequeno-almoco">Pequeno-almoço</button>
-                <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="fast-food">Fast food</button>
-                <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="almoco">Almoço</button>
-                <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="jantar">Jantar</button>
-                <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="sobremesas">Sobremesas</button>
-                <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="bebidas-sem-alcool">Bebidas sem álcool</button>
-                <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="bebidas-com-alcool">Bebidas com álcool</button>
-            </div>
-            <p id="categoria-descricao" class="categoria-descricao" aria-live="polite"></p>
-            <div id="menu-pratos" class="menu-pratos" aria-live="polite"></div>
-            <button id="mostrar-mais" type="button" class="btn btn-secondary" hidden>Ver mais pratos</button>
-            <a class="btn btn-secondary" href="#contato">Ver opções de contacto</a>
-        </section>
-
-        <section id="login-sistema" class="conteudo-secao">
-            <h2>Login por usuário</h2>
-            <div class="login-container">
-                <form id="form-login" class="form-login">
-                    <label>
-                        Utilizador
-                        <input type="text" id="usuario-login" placeholder="garcom, delivery ou admin" required>
-                    </label>
-                    <label>
-                        Palavra-passe
-                        <input type="password" id="senha-login" placeholder="123" value="123" required>
-                    </label>
-                    <button type="submit" class="btn btn-primary">Entrar</button>
-                </form>
-                <p id="login-mensagem" class="login-mensagem" aria-live="polite"></p>
-            </div>
-
-            <div id="dashboard" class="dashboard oculto">
-                <div class="dashboard-header">
-                    <div>
-                        <span>Utilizador ativo</span>
-                        <strong id="usuario-ativo">-</strong>
-                    </div>
-                    <button id="btn-logout" type="button" class="btn btn-secondary">Sair</button>
-                </div>
-
-                <div class="dashboard-tabs">
-                    <button class="dashboard-tab ativo" type="button" data-role="garcom">Garçom</button>
-                    <button class="dashboard-tab" type="button" data-role="delivery">Delivery</button>
-                    <button class="dashboard-tab" type="button" data-role="admin">Admin</button>
-                    <button class="dashboard-tab" type="button" data-role="caixa">Caixa</button>
-                </div>
-
-                <div class="dashboard-panel ativo" data-panel="garcom">
-                    <h3>Pedidos do garçom</h3>
-                    <div class="tabela-responsiva">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Cliente</th>
-                                    <th>Mesa</th>
-                                    <th>Itens</th>
-                                    <th>Total</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="garcom-lista"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="dashboard-panel" data-panel="delivery">
-                    <h3>Pedidos para delivery</h3>
-                    <div class="tabela-responsiva">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Cliente</th>
-                                    <th>Endereço</th>
-                                    <th>Email</th>
-                                    <th>Total</th>
-                                    <th>Recibo</th>
-                                </tr>
-                            </thead>
-                            <tbody id="delivery-lista"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="dashboard-panel" data-panel="admin">
-                    <h3>Gestão do menu</h3>
-                    <form id="form-admin-menu" class="form-admin-menu">
-                        <div class="campo-grid split-3">
-                            <label>
-                                Nome do prato
-                                <input type="text" id="admin-prato-nome" required>
-                            </label>
-                            <label>
-                                Preço (MT)
-                                <input type="number" id="admin-prato-preco" min="1" required>
-                            </label>
-                            <label>
-                                Categoria
-                                <select id="admin-prato-categoria">
-                                    <option value="pequeno-almoco">Pequeno-almoço</option>
-                                    <option value="fast-food">Fast food</option>
-                                    <option value="almoco">Almoço</option>
-                                    <option value="jantar">Jantar</option>
-                                    <option value="sobremesas">Sobremesas</option>
-                                    <option value="bebidas-sem-alcool">Bebidas sem álcool</option>
-                                    <option value="bebidas-com-alcool">Bebidas com álcool</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div class="admin-acoes">
-                            <button type="submit" class="btn btn-primary">Adicionar prato</button>
-                            <button type="button" id="btn-limpar-admin" class="btn btn-secondary">Limpar</button>
-                        </div>
-                    </form>
-
-                    <div class="admin-menu-lista-wrap">
-                        <h4>Itens atuais</h4>
-                        <div id="admin-menu-lista" class="admin-menu-lista"></div>
-                    </div>
-
-                    <div class="admin-relatorios">
-                        <h4>Relatório</h4>
-                        <div id="admin-relatorio" class="admin-relatorio"></div>
-                    </div>
-                </div>
-
-                <div class="dashboard-panel" data-panel="caixa">
-                    <h3>Caixa e recibos</h3>
-                    <div id="caixa-lista" class="caixa-lista"></div>
-                </div>
-            </div>
-        </section>
-
-        <section id="pedido" class="conteudo-secao">
-            <h2>Pedido rápido</h2>
-            <div class="pedido-resumo">
-                <p>Selecione quantos pratos quer e confirme quando terminar.</p>
-                <div class="pedido-opcoes-entrega">
-                    <label>
-                        <input id="tipo-pedido-mesa" type="radio" name="tipo-pedido" value="mesa" checked>
-                        Consumir no restaurante
-                    </label>
-                    <label>
-                        <input id="tipo-pedido-delivery" type="radio" name="tipo-pedido" value="delivery">
-                        Delivery
-                    </label>
-                </div>
-                <div class="pedido-campos">
-                    <label>
-                        Nome do cliente
-                        <input type="text" id="nome-pedido" placeholder="Digite o seu nome" required>
-                    </label>
-                    <label>
-                        Email do cliente
-                        <input type="email" id="email-pedido" placeholder="cliente@email.com" required>
-                    </label>
-                    <label>
-                        Mesa / endereço de entrega
-                        <input type="text" id="local-pedido" placeholder="Mesa 5 ou endereço completo" required>
-                    </label>
-                </div>
-                <button id="btn-localizacao" type="button" class="btn btn-secondary">Usar localização para entrega</button>
-                <p id="localizacao-status" class="localizacao-status" aria-live="polite"></p>
-                <ul id="pedido-resumo-lista" class="pedido-resumo-lista">
-                    <li>Nenhum prato adicionado ainda.</li>
-                </ul>
-                <div class="pedido-total">
-                    <span>Total estimado:</span>
-                    <strong id="pedido-total">0 MT</strong>
-                </div>
-                <div class="pedido-entrega-total">
-                    <span>Taxa de delivery:</span>
-                    <strong id="taxa-delivery">0 MT</strong>
-                </div>
-                <button id="btn-confirmar-pedido" type="button" class="btn btn-primary">Confirmar pedido</button>
-                <p id="pedido-status" class="pedido-status" aria-live="polite"></p>
-            </div>
-        </section>
-
-        <section id="galeria" class="conteudo-secao">
-            <h2>Galeria</h2>
-            <div class="galeria-imagens">
-                <img src="./images/Pizza Mexicana.jpg" alt="Pizza mexicana">
-                <img src="./images/kebab com iogurte e limão e salada.jpg" alt="Kebab com salada">
-                <img src="./images/massa italiana.jpg" alt="Massa italiana">
-                <img src="./images/Bife de vitela.jpg "alt="Bife de Vitela">
-            </div>
-        </section>
-
-        <section id="contato" class="conteudo-secao">
-            <h2>Contacto</h2>
-            <p>Faça a sua encomenda pelo telefone <a href="tel:+258876964663">+258 87 6964 663</a>.</p>
-
-            <form id="form-reserva" class="form-reserva">
-                <div class="campo-grid">
-                    <label>
-                        Nome
-                        <input type="text" id="nome-reserva" name="nome" placeholder="Seu nome" required>
-                    </label>
-                    <label>
-                        Telefone
-                        <input type="tel" id="telefone-reserva" name="telefone" placeholder="+258 ..." required>
-                    </label>
-                    <label>
-                        Data
-                        <input type="date" id="data-reserva" name="data" required>
-                    </label>
-                    <label>
-                        Hora
-                        <input type="time" id="hora-reserva" name="hora" required>
-                    </label>
-                    <label>
-                        Pessoas
-                        <input type="number" id="pessoas-reserva" name="pessoas" min="1" max="30" value="2" required>
-                    </label>
-                    <label>
-                        Taxa de confirmação
-                        <input type="text" value="200 MT" readonly>
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-primary">Reservar mesa</button>
-                <p id="reserva-mensagem" class="reserva-mensagem" aria-live="polite"></p>
+    <section id="login-sistema" class="conteudo-secao">
+        <h2>Login por usuário</h2>
+        <div class="login-container">
+            <form id="form-login" class="form-login">
+                <label>
+                    Utilizador
+                    <input type="text" id="usuario-login" placeholder="garcom, delivery ou admin" required>
+                </label>
+                <label>
+                    Palavra-passe
+                    <input type="password" id="senha-login" placeholder="123" value="123" required>
+                </label>
+                <button type="submit" class="btn btn-primary">Entrar</button>
             </form>
-        </section>
-    </main>
-    <footer><a href="#inicio">Voltar ao início</a></footer>
+            <p id="login-mensagem" class="login-mensagem" aria-live="polite"></p>
+        </div>
+
+        <div id="dashboard" class="dashboard oculto">
+            <div class="dashboard-header">
+                <div>
+                    <span>Utilizador ativo</span>
+                    <strong id="usuario-ativo">-</strong>
+                </div>
+                <button id="btn-logout" type="button" class="btn btn-secondary">Sair</button>
+            </div>
+
+            <div class="dashboard-tabs">
+                <button class="dashboard-tab ativo" type="button" data-role="garcom">Garçom</button>
+                <button class="dashboard-tab" type="button" data-role="delivery">Delivery</button>
+                <button class="dashboard-tab" type="button" data-role="admin">Admin</button>
+                <button class="dashboard-tab" type="button" data-role="caixa">Caixa</button>
+            </div>
+
+            <div class="dashboard-panel ativo" data-panel="garcom">
+                <h3>Pedidos do garçom</h3>
+                <div class="tabela-responsiva">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Mesa</th>
+                                <th>Itens</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="garcom-lista"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="dashboard-panel" data-panel="delivery">
+                <h3>Pedidos para delivery</h3>
+                <div class="tabela-responsiva">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Endereço</th>
+                                <th>Email</th>
+                                <th>Total</th>
+                                <th>Recibo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="delivery-lista"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="dashboard-panel" data-panel="admin">
+                <h3>Gestão do menu</h3>
+                <form id="form-admin-menu" class="form-admin-menu">
+                    <div class="campo-grid split-3">
+                        <label>
+                            Nome do prato
+                            <input type="text" id="admin-prato-nome" required>
+                        </label>
+                        <label>
+                            Preço (MT)
+                            <input type="number" id="admin-prato-preco" min="1" required>
+                        </label>
+                        <label>
+                            Categoria
+                            <select id="admin-prato-categoria">
+                                <option value="pequeno-almoco">Pequeno-almoço</option>
+                                <option value="fast-food">Fast food</option>
+                                <option value="almoco">Almoço</option>
+                                <option value="jantar">Jantar</option>
+                                <option value="sobremesas">Sobremesas</option>
+                                <option value="bebidas-sem-alcool">Bebidas sem álcool</option>
+                                <option value="bebidas-com-alcool">Bebidas com álcool</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="admin-acoes">
+                        <button type="submit" class="btn btn-primary">Adicionar prato</button>
+                        <button type="button" id="btn-limpar-admin" class="btn btn-secondary">Limpar</button>
+                    </div>
+                </form>
+
+                <div class="admin-menu-lista-wrap">
+                    <h4>Itens atuais</h4>
+                    <div id="admin-menu-lista" class="admin-menu-lista"></div>
+                </div>
+
+                <div class="admin-relatorios">
+                    <h4>Relatório</h4>
+                    <div id="admin-relatorio" class="admin-relatorio"></div>
+                </div>
+            </div>
+
+            <div class="dashboard-panel" data-panel="caixa">
+                <h3>Caixa e recibos</h3>
+                <div id="caixa-lista" class="caixa-lista"></div>
+            </div>
+        </div>
+    </section>
+
+    <div id="site-aplicacao" class="site-aplicacao">
+        <header id="inicio">
+            <nav id="nav-esquerda" aria-label="Navegação principal">
+                <div id="logo">
+                    <a href="#inicio" aria-label="Voltar ao início">
+                        <img src="./images/Charles Down.png" alt="Logo">
+                    </a>
+                </div>
+
+                <ul id="icone-menu">
+                    <li id="menu-toggle"><ion-icon name="menu-outline"></ion-icon></li>
+                    <li id="menu-close"><ion-icon name="close-outline"></ion-icon></li>
+                </ul>
+
+                <ul class="menu-principal">
+                    <li><a href="#inicio">Home</a></li>
+                    <li><a href="#sobre">Sobre</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#galeria">Galeria</a></li>
+                    <li><a href="#contato">Contacto</a></li>
+                </ul>
+            </nav>
+
+            <div class="chamada">
+                <h1>Fast Food</h1>
+                <h2>O sabor que você ama</h2>
+                <a href="#menu" class="btn-pedir-prato">Quero pedir um prato</a>
+            </div>
+        </header>
+
+        <main>
+            <section id="sobre" class="sobre">
+                <div class="sobre-meste">
+                <div class="row">
+
+                    <div class="col-lg-4">
+                        <img src="./images/Bife de vitela.jpg" alt="Bife de vitela" class="bd-placeholder-img rounded-circle"
+                            width="140" height="140">
+                        <h2 class="fw-normal">Missão</h2>
+                        <p>Servir comida deliciosa e de qualidade, com atendimento rápido e preços acessíveis.</p>
+                        <p><a class="btn btn-secondary" href="#menu">Ver o menu &raquo;</a></p>
+                    </div><!-- /.col-lg-4 -->
+
+                    <div class="col-lg-4">
+                        <img src="./images/Sushi.jpg" alt="Sushi" class="bd-placeholder-img rounded-circle"
+                            width="140" height="140">
+                        <h2 class="fw-normal">Visão</h2>
+                        <p>Ser a fast food mais querida da região, reconhecida pelo sabor e pela experiência.</p>
+                        <p><a class="btn btn-secondary" href="#galeria">Ver a galeria &raquo;</a></p>
+                    </div><!-- /.col-lg-4 -->
+
+                    <div class="col-lg-4">
+                        <img src="./images/spaghetti.jpg" alt="Spaghetti" class="bd-placeholder-img rounded-circle"
+                            width="140" height="140">
+                        <h2 class="fw-normal">Valores</h2>
+                        <p>Qualidade, rapidez, respeito ao cliente e paixão pela comida bem feita.</p>
+                        <p><a class="btn btn-secondary" href="#contato">Fale connosco &raquo;</a></p>
+                    </div><!-- /.col-lg-4 -->
+                    </div>
+                </div>
+            </section>
+            <section id="menu" class="conteudo-secao">
+                <h2>Menu</h2>
+                <p>Explore as nossas opções e peça pelo telefone <strong>+258 87 6964 663</strong>.</p>
+                <div class="categorias-menu" role="tablist" aria-label="Categorias do menu">
+                    <button class="categoria-btn ativo" type="button" role="tab" aria-selected="true" data-categoria="pequeno-almoco">Pequeno-almoço</button>
+                    <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="fast-food">Fast food</button>
+                    <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="almoco">Almoço</button>
+                    <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="jantar">Jantar</button>
+                    <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="sobremesas">Sobremesas</button>
+                    <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="bebidas-sem-alcool">Bebidas sem álcool</button>
+                    <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="bebidas-com-alcool">Bebidas com álcool</button>
+                </div>
+                <p id="categoria-descricao" class="categoria-descricao" aria-live="polite"></p>
+                <div id="menu-pratos" class="menu-pratos" aria-live="polite"></div>
+                <button id="mostrar-mais" type="button" class="btn btn-secondary" hidden>Ver mais pratos</button>
+                <a class="btn btn-secondary" href="#contato">Ver opções de contacto</a>
+            </section>
+
+            <section id="pedido" class="conteudo-secao">
+                <h2>Pedido rápido</h2>
+                <div class="pedido-resumo">
+                    <p>Selecione quantos pratos quer e confirme quando terminar.</p>
+                    <div class="pedido-opcoes-entrega">
+                        <label>
+                            <input id="tipo-pedido-mesa" type="radio" name="tipo-pedido" value="mesa" checked>
+                            Consumir no restaurante
+                        </label>
+                        <label>
+                            <input id="tipo-pedido-delivery" type="radio" name="tipo-pedido" value="delivery">
+                            Delivery
+                        </label>
+                    </div>
+                    <div class="pedido-campos">
+                        <label>
+                            Nome do cliente
+                            <input type="text" id="nome-pedido" placeholder="Digite o seu nome" required>
+                        </label>
+                        <label>
+                            Email do cliente
+                            <input type="email" id="email-pedido" placeholder="cliente@email.com" required>
+                        </label>
+                        <label>
+                            Mesa / endereço de entrega
+                            <input type="text" id="local-pedido" placeholder="Mesa 5 ou endereço completo" required>
+                        </label>
+                    </div>
+                    <button id="btn-localizacao" type="button" class="btn btn-secondary">Usar localização para entrega</button>
+                    <p id="localizacao-status" class="localizacao-status" aria-live="polite"></p>
+                    <ul id="pedido-resumo-lista" class="pedido-resumo-lista">
+                        <li>Nenhum prato adicionado ainda.</li>
+                    </ul>
+                    <div class="pedido-total">
+                        <span>Total estimado:</span>
+                        <strong id="pedido-total">0 MT</strong>
+                    </div>
+                    <div class="pedido-entrega-total">
+                        <span>Taxa de delivery:</span>
+                        <strong id="taxa-delivery">0 MT</strong>
+                    </div>
+                    <button id="btn-confirmar-pedido" type="button" class="btn btn-primary">Confirmar pedido</button>
+                    <p id="pedido-status" class="pedido-status" aria-live="polite"></p>
+                </div>
+            </section>
+
+            <section id="galeria" class="conteudo-secao">
+                <h2>Galeria</h2>
+                <div class="galeria-imagens">
+                    <img src="./images/Pizza Mexicana.jpg" alt="Pizza mexicana">
+                    <img src="./images/kebab com iogurte e limão e salada.jpg" alt="Kebab com salada">
+                    <img src="./images/massa italiana.jpg" alt="Massa italiana">
+                    <img src="./images/Bife de vitela.jpg "alt="Bife de Vitela">
+                </div>
+            </section>
+
+            <section id="contato" class="conteudo-secao">
+                <h2>Contacto</h2>
+                <p>Faça a sua encomenda pelo telefone <a href="tel:+258876964663">+258 87 6964 663</a>.</p>
+
+                <form id="form-reserva" class="form-reserva">
+                    <div class="campo-grid">
+                        <label>
+                            Nome
+                            <input type="text" id="nome-reserva" name="nome" placeholder="Seu nome" required>
+                        </label>
+                        <label>
+                            Telefone
+                            <input type="tel" id="telefone-reserva" name="telefone" placeholder="+258 ..." required>
+                        </label>
+                        <label>
+                            Data
+                            <input type="date" id="data-reserva" name="data" required>
+                        </label>
+                        <label>
+                            Hora
+                            <input type="time" id="hora-reserva" name="hora" required>
+                        </label>
+                        <label>
+                            Pessoas
+                            <input type="number" id="pessoas-reserva" name="pessoas" min="1" max="30" value="2" required>
+                        </label>
+                        <label>
+                            Taxa de confirmação
+                            <input type="text" value="200 MT" readonly>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Reservar mesa</button>
+                    <p id="reserva-mensagem" class="reserva-mensagem" aria-live="polite"></p>
+                </form>
+            </section>
+        </main>
+        <footer><a href="#inicio">Voltar ao início</a></footer>
+    </div>
 
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
