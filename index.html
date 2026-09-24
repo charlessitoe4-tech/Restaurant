@@ -139,6 +139,56 @@
             </div>
         </section>
 
+        <section id="acessos" class="conteudo-secao">
+            <h2>Acessos do sistema</h2>
+            <p>Defina o perfil do utilizador para ver o que cada área pode controlar no restaurante.</p>
+
+            <div class="acesso-sistema">
+                <div class="acesso-botoes" role="tablist" aria-label="Perfis de acesso">
+                    <button class="acesso-btn ativo" type="button" role="tab" aria-selected="true" data-acesso="garcom">Garçom</button>
+                    <button class="acesso-btn" type="button" role="tab" aria-selected="false" data-acesso="delivery">Delivery</button>
+                    <button class="acesso-btn" type="button" role="tab" aria-selected="false" data-acesso="admin">Admin</button>
+                    <button class="acesso-btn" type="button" role="tab" aria-selected="false" data-acesso="reservas">Reservas</button>
+                </div>
+
+                <div class="acesso-painel ativo" data-painel="garcom">
+                    <h3>Garçom</h3>
+                    <ul>
+                        <li>Vê os pedidos ativos da mesa.</li>
+                        <li>Confirma o estado do atendimento.</li>
+                        <li>Atualiza pedidos em andamento.</li>
+                    </ul>
+                </div>
+
+                <div class="acesso-painel" data-painel="delivery">
+                    <h3>Delivery</h3>
+                    <ul>
+                        <li>Consulta os pedidos para entrega.</li>
+                        <li>Vê o endereço e contacto do cliente.</li>
+                        <li>Confirma a entrega finalizada.</li>
+                    </ul>
+                </div>
+
+                <div class="acesso-painel" data-painel="admin">
+                    <h3>Admin</h3>
+                    <ul>
+                        <li>Altera preços e itens do menu.</li>
+                        <li>Adiciona ou remove pratos.</li>
+                        <li>Gerencia disponibilidade e categorias.</li>
+                    </ul>
+                </div>
+
+                <div class="acesso-painel" data-painel="reservas">
+                    <h3>Reservas</h3>
+                    <ul>
+                        <li>Vê todas as reservas confirmadas.</li>
+                        <li>Controla pessoas, data e hora.</li>
+                        <li>Avisa a equipa sobre mesas agendadas.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
         <section id="galeria" class="conteudo-secao">
             <h2>Galeria</h2>
             <div class="galeria-imagens">

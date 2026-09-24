@@ -346,6 +346,16 @@ $(function () {
         });
     });
 
+    $('.acesso-btn').on('click', function () {
+        const acesso = $(this).data('acesso');
+
+        $('.acesso-btn').removeClass('ativo').attr('aria-selected', 'false');
+        $(this).addClass('ativo').attr('aria-selected', 'true');
+
+        $('.acesso-painel').removeClass('ativo');
+        $(`.acesso-painel[data-painel="${acesso}"]`).addClass('ativo');
+    });
+
     $('#form-reserva').on('submit', function (event) {
         event.preventDefault();
         const nome = $('#nome-reserva').val().trim();
