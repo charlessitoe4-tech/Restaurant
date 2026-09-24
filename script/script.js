@@ -25,6 +25,48 @@ $(function () {
         localStorage.setItem(USERS_KEY, JSON.stringify(USERS));
     }
 
+    function gerarUsuarioCliente(nome, email) {
+        const base = (nome || email || 'cliente')
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]+/g, '')
+            .slice(0, 12);
+
+        const sufixo = Math.floor(Math.random() * 900 + 100);
+        return `${base || 'cliente'}${sufixo}`;
+    }
+
+    function cadastrarCliente(nome, email, telefone, senha) {
+        if (!nome || !email || !telefone || !senha) {
+            $('#login-mensagem').text('Preencha nome, email, telefone e senha para criar a conta.');
+            return false;
+        }
+
+        const existe = USERS.some(item => item.email === email || item.usuario === gerarUsuarioCliente(nome, email));
+        if (existe) {
+            $('#login-mensagem').text('Já existe uma conta com este e-mail ou nome de utilizador.');
+            return false;
+        }
+
+        const usuario = gerarUsuarioCliente(nome, email);
+        const novaConta = {
+            nome: nome.trim(),
+            usuario,
+            email: email.trim(),
+            telefone: telefone.trim(),
+            senha,
+            role: 'cliente'
+        };
+
+        USERS.push(novaConta);
+        salvarUsuarios();
+        $('#login-mensagem').text(`Conta criada com sucesso! Utilize o utilizador ${usuario} ou o email ${email}.`);
+        $('#usuario-login').val(usuario);
+        $('#senha-login').val(senha);
+        return true;
+    }
+
     $('body').removeClass('logado');
 
     const categorias = {
@@ -541,7 +583,7 @@ $(function () {
             return;
         }
 
-        usuarioLogado = { nome: conta.nome, usuario: conta.usuario, email: conta.email, role: conta.role };
+        usuarioLogado = { nome: conta.nome, usuario: conta.usuario, email: conta.email, role: conta.role, telefone: conta.telefone || '' };
         $('body').addClass('logado');
         $('#usuario-ativo').text(`${conta.nome} (${conta.role})`);
         $('#dashboard').removeClass('oculto').show();
@@ -804,8 +846,43 @@ $(function () {
 
         $('#btn-logout').on('click', sairDoSistema);
 
+        $('.btn-toggle-senha').on('click', function () {
+            const targetId = $(this).data('target');
+            const input = document.getElementById(targetId);
+            if (!input) return;
+
+            const isPassword = input.type === 'password';
+            input.type = isPassword ? 'text' : 'password';
+            $(this).text(isPassword ? 'Ocultar' : 'Mostrar');
+        });
+
+        $('#btn-criar-conta').on('click', function () {
+            $('#cadastro-box').removeClass('oculto');
+            $('#recuperar-senha-box').addClass('oculto');
+            $('#nome-cadastro').focus();
+        });
+
+        $('#btn-cancelar-cadastro').on('click', function () {
+            $('#cadastro-box').addClass('oculto');
+            $('#form-cadastro')[0].reset();
+        });
+
+        $('#form-cadastro').on('submit', function (event) {
+            event.preventDefault();
+            const nome = $('#nome-cadastro').val().trim();
+            const email = $('#email-cadastro').val().trim();
+            const telefone = $('#telefone-cadastro').val().trim();
+            const senha = $('#senha-cadastro').val().trim();
+
+            if (cadastrarCliente(nome, email, telefone, senha)) {
+                $('#cadastro-box').addClass('oculto');
+                $('#form-cadastro')[0].reset();
+            }
+        });
+
         $('#btn-recuperar-senha').on('click', function () {
             $('#recuperar-senha-box').removeClass('oculto');
+            $('#cadastro-box').addClass('oculto');
             $('#usuario-recuperar').focus();
         });
 

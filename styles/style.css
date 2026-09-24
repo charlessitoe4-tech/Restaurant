@@ -563,7 +563,15 @@ section.sobre img.bd-placeholder-img {
 .login-extra {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: .75rem;
   margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.login-divider {
+  color: #654321;
+  opacity: .6;
 }
 
 .btn-link {
@@ -573,6 +581,26 @@ section.sobre img.bd-placeholder-img {
   font-weight: 700;
   cursor: pointer;
   text-decoration: underline;
+}
+
+.password-field {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.password-field input {
+  flex: 1;
+}
+
+.btn-toggle-senha {
+  border: 1px solid #d4af37;
+  background: #fff8e8;
+  color: #654321;
+  border-radius: .6rem;
+  padding: .5rem .7rem;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .recuperar-senha-box {
