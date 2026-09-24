@@ -74,4 +74,46 @@ router.get('/me', async (req, res) => {
   }
 });
 
+router.post('/reset-password', async (req, res) => {
+  const { identifier, newPassword } = req.body;
+
+  if (!identifier || !newPassword) {
+    return res.status(400).json({ message: 'Identificador e nova senha são obrigatórios.' });
+  }
+
+  if (String(newPassword).length < 4) {
+    return res.status(400).json({ message: 'A nova senha deve ter pelo menos 4 caracteres.' });
+  }
+
+  try {
+    const [rows] = await pool.query(
+      'SELECT * FROM users WHERE username = ? OR email = ? LIMIT 1',
+      [identifier, identifier]
+    );
+
+    if (!rows.length) {
+      return res.status(404).json({ message: 'Utilizador não encontrado para redefinição.' });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await pool.query(
+      'UPDATE users SET password_hash = ? WHERE id = ?',
+      [hashedPassword, rows[0].id]
+    );
+
+    return res.json({
+      message: 'Senha redefinida com sucesso.',
+      user: {
+        id: rows[0].id,
+        username: rows[0].username,
+        email: rows[0].email,
+        role: rows[0].role,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Erro ao redefinir a senha.', error: error.message });
+  }
+});
+
 module.exports = router;
