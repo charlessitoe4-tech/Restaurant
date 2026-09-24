@@ -6,10 +6,10 @@ $(function () {
     function carregarUsuarios() {
         const usuariosSalvos = JSON.parse(localStorage.getItem(USERS_KEY) || 'null');
         const usuariosPadrao = [
-            { nome: 'Garçom', usuario: 'garcom', email: 'garcom@restaurante.com', senha: '123', role: 'garcom' },
-            { nome: 'Delivery', usuario: 'delivery', email: 'delivery@restaurante.com', senha: '123', role: 'delivery' },
-            { nome: 'Admin', usuario: 'admin', email: 'admin@restaurante.com', senha: '123', role: 'admin' },
-            { nome: 'Caixa', usuario: 'caixa', email: 'caixa@restaurante.com', senha: '123', role: 'caixa' }
+            { nome: 'Garçom', usuario: 'garcom', email: 'garcom@restaurante.com', senha: 'G@rcom2025', role: 'garcom' },
+            { nome: 'Delivery', usuario: 'delivery', email: 'delivery@restaurante.com', senha: 'D3liVery#2025', role: 'delivery' },
+            { nome: 'Admin', usuario: 'admin', email: 'admin@restaurante.com', senha: 'Adm!nRest2025', role: 'admin' },
+            { nome: 'Caixa', usuario: 'caixa', email: 'caixa@restaurante.com', senha: 'C@ixa2025', role: 'caixa' }
         ];
 
         if (Array.isArray(usuariosSalvos) && usuariosSalvos.length) {
@@ -599,17 +599,19 @@ $(function () {
         };
 
         $('.dashboard-tab').hide().removeClass('ativo').addClass('hidden');
-        $('.dashboard-panel').removeClass('ativo');
+        $('.dashboard-panel').hide().removeClass('ativo');
 
         const tabs = tabsPermitidos[conta.role] || ['garcom'];
         tabs.forEach((role) => {
             const tab = $(`.dashboard-tab[data-role="${role}"]`);
+            const painel = $(`.dashboard-panel[data-panel="${role}"]`);
             tab.show().removeClass('hidden');
+            painel.show();
         });
 
         const painelInicial = tabs[0];
         $(`.dashboard-tab[data-role="${painelInicial}"]`).addClass('ativo');
-        $(`.dashboard-panel[data-panel="${painelInicial}"]`).addClass('ativo');
+        $(`.dashboard-panel[data-panel="${painelInicial}"]`).addClass('ativo').show();
 
         renderGarcom();
         renderDelivery();
@@ -860,16 +862,6 @@ $(function () {
         });
 
         $('#btn-logout').on('click', sairDoSistema);
-
-        $('.btn-toggle-senha').on('click', function () {
-            const targetId = $(this).data('target');
-            const input = document.getElementById(targetId);
-            if (!input) return;
-
-            const isPassword = input.type === 'password';
-            input.type = isPassword ? 'text' : 'password';
-            $(this).text(isPassword ? 'Ocultar' : 'Mostrar');
-        });
 
         $('#btn-criar-conta').on('click', function () {
             $('#cadastro-box').removeClass('oculto');
