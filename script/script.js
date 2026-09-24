@@ -163,8 +163,12 @@ $(function () {
 
     const estadoPadrao = {
         orders: [
-            { id: 101, cliente: 'Ana Costa', email: 'ana@cliente.com', local: 'Mesa 3', tipoPedido: 'mesa', total: 950, itens: [{ nome: 'Frango à cafreal', preco: 520, quantidade: 1 }, { nome: 'Refrigerante cola', preco: 120, quantidade: 2 }], data: '2026-09-25 12:40' },
-            { id: 102, cliente: 'Paulo Nhamposse', email: 'paulo@cliente.com', local: 'Rua 1, Bairro da Luz', tipoPedido: 'delivery', total: 1280, itens: [{ nome: 'Hambúrguer clássico', preco: 350, quantidade: 2 }, { nome: 'Batata frita', preco: 180, quantidade: 2 }], data: '2026-09-25 13:05' }
+            { id: 101, cliente: 'Ana Costa', email: 'ana@cliente.com', telefone: '+258 84 111 2233', local: 'Mesa 3', tipoPedido: 'mesa', total: 950, taxaEntrega: 0, itens: [{ nome: 'Frango à cafreal', preco: 520, quantidade: 1 }, { nome: 'Refrigerante cola', preco: 120, quantidade: 2 }], data: '2026-09-25 12:40' },
+            { id: 102, cliente: 'Paulo Nhamposse', email: 'paulo@cliente.com', telefone: '+258 86 555 9988', local: 'Rua 1, Bairro da Luz', tipoPedido: 'delivery', total: 1280, taxaEntrega: 150, itens: [{ nome: 'Hambúrguer clássico', preco: 350, quantidade: 2 }, { nome: 'Batata frita', preco: 180, quantidade: 2 }], data: '2026-09-25 13:05' }
+        ],
+        reservas: [
+            { id: 1, nome: 'Marta Silva', telefone: '+258 84 740 1001', data: '2026-09-30', hora: '19:30', pessoas: 4, mesa: 'Mesa 5', taxa: 200, status: 'pendente', dataConfirmacao: '2026-09-25 09:30' },
+            { id: 2, nome: 'Carlos Nhamposse', telefone: '+258 86 200 3300', data: '2026-10-02', hora: '20:15', pessoas: 6, mesa: 'Mesa 8', taxa: 200, status: 'confirmada', dataConfirmacao: '2026-09-25 10:00' }
         ],
         receipts: []
     };
@@ -180,6 +184,7 @@ $(function () {
         if (!dadosSalvos) return base;
 
         if (Array.isArray(dadosSalvos.orders)) base.orders = dadosSalvos.orders;
+        if (Array.isArray(dadosSalvos.reservas)) base.reservas = dadosSalvos.reservas;
         if (Array.isArray(dadosSalvos.receipts)) base.receipts = dadosSalvos.receipts;
         if (dadosSalvos.categorias) {
             Object.keys(categorias).forEach((chave) => {
@@ -192,7 +197,7 @@ $(function () {
     }
 
     function salvarEstado() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ categorias, orders: estado.orders, receipts: estado.receipts }));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ categorias, orders: estado.orders, reservas: estado.reservas, receipts: estado.receipts }));
     }
 
     function formatarMoeda(valor) {
@@ -211,9 +216,18 @@ $(function () {
 
         pedidosMesa.forEach((pedidoAtual) => {
             const itensTexto = pedidoAtual.itens.map(item => `${item.nome} x${item.quantidade}`).join(', ');
+            const imagem = pedidoAtual.itens[0] ? obterImagem(pedidoAtual.itens[0].nome) : obterImagem('Prato');
             tabela.append(`
                 <tr>
-                    <td>${pedidoAtual.cliente}</td>
+                    <td>
+                        <div class="pedido-cliente">
+                            <img src="${imagem}" alt="${pedidoAtual.itens[0] ? pedidoAtual.itens[0].nome : 'Prato'}" class="pedido-miniatura">
+                            <div>
+                                <strong>${pedidoAtual.cliente}</strong><br>
+                                <span>${pedidoAtual.telefone || pedidoAtual.email}</span>
+                            </div>
+                        </div>
+                    </td>
                     <td>${pedidoAtual.local}</td>
                     <td>${itensTexto}</td>
                     <td>${formatarMoeda(pedidoAtual.total)}</td>
@@ -234,13 +248,34 @@ $(function () {
         }
 
         pedidosDelivery.forEach((pedidoAtual) => {
+            const primeiroItem = pedidoAtual.itens[0] || { nome: 'Pedido', preco: 0, quantidade: 1 };
+            const ruaBusca = encodeURIComponent(pedidoAtual.local || 'Endereço do cliente');
+            const mapaUrl = `https://www.google.com/maps/search/?api=1&query=${ruaBusca}`;
+            const taxa = Number(pedidoAtual.taxaEntrega || 150);
+
             tabela.append(`
                 <tr>
-                    <td>${pedidoAtual.cliente}</td>
-                    <td>${pedidoAtual.local}</td>
+                    <td>
+                        <div class="pedido-cliente">
+                            <img src="${obterImagem(primeiroItem.nome)}" alt="${primeiroItem.nome}" class="pedido-miniatura">
+                            <div>
+                                <strong>${pedidoAtual.cliente}</strong><br>
+                                <span>${pedidoAtual.telefone || pedidoAtual.email}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <a href="${mapaUrl}" target="_blank" rel="noopener noreferrer">${pedidoAtual.local}</a><br>
+                        <small>Taxa: ${formatarMoeda(taxa)}</small>
+                    </td>
                     <td>${pedidoAtual.email}</td>
                     <td>${formatarMoeda(pedidoAtual.total)}</td>
-                    <td><button type="button" class="btn-mini email" data-email="${pedidoAtual.email}" data-nome="${pedidoAtual.cliente}">Enviar recibo</button></td>
+                    <td>
+                        <div class="acoes-em-coluna">
+                            <a class="btn-mini email" href="tel:${encodeURIComponent(pedidoAtual.telefone || '')}" target="_blank">Contactar</a>
+                            <button type="button" class="btn-mini email" data-email="${pedidoAtual.email}" data-nome="${pedidoAtual.cliente}">Enviar recibo</button>
+                        </div>
+                    </td>
                 </tr>
             `);
         });
@@ -297,13 +332,17 @@ $(function () {
         const pedidosDelivery = estado.orders.filter(item => item.tipoPedido === 'delivery').length;
         const pedidosMesa = estado.orders.filter(item => item.tipoPedido === 'mesa').length;
         const recibosEnviados = estado.receipts.filter(item => item.enviadoEmail).length;
+        const reservasPendentes = estado.reservas.filter(item => item.status === 'pendente').length;
+        const reservasConfirmadas = estado.reservas.filter(item => item.status === 'confirmada').length;
 
         const metricas = [
             ['Total de pedidos', estado.orders.length],
             ['Faturamento', formatarMoeda(faturamento)],
             ['Delivery', pedidosDelivery],
             ['Consumo no restaurante', pedidosMesa],
-            ['Recibos enviados', recibosEnviados]
+            ['Recibos enviados', recibosEnviados],
+            ['Reservas pendentes', reservasPendentes],
+            ['Reservas confirmadas', reservasConfirmadas]
         ];
 
         metricas.forEach(([label, valor]) => {
@@ -312,35 +351,105 @@ $(function () {
             card.append($('<strong>', { text: valor }));
             relatorio.append(card);
         });
+
+        const reservas = $('<div>', { class: 'lista-admin' });
+        reservas.append($('<h5>', { text: 'Reservas do restaurante' }));
+
+        if (!estado.reservas.length) {
+            reservas.append('<p>Nenhuma reserva registada.</p>');
+        } else {
+            estado.reservas.forEach((reserva) => {
+                const item = $('<div>', { class: 'reserva-item' });
+                item.html(`
+                    <div>
+                        <strong>${reserva.nome}</strong><br>
+                        <span>${reserva.data} às ${reserva.hora}</span><br>
+                        <span>${reserva.pessoas} pessoas · ${reserva.mesa}</span>
+                    </div>
+                    <div>
+                        <span class="status-badge ${reserva.status}">${reserva.status}</span>
+                        <small>Taxa: ${formatarMoeda(reserva.taxa || 200)}</small>
+                    </div>
+                `);
+                reservas.append(item);
+            });
+        }
+
+        relatorio.append(reservas);
     }
 
     function renderCaixa() {
         const lista = $('#caixa-lista');
         lista.empty();
 
-        if (!estado.receipts.length) {
-            lista.append('<div class="caixa-item"><span>Nenhum recibo gerado ainda.</span></div>');
+        const aprovacoes = [
+            ...estado.orders.map((pedido) => ({
+                tipo: 'pedido',
+                id: pedido.id,
+                nome: pedido.cliente,
+                valor: pedido.total,
+                data: pedido.data,
+                email: pedido.email,
+                status: 'pendente',
+                item: pedido
+            })),
+            ...estado.reservas.map((reserva) => ({
+                tipo: 'reserva',
+                id: reserva.id,
+                nome: reserva.nome,
+                valor: Number(reserva.taxa || 200),
+                data: `${reserva.data} ${reserva.hora}`,
+                email: '',
+                status: reserva.status,
+                item: reserva
+            }))
+        ];
+
+        if (!aprovacoes.length) {
+            lista.append('<div class="caixa-item"><span>Nenhum pagamento pendente.</span></div>');
             return;
         }
 
-        estado.receipts.forEach((recibo) => {
+        aprovacoes.forEach((aprovacao) => {
             const item = $('<div>', { class: 'caixa-item' });
-            const dados = $('<div>').html(`<strong>${recibo.cliente}</strong><br><span>${recibo.email}</span><br><span>${recibo.data}</span>`);
+            const dados = $('<div>').html(`<strong>${aprovacao.nome}</strong><br><span>${aprovacao.tipo === 'pedido' ? 'Pedido' : 'Reserva'}</span><br><span>${aprovacao.data}</span><br><span>${formatarMoeda(aprovacao.valor)}</span>`);
             const acoes = $('<div>', { class: 'acoes' });
+
+            const confirmar = $('<button>', { type: 'button', class: 'btn-mini email', text: aprovacao.tipo === 'pedido' ? 'Aprovar pagamento' : 'Confirmar reserva' });
+            confirmar.on('click', function () {
+                if (aprovacao.tipo === 'pedido') {
+                    const recibo = gerarRecibo(aprovacao.item);
+                    const pedidoIndex = estado.orders.findIndex(p => p.id === aprovacao.item.id);
+                    if (pedidoIndex >= 0) {
+                        estado.orders[pedidoIndex].statusPagamento = 'aprovado';
+                    }
+                    enviarReciboPorEmail(aprovacao.email, aprovacao.nome, recibo);
+                    const janela = window.open('', '_blank');
+                    janela.document.write(criarHtmlRecibo(recibo));
+                    janela.document.close();
+                    janela.focus();
+                    janela.print();
+                } else {
+                    const reservaIndex = estado.reservas.findIndex(r => r.id === aprovacao.item.id);
+                    if (reservaIndex >= 0) {
+                        estado.reservas[reservaIndex].status = 'confirmada';
+                    }
+                    salvarEstado();
+                    renderRelatorio();
+                    renderCaixa();
+                    $('#reserva-mensagem').text(`Reserva confirmada para ${aprovacao.nome}. Taxa recebida e recibo emitido.`);
+                }
+            });
 
             const verDigital = $('<button>', { type: 'button', class: 'btn-mini email', text: 'Ver digital' });
             verDigital.on('click', function () {
                 const janela = window.open('', '_blank');
-                janela.document.write(criarHtmlRecibo(recibo));
+                const html = aprovacao.tipo === 'pedido' ? criarHtmlRecibo(aprovacao.item) : criarHtmlReserva(aprovacao.item);
+                janela.document.write(html);
                 janela.document.close();
             });
 
-            const enviarEmail = $('<button>', { type: 'button', class: 'btn-mini email', text: 'Enviar email' });
-            enviarEmail.on('click', function () {
-                enviarReciboPorEmail(recibo.email, recibo.cliente, recibo);
-            });
-
-            acoes.append(verDigital, enviarEmail);
+            acoes.append(confirmar, verDigital);
             item.append(dados, acoes);
             lista.append(item);
         });
@@ -359,6 +468,24 @@ $(function () {
                 <p><strong>Tipo:</strong> ${recibo.tipoPedido}</p>
                 <ul>${itens}</ul>
                 <p><strong>Total:</strong> ${formatarMoeda(recibo.total)}</p>
+                <p><strong>Responsável:</strong> ${recibo.usuarioResponsavel || 'Sistema'}</p>
+            </body>
+            </html>
+        `;
+    }
+
+    function criarHtmlReserva(reserva) {
+        return `
+            <html>
+            <head><title>Recibo da reserva</title></head>
+            <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; color: #333;">
+                <h2>Recibo da reserva</h2>
+                <p><strong>Cliente:</strong> ${reserva.nome}</p>
+                <p><strong>Telefone:</strong> ${reserva.telefone}</p>
+                <p><strong>Data:</strong> ${reserva.data} às ${reserva.hora}</p>
+                <p><strong>Mesas:</strong> ${reserva.mesa}</p>
+                <p><strong>Pessoas:</strong> ${reserva.pessoas}</p>
+                <p><strong>Taxa de confirmação:</strong> ${formatarMoeda(reserva.taxa || 200)}</p>
             </body>
             </html>
         `;
@@ -571,6 +698,7 @@ $(function () {
     function confirmarPedido() {
         const nome = $('#nome-pedido').val().trim();
         const email = $('#email-pedido').val().trim();
+        const telefone = $('#telefone-pedido').val().trim();
         const local = $('#local-pedido').val().trim();
         const tipoPedido = $('input[name="tipo-pedido"]:checked').val();
 
@@ -579,19 +707,22 @@ $(function () {
             return;
         }
 
-        if (!nome || !email || !local) {
-            $('#pedido-status').text('Preencha nome, email e mesa/endereço antes de confirmar.');
+        if (!nome || !email || !telefone || !local) {
+            $('#pedido-status').text('Preencha nome, email, contacto e mesa/endereço antes de confirmar.');
             return;
         }
 
-        const totalPedido = pedido.reduce((soma, item) => soma + (item.preco * item.quantidade), 0) + (tipoPedido === 'delivery' ? 150 : 0);
+        const taxaEntrega = tipoPedido === 'delivery' ? 150 : 0;
+        const totalPedido = pedido.reduce((soma, item) => soma + (item.preco * item.quantidade), 0) + taxaEntrega;
         const novoPedido = {
             id: Date.now(),
             cliente: nome,
             email,
+            telefone,
             local,
             tipoPedido,
             total: totalPedido,
+            taxaEntrega,
             itens: pedido.map(item => ({ ...item })),
             data: new Date().toLocaleString()
         };
@@ -606,6 +737,7 @@ $(function () {
         $('#pedido-status').text(`Pedido confirmado para ${nome}. Recibo gerado e pronto para envio.`);
         $('#nome-pedido').val('');
         $('#email-pedido').val('');
+        $('#telefone-pedido').val('');
         $('#local-pedido').val('');
         pedido.length = 0;
         atualizarResumoPedido();
@@ -745,7 +877,7 @@ $(function () {
             const telefone = $('#telefone-reserva').val().trim();
             const data = $('#data-reserva').val();
             const hora = $('#hora-reserva').val();
-            const pessoas = $('#pessoas-reserva').val();
+            const pessoas = Number($('#pessoas-reserva').val());
             const taxa = 200;
 
             if (!nome || !telefone || !data || !hora || !pessoas) {
@@ -753,7 +885,25 @@ $(function () {
                 return;
             }
 
-            $('#reserva-mensagem').text(`Reserva confirmada para ${nome} para ${pessoas} pessoas em ${data} às ${hora}. Taxa de confirmação: ${taxa} MT.`);
+            const novaReserva = {
+                id: Date.now(),
+                nome,
+                telefone,
+                data,
+                hora,
+                pessoas,
+                mesa: `Mesa ${Math.max(1, Math.min(10, pessoas))}`,
+                taxa,
+                status: 'pendente',
+                dataConfirmacao: new Date().toLocaleString()
+            };
+
+            estado.reservas.unshift(novaReserva);
+            salvarEstado();
+            renderRelatorio();
+            renderCaixa();
+
+            $('#reserva-mensagem').text(`Reserva registada para ${nome} em ${data} às ${hora}. Taxa de confirmação: ${taxa} MT. Aguardando aprovação do caixa.`);
             this.reset();
             $('#pessoas-reserva').val('2');
         });
