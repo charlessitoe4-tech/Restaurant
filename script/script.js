@@ -1,36 +1,10 @@
 $(function () {
-    const menu = $('nav#nav-esquerda ul.menu-principal');
-    const btnMenu = $('#menu-toggle');
-    const btnClose = $('#menu-close');
-    const nav = $('#nav-esquerda');
-    let ultimoScroll = 0;
-
-    function atualizarPosicaoNav() {
-        const scrollAtual = $(window).scrollTop();
-        const deslocamento = scrollAtual > ultimoScroll ? 18 : -10;
-        nav.css('transform', `translateX(-50%) translateY(${deslocamento}px)`);
-        ultimoScroll = scrollAtual;
-    }
-
-    $(window).on('scroll', atualizarPosicaoNav);
-
-    function mostrarMenu() {
-        menu.css('display', 'flex')
-            .removeClass('animate__fadeOutRight')
-            .addClass('animate__animated animate__fadeInRight animate__slow');
-        btnMenu.css('display', 'none');
-        btnClose.css('display', 'flex');
-    }
-
-    function esconderMenu() {
-        menu.css('display', 'none')
-            .removeClass('animate__animated animate__fadeInRight animate__fadeOutRight');
-        btnMenu.css('display', 'flex');
-        btnClose.css('display', 'none');
-    }
-
-    btnMenu.on('click', mostrarMenu);
-    btnClose.on('click', esconderMenu);
+    const STORAGE_KEY = 'restaurante_estado_v1';
+    const USERS = [
+        { nome: 'Garçom', usuario: 'garcom', senha: '123', role: 'garcom' },
+        { nome: 'Delivery', usuario: 'delivery', senha: '123', role: 'delivery' },
+        { nome: 'Admin', usuario: 'admin', senha: '123', role: 'admin' }
+    ];
 
     const categorias = {
         'pequeno-almoco': {
@@ -166,38 +140,300 @@ $(function () {
         }
     };
 
-    const lista = $('#menu-pratos');
-    const descricao = $('#categoria-descricao');
-    const botaoVerMais = $('#mostrar-mais');
-    const pedidoLista = $('#pedido-resumo-lista');
-    const pedidoTotal = $('#pedido-total');
-    const taxaDelivery = $('#taxa-delivery');
-    const btnLocalizacao = $('#btn-localizacao');
-    const statusLocalizacao = $('#localizacao-status');
-    const nomePedido = $('#nome-pedido');
-    const localPedido = $('#local-pedido');
-    const pedido = [];
-    const imagens = {
-        'Pizza': 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80',
-        'Bife': 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80',
-        'Massa': 'https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?auto=format&fit=crop&w=900&q=80',
-        'Esparguete': 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80',
-        'Sushi': 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=900&q=80',
-        'Kebab': 'https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=900&q=80',
-        'Wrap': 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=900&q=80',
-        'Camarão': 'https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=900&q=80',
-        'Peixe': 'https://images.unsplash.com/photo-1534939561126-855b8675edd7?auto=format&fit=crop&w=900&q=80',
-        'Frango': 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=900&q=80',
-        'Sobremesa': 'https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=900&q=80',
-        'Bebida': 'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80'
+    const estadoPadrao = {
+        orders: [
+            { id: 101, cliente: 'Ana Costa', email: 'ana@cliente.com', local: 'Mesa 3', tipoPedido: 'mesa', total: 950, itens: [{ nome: 'Frango à cafreal', preco: 520, quantidade: 1 }, { nome: 'Refrigerante cola', preco: 120, quantidade: 2 }], data: '2026-09-25 12:40' },
+            { id: 102, cliente: 'Paulo Nhamposse', email: 'paulo@cliente.com', local: 'Rua 1, Bairro da Luz', tipoPedido: 'delivery', total: 1280, itens: [{ nome: 'Hambúrguer clássico', preco: 350, quantidade: 2 }, { nome: 'Batata frita', preco: 180, quantidade: 2 }], data: '2026-09-25 13:05' }
+        ],
+        receipts: []
     };
 
+    const estado = carregarEstado();
+    const pedido = [];
     let categoriaAtual = 'pequeno-almoco';
     let itensExibidos = 15;
 
+    function carregarEstado() {
+        const dadosSalvos = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+        const base = JSON.parse(JSON.stringify(estadoPadrao));
+        if (!dadosSalvos) return base;
+
+        if (Array.isArray(dadosSalvos.orders)) base.orders = dadosSalvos.orders;
+        if (Array.isArray(dadosSalvos.receipts)) base.receipts = dadosSalvos.receipts;
+        if (dadosSalvos.categorias) {
+            Object.keys(categorias).forEach((chave) => {
+                if (dadosSalvos.categorias[chave]) {
+                    categorias[chave] = dadosSalvos.categorias[chave];
+                }
+            });
+        }
+        return base;
+    }
+
+    function salvarEstado() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ categorias, orders: estado.orders, receipts: estado.receipts }));
+    }
+
+    function formatarMoeda(valor) {
+        return `${Number(valor).toFixed(0)} MT`;
+    }
+
+    function renderGarcom() {
+        const tabela = $('#garcom-lista');
+        tabela.empty();
+        const pedidosMesa = estado.orders.filter(item => item.tipoPedido === 'mesa');
+
+        if (!pedidosMesa.length) {
+            tabela.append('<tr><td colspan="5">Nenhum pedido para garçom.</td></tr>');
+            return;
+        }
+
+        pedidosMesa.forEach((pedidoAtual) => {
+            const itensTexto = pedidoAtual.itens.map(item => `${item.nome} x${item.quantidade}`).join(', ');
+            tabela.append(`
+                <tr>
+                    <td>${pedidoAtual.cliente}</td>
+                    <td>${pedidoAtual.local}</td>
+                    <td>${itensTexto}</td>
+                    <td>${formatarMoeda(pedidoAtual.total)}</td>
+                    <td>Em espera</td>
+                </tr>
+            `);
+        });
+    }
+
+    function renderDelivery() {
+        const tabela = $('#delivery-lista');
+        tabela.empty();
+        const pedidosDelivery = estado.orders.filter(item => item.tipoPedido === 'delivery');
+
+        if (!pedidosDelivery.length) {
+            tabela.append('<tr><td colspan="5">Nenhum pedido para delivery.</td></tr>');
+            return;
+        }
+
+        pedidosDelivery.forEach((pedidoAtual) => {
+            tabela.append(`
+                <tr>
+                    <td>${pedidoAtual.cliente}</td>
+                    <td>${pedidoAtual.local}</td>
+                    <td>${pedidoAtual.email}</td>
+                    <td>${formatarMoeda(pedidoAtual.total)}</td>
+                    <td><button type="button" class="btn-mini email" data-email="${pedidoAtual.email}" data-nome="${pedidoAtual.cliente}">Enviar recibo</button></td>
+                </tr>
+            `);
+        });
+
+        $('.btn-mini.email').on('click', function () {
+            const email = $(this).data('email');
+            const nome = $(this).data('nome');
+            const pedidoAtual = estado.orders.find(item => item.email === email && item.cliente === nome);
+            if (pedidoAtual) {
+                const recibo = gerarRecibo(pedidoAtual);
+                enviarReciboPorEmail(email, nome, recibo);
+            }
+        });
+    }
+
+    function renderAdminMenu() {
+        const lista = $('#admin-menu-lista');
+        lista.empty();
+
+        Object.entries(categorias).forEach(([chave, categoria]) => {
+            categoria.itens.forEach(([nome, preco], index) => {
+                const item = $('<div>', { class: 'item-admin' });
+                const info = $('<div>').html(`<strong>${nome}</strong><br><span>${categoria.nome} · ${formatarMoeda(preco)}</span>`);
+                const acoes = $('<div>', { class: 'acoes' });
+
+                const editar = $('<button>', { type: 'button', class: 'btn-mini editar', text: 'Editar' });
+                editar.on('click', function () {
+                    $('#admin-prato-nome').val(nome);
+                    $('#admin-prato-preco').val(preco);
+                    $('#admin-prato-categoria').val(chave);
+                    $('#form-admin-menu').data('edit', { categoria: chave, index });
+                });
+
+                const excluir = $('<button>', { type: 'button', class: 'btn-mini excluir', text: 'Excluir' });
+                excluir.on('click', function () {
+                    categorias[chave].itens.splice(index, 1);
+                    salvarEstado();
+                    renderAdminMenu();
+                    renderRelatorio();
+                });
+
+                acoes.append(editar, excluir);
+                item.append(info, acoes);
+                lista.append(item);
+            });
+        });
+    }
+
+    function renderRelatorio() {
+        const relatorio = $('#admin-relatorio');
+        relatorio.empty();
+
+        const faturamento = estado.orders.reduce((total, pedidoAtual) => total + Number(pedidoAtual.total || 0), 0);
+        const pedidosDelivery = estado.orders.filter(item => item.tipoPedido === 'delivery').length;
+        const pedidosMesa = estado.orders.filter(item => item.tipoPedido === 'mesa').length;
+        const recibosEnviados = estado.receipts.filter(item => item.enviadoEmail).length;
+
+        const metricas = [
+            ['Total de pedidos', estado.orders.length],
+            ['Faturamento', formatarMoeda(faturamento)],
+            ['Delivery', pedidosDelivery],
+            ['Consumo no restaurante', pedidosMesa],
+            ['Recibos enviados', recibosEnviados]
+        ];
+
+        metricas.forEach(([label, valor]) => {
+            const card = $('<div>', { class: 'card-metrica' });
+            card.append($('<span>', { text: label }));
+            card.append($('<strong>', { text: valor }));
+            relatorio.append(card);
+        });
+    }
+
+    function renderCaixa() {
+        const lista = $('#caixa-lista');
+        lista.empty();
+
+        if (!estado.receipts.length) {
+            lista.append('<div class="caixa-item"><span>Nenhum recibo gerado ainda.</span></div>');
+            return;
+        }
+
+        estado.receipts.forEach((recibo) => {
+            const item = $('<div>', { class: 'caixa-item' });
+            const dados = $('<div>').html(`<strong>${recibo.cliente}</strong><br><span>${recibo.email}</span><br><span>${recibo.data}</span>`);
+            const acoes = $('<div>', { class: 'acoes' });
+
+            const verDigital = $('<button>', { type: 'button', class: 'btn-mini email', text: 'Ver digital' });
+            verDigital.on('click', function () {
+                const janela = window.open('', '_blank');
+                janela.document.write(criarHtmlRecibo(recibo));
+                janela.document.close();
+            });
+
+            const enviarEmail = $('<button>', { type: 'button', class: 'btn-mini email', text: 'Enviar email' });
+            enviarEmail.on('click', function () {
+                enviarReciboPorEmail(recibo.email, recibo.cliente, recibo);
+            });
+
+            acoes.append(verDigital, enviarEmail);
+            item.append(dados, acoes);
+            lista.append(item);
+        });
+    }
+
+    function criarHtmlRecibo(recibo) {
+        const itens = recibo.itens.map(item => `<li>${item.nome} x${item.quantidade} — ${formatarMoeda(item.preco * item.quantidade)}</li>`).join('');
+        return `
+            <html>
+            <head><title>Recibo digital</title></head>
+            <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; color: #333;">
+                <h2>Recibo Digital</h2>
+                <p><strong>Cliente:</strong> ${recibo.cliente}</p>
+                <p><strong>Email:</strong> ${recibo.email}</p>
+                <p><strong>Data:</strong> ${recibo.data}</p>
+                <p><strong>Tipo:</strong> ${recibo.tipoPedido}</p>
+                <ul>${itens}</ul>
+                <p><strong>Total:</strong> ${formatarMoeda(recibo.total)}</p>
+            </body>
+            </html>
+        `;
+    }
+
+    function gerarRecibo(order) {
+        const recibo = {
+            id: order.id,
+            cliente: order.cliente,
+            email: order.email,
+            tipoPedido: order.tipoPedido,
+            total: order.total,
+            itens: order.itens,
+            data: new Date().toLocaleString(),
+            enviadoEmail: false
+        };
+
+        const jaExiste = estado.receipts.find(item => item.id === order.id);
+        if (!jaExiste) {
+            estado.receipts.unshift(recibo);
+        }
+
+        salvarEstado();
+        renderRelatorio();
+        renderCaixa();
+        return recibo;
+    }
+
+    function enviarReciboPorEmail(email, nome, reciboOriginal) {
+        const recibo = reciboOriginal || { cliente: nome, email, data: new Date().toLocaleString(), tipoPedido: 'pedido', total: 0, itens: [], enviadoEmail: false };
+        const assunto = encodeURIComponent('Recibo digital da sua compra');
+        const corpo = encodeURIComponent(`Olá ${nome},\n\nSegue o seu recibo digital:\n\n${recibo.itens.map(item => `${item.nome} x${item.quantidade} - ${formatarMoeda(item.preco * item.quantidade)}`).join('\n')}\n\nTotal: ${formatarMoeda(recibo.total)}\n\nObrigado pela preferência!`);
+
+        if (email) {
+            window.location.href = `mailto:${email}?subject=${assunto}&body=${corpo}`;
+        }
+
+        if (reciboOriginal) {
+            recibo.enviadoEmail = true;
+            const existente = estado.receipts.find(item => item.id === reciboOriginal.id);
+            if (existente) existente.enviadoEmail = true;
+        }
+
+        salvarEstado();
+        renderRelatorio();
+    }
+
+    function entrarNoSistema(usuario, senha) {
+        const conta = USERS.find(item => item.usuario === usuario && item.senha === senha);
+        if (!conta) {
+            $('#login-mensagem').text('Utilizador ou palavra-passe inválidos.');
+            return;
+        }
+
+        $('#usuario-ativo').text(`${conta.nome} (${conta.role})`);
+        $('#dashboard').removeClass('oculto').show();
+        $('#login-mensagem').text(`Bem-vindo(a), ${conta.nome}.`);
+
+        $('.dashboard-tab').removeClass('ativo');
+        $('.dashboard-panel').removeClass('ativo');
+
+        const painelInicial = conta.role === 'admin' ? 'admin' : conta.role === 'delivery' ? 'delivery' : 'garcom';
+        $(`.dashboard-tab[data-role="${painelInicial}"]`).addClass('ativo');
+        $(`.dashboard-panel[data-panel="${painelInicial}"]`).addClass('ativo');
+
+        renderGarcom();
+        renderDelivery();
+        renderAdminMenu();
+        renderRelatorio();
+        renderCaixa();
+    }
+
+    function sairDoSistema() {
+        $('#dashboard').addClass('oculto').hide();
+        $('#form-login')[0].reset();
+        $('#login-mensagem').text('Sessão terminada.');
+    }
+
     function obterImagem(nome) {
-        const imagem = Object.entries(imagens).find(([termo]) => nome.toLowerCase().includes(termo.toLowerCase()));
-        return imagem ? imagem[1] : 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80';
+        const imagens = {
+            'Pizza': 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80',
+            'Bife': 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80',
+            'Massa': 'https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?auto=format&fit=crop&w=900&q=80',
+            'Esparguete': 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80',
+            'Sushi': 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=900&q=80',
+            'Kebab': 'https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=900&q=80',
+            'Wrap': 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=900&q=80',
+            'Camarão': 'https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=900&q=80',
+            'Peixe': 'https://images.unsplash.com/photo-1534939561126-855b8675edd7?auto=format&fit=crop&w=900&q=80',
+            'Frango': 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=900&q=80',
+            'Sobremesa': 'https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=900&q=80',
+            'Bebida': 'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80'
+        };
+
+        const match = Object.entries(imagens).find(([termo]) => nome.toLowerCase().includes(termo.toLowerCase()));
+        return match ? match[1] : 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80';
     }
 
     function mostrarCategoria(chave, resetar = true) {
@@ -205,181 +441,259 @@ $(function () {
         if (!categoria) return;
 
         categoriaAtual = chave;
-        if (resetar) {
-            itensExibidos = 15;
-        }
+        if (resetar) itensExibidos = 15;
 
         const totalItens = categoria.itens.length;
         const itensMostrados = Math.min(itensExibidos, totalItens);
-
-        descricao.text(`${categoria.descricao} ${itensMostrados} de ${totalItens} opções exibidas.`);
+        $('#categoria-descricao').text(`${categoria.descricao} ${itensMostrados} de ${totalItens} opções exibidas.`);
+        const lista = $('#menu-pratos');
         lista.empty();
 
         categoria.itens.slice(0, itensMostrados).forEach(([nome, preco]) => {
             const cartao = $('<article>', { class: 'prato' });
             const conteudo = $('<div>', { class: 'prato-conteudo' });
-            const imagem = obterImagem(nome);
             const quantidadeWrap = $('<div>', { class: 'quantidade-controle' });
-            const btnMenos = $('<button>', { type: 'button', class: 'btn-quantidade', text: '−' });
-            const inputQuantidade = $('<input>', {
-                type: 'number',
-                min: 1,
-                max: 99,
-                value: 1,
-                'aria-label': `Quantidade de ${nome}`
-            });
-            const btnMais = $('<button>', { type: 'button', class: 'btn-quantidade', text: '+' });
-            const btnPedido = $('<button>', {
-                type: 'button',
-                class: 'btn btn-primary',
-                text: 'Adicionar ao pedido',
-                'aria-label': `Adicionar ${nome} ao pedido`
+            const menos = $('<button>', { type: 'button', class: 'btn-quantidade', text: '−' });
+            const quantidade = $('<input>', { type: 'number', min: 1, max: 99, value: 1, 'aria-label': `Quantidade de ${nome}` });
+            const mais = $('<button>', { type: 'button', class: 'btn-quantidade', text: '+' });
+            const adicionar = $('<button>', { type: 'button', class: 'btn btn-primary', text: 'Adicionar ao pedido', 'aria-label': `Adicionar ${nome} ao pedido` });
+
+            menos.on('click', function () {
+                const atual = Number(quantidade.val()) || 1;
+                quantidade.val(Math.max(1, atual - 1));
             });
 
-            btnMenos.on('click', function () {
-                const valor = Number(inputQuantidade.val()) || 1;
-                inputQuantidade.val(Math.max(1, valor - 1));
+            mais.on('click', function () {
+                const atual = Number(quantidade.val()) || 1;
+                quantidade.val(Math.min(99, atual + 1));
             });
 
-            btnMais.on('click', function () {
-                const valor = Number(inputQuantidade.val()) || 1;
-                inputQuantidade.val(Math.min(99, valor + 1));
-            });
-
-            btnPedido.on('click', function () {
-                const qtd = Number(inputQuantidade.val()) || 1;
-                const itemExistente = pedido.find(item => item.nome === nome);
-
-                if (itemExistente) {
-                    itemExistente.quantidade += qtd;
-                } else {
-                    pedido.push({ nome, preco, quantidade: qtd });
-                }
-
+            adicionar.on('click', function () {
+                const qtd = Number(quantidade.val()) || 1;
+                const existente = pedido.find(item => item.nome === nome);
+                if (existente) existente.quantidade += qtd;
+                else pedido.push({ nome, preco, quantidade: qtd });
                 atualizarResumoPedido();
                 $('html, body').animate({ scrollTop: $('#pedido').offset().top - 80 }, 500);
             });
 
-            $('<img>', {
-                class: 'prato-imagem',
-                src: imagem,
-                alt: nome,
-                loading: 'lazy',
-                decoding: 'async'
-            }).appendTo(cartao);
-
+            $('<img>', { class: 'prato-imagem', src: obterImagem(nome), alt: nome, loading: 'lazy', decoding: 'async' }).appendTo(cartao);
             $('<span>', { class: 'prato-categoria', text: categoria.nome }).appendTo(conteudo);
             $('<h3>', { text: nome }).appendTo(conteudo);
             $('<p>', { text: categoria.frase }).appendTo(conteudo);
             $('<strong>', { text: `${preco} MT` }).appendTo(conteudo);
 
-            quantidadeWrap.append(btnMenos, inputQuantidade, btnMais);
+            quantidadeWrap.append(menos, quantidade, mais);
             quantidadeWrap.appendTo(conteudo);
-            btnPedido.appendTo(conteudo);
-
+            adicionar.appendTo(conteudo);
             conteudo.appendTo(cartao);
             cartao.appendTo(lista);
         });
 
-        if (itensMostrados >= totalItens) {
-            botaoVerMais.attr('hidden', true);
-        } else {
+        const botaoVerMais = $('#mostrar-mais');
+        if (itensMostrados >= totalItens) botaoVerMais.attr('hidden', true);
+        else {
             botaoVerMais.removeAttr('hidden');
             botaoVerMais.text(`Ver mais (${Math.min(8, totalItens - itensMostrados)} a mais)`);
         }
     }
 
-    $('.categoria-btn').on('click', function () {
-        $('.categoria-btn').removeClass('ativo').attr('aria-selected', 'false');
-        $(this).addClass('ativo').attr('aria-selected', 'true');
-        mostrarCategoria($(this).data('categoria'));
-    });
-
     function atualizarResumoPedido() {
         if (!pedido.length) {
-            pedidoLista.html('<li>Nenhum prato adicionado ainda.</li>');
-            pedidoTotal.text('0 MT');
-            taxaDelivery.text('0 MT');
+            $('#pedido-resumo-lista').html('<li>Nenhum prato adicionado ainda.</li>');
+            $('#pedido-total').text('0 MT');
+            $('#taxa-delivery').text('0 MT');
             return;
         }
 
         let total = 0;
-        pedidoLista.empty();
+        $('#pedido-resumo-lista').empty();
 
         pedido.forEach(item => {
             const valorItem = item.preco * item.quantidade;
             total += valorItem;
-            $('<li>', {
-                html: `<span>${item.nome} x${item.quantidade}</span><strong>${valorItem} MT</strong>`
-            }).appendTo(pedidoLista);
+            $('<li>', { html: `<span>${item.nome} x${item.quantidade}</span><strong>${valorItem} MT</strong>` }).appendTo('#pedido-resumo-lista');
         });
 
-        pedidoTotal.text(`${total} MT`);
-
+        $('#pedido-total').text(`${total} MT`);
         const tipoPedido = $('input[name="tipo-pedido"]:checked').val();
         const taxa = tipoPedido === 'delivery' ? 150 : 0;
-        taxaDelivery.text(`${taxa} MT`);
+        $('#taxa-delivery').text(`${taxa} MT`);
     }
 
-    $('input[name="tipo-pedido"]').on('change', atualizarResumoPedido);
+    function confirmarPedido() {
+        const nome = $('#nome-pedido').val().trim();
+        const email = $('#email-pedido').val().trim();
+        const local = $('#local-pedido').val().trim();
+        const tipoPedido = $('input[name="tipo-pedido"]:checked').val();
 
-    btnLocalizacao.on('click', function () {
-        if (!navigator.geolocation) {
-            statusLocalizacao.text('Geolocalização não suportada pelo navegador.');
+        if (!pedido.length) {
+            $('#pedido-status').text('Adicione pelo menos um prato antes de confirmar.');
             return;
         }
 
-        statusLocalizacao.text('A obter a sua localização...');
-        navigator.geolocation.getCurrentPosition(function (position) {
-            const latitude = position.coords.latitude.toFixed(5);
-            const longitude = position.coords.longitude.toFixed(5);
-            localPedido.val(`Delivery em: Lat ${latitude}, Lng ${longitude}`);
-            statusLocalizacao.text('Localização obtida. O restaurante vai confirmar o melhor ponto de entrega.');
-            $('#tipo-pedido-delivery').prop('checked', true);
-            atualizarResumoPedido();
-        }, function () {
-            statusLocalizacao.text('Não foi possível obter a localização. Digite o endereço manualmente.');
-        }, {
-            enableHighAccuracy: true,
-            timeout: 15000,
-            maximumAge: 0
+        if (!nome || !email || !local) {
+            $('#pedido-status').text('Preencha nome, email e mesa/endereço antes de confirmar.');
+            return;
+        }
+
+        const totalPedido = pedido.reduce((soma, item) => soma + (item.preco * item.quantidade), 0) + (tipoPedido === 'delivery' ? 150 : 0);
+        const novoPedido = {
+            id: Date.now(),
+            cliente: nome,
+            email,
+            local,
+            tipoPedido,
+            total: totalPedido,
+            itens: pedido.map(item => ({ ...item })),
+            data: new Date().toLocaleString()
+        };
+
+        estado.orders.unshift(novoPedido);
+        salvarEstado();
+        renderGarcom();
+        renderDelivery();
+        renderRelatorio();
+
+        const recibo = gerarRecibo(novoPedido);
+        $('#pedido-status').text(`Pedido confirmado para ${nome}. Recibo gerado e pronto para envio.`);
+        $('#nome-pedido').val('');
+        $('#email-pedido').val('');
+        $('#local-pedido').val('');
+        pedido.length = 0;
+        atualizarResumoPedido();
+        enviarReciboPorEmail(email, nome, recibo);
+    }
+
+    function inicializarEventos() {
+        const menu = $('nav#nav-esquerda ul.menu-principal');
+        const btnMenu = $('#menu-toggle');
+        const btnClose = $('#menu-close');
+        const nav = $('#nav-esquerda');
+        let ultimoScroll = 0;
+
+        function atualizarPosicaoNav() {
+            const scrollAtual = $(window).scrollTop();
+            const deslocamento = scrollAtual > ultimoScroll ? 18 : -10;
+            nav.css('transform', `translateX(-50%) translateY(${deslocamento}px)`);
+            ultimoScroll = scrollAtual;
+        }
+
+        $(window).on('scroll', atualizarPosicaoNav);
+
+        function mostrarMenu() { menu.css('display', 'flex').removeClass('animate__fadeOutRight').addClass('animate__animated animate__fadeInRight animate__slow'); btnMenu.css('display', 'none'); btnClose.css('display', 'flex'); }
+        function esconderMenu() { menu.css('display', 'none').removeClass('animate__animated animate__fadeInRight animate__fadeOutRight'); btnMenu.css('display', 'flex'); btnClose.css('display', 'none'); }
+
+        btnMenu.on('click', mostrarMenu);
+        btnClose.on('click', esconderMenu);
+
+        $('.categoria-btn').on('click', function () {
+            $('.categoria-btn').removeClass('ativo').attr('aria-selected', 'false');
+            $(this).addClass('ativo').attr('aria-selected', 'true');
+            mostrarCategoria($(this).data('categoria'));
         });
-    });
 
-    $('.acesso-btn').on('click', function () {
-        const acesso = $(this).data('acesso');
+        $('input[name="tipo-pedido"]').on('change', atualizarResumoPedido);
 
-        $('.acesso-btn').removeClass('ativo').attr('aria-selected', 'false');
-        $(this).addClass('ativo').attr('aria-selected', 'true');
+        $('#btn-localizacao').on('click', function () {
+            if (!navigator.geolocation) {
+                $('#localizacao-status').text('Geolocalização não suportada pelo navegador.');
+                return;
+            }
 
-        $('.acesso-painel').removeClass('ativo');
-        $(`.acesso-painel[data-painel="${acesso}"]`).addClass('ativo');
-    });
+            $('#localizacao-status').text('A obter a sua localização...');
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const latitude = position.coords.latitude.toFixed(5);
+                const longitude = position.coords.longitude.toFixed(5);
+                $('#local-pedido').val(`Delivery em: Lat ${latitude}, Lng ${longitude}`);
+                $('#localizacao-status').text('Localização obtida. O restaurante vai confirmar o melhor ponto de entrega.');
+                $('#tipo-pedido-delivery').prop('checked', true);
+                atualizarResumoPedido();
+            }, function () {
+                $('#localizacao-status').text('Não foi possível obter a localização. Digite o endereço manualmente.');
+            }, { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 });
+        });
 
-    $('#form-reserva').on('submit', function (event) {
-        event.preventDefault();
-        const nome = $('#nome-reserva').val().trim();
-        const telefone = $('#telefone-reserva').val().trim();
-        const data = $('#data-reserva').val();
-        const hora = $('#hora-reserva').val();
-        const pessoas = $('#pessoas-reserva').val();
-        const taxa = 200;
+        $('#btn-confirmar-pedido').on('click', confirmarPedido);
 
-        if (!nome || !telefone || !data || !hora || !pessoas) {
-            $('#reserva-mensagem').text('Preencha todos os campos da reserva.');
-            return;
-        }
+        $('#form-login').on('submit', function (event) {
+            event.preventDefault();
+            const usuario = $('#usuario-login').val().trim().toLowerCase();
+            const senha = $('#senha-login').val().trim();
+            entrarNoSistema(usuario, senha);
+        });
 
-        $('#reserva-mensagem').text(`Reserva confirmada para ${nome} para ${pessoas} pessoas em ${data} às ${hora}. Taxa de confirmação: ${taxa} MT.`);
-        this.reset();
-        $('#pessoas-reserva').val('2');
-    });
+        $('#btn-logout').on('click', sairDoSistema);
 
-    botaoVerMais.on('click', function () {
-        itensExibidos = Math.min(itensExibidos + 8, categorias[categoriaAtual].itens.length);
-        mostrarCategoria(categoriaAtual, false);
-    });
+        $('.dashboard-tab').on('click', function () {
+            const role = $(this).data('role');
+            $('.dashboard-tab').removeClass('ativo');
+            $(this).addClass('ativo');
+            $('.dashboard-panel').removeClass('ativo');
+            $(`.dashboard-panel[data-panel="${role}"]`).addClass('ativo');
+        });
 
+        $('#form-admin-menu').on('submit', function (event) {
+            event.preventDefault();
+            const nome = $('#admin-prato-nome').val().trim();
+            const preco = Number($('#admin-prato-preco').val());
+            const categoria = $('#admin-prato-categoria').val();
+
+            if (!nome || !preco || !categoria) {
+                $('#login-mensagem').text('Preencha corretamente o nome, preço e categoria.');
+                return;
+            }
+
+            const editInfo = $(this).data('edit');
+            if (editInfo) {
+                categorias[editInfo.categoria].itens[editInfo.index] = [nome, preco];
+                $(this).removeData('edit');
+            } else {
+                categorias[categoria].itens.push([nome, preco]);
+            }
+
+            salvarEstado();
+            renderAdminMenu();
+            renderRelatorio();
+            this.reset();
+        });
+
+        $('#btn-limpar-admin').on('click', function () {
+            $('#form-admin-menu').removeData('edit');
+            $('#form-admin-menu')[0].reset();
+        });
+
+        $('#form-reserva').on('submit', function (event) {
+            event.preventDefault();
+            const nome = $('#nome-reserva').val().trim();
+            const telefone = $('#telefone-reserva').val().trim();
+            const data = $('#data-reserva').val();
+            const hora = $('#hora-reserva').val();
+            const pessoas = $('#pessoas-reserva').val();
+            const taxa = 200;
+
+            if (!nome || !telefone || !data || !hora || !pessoas) {
+                $('#reserva-mensagem').text('Preencha todos os campos da reserva.');
+                return;
+            }
+
+            $('#reserva-mensagem').text(`Reserva confirmada para ${nome} para ${pessoas} pessoas em ${data} às ${hora}. Taxa de confirmação: ${taxa} MT.`);
+            this.reset();
+            $('#pessoas-reserva').val('2');
+        });
+
+        $('#mostrar-mais').on('click', function () {
+            itensExibidos = Math.min(itensExibidos + 8, categorias[categoriaAtual].itens.length);
+            mostrarCategoria(categoriaAtual, false);
+        });
+    }
+
+    inicializarEventos();
+    renderGarcom();
+    renderDelivery();
+    renderAdminMenu();
+    renderRelatorio();
+    renderCaixa();
     mostrarCategoria('pequeno-almoco');
     atualizarResumoPedido();
 });

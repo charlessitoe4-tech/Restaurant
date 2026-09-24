@@ -99,6 +99,124 @@
             <a class="btn btn-secondary" href="#contato">Ver opções de contacto</a>
         </section>
 
+        <section id="login-sistema" class="conteudo-secao">
+            <h2>Login por usuário</h2>
+            <div class="login-container">
+                <form id="form-login" class="form-login">
+                    <label>
+                        Utilizador
+                        <input type="text" id="usuario-login" placeholder="garcom, delivery ou admin" required>
+                    </label>
+                    <label>
+                        Palavra-passe
+                        <input type="password" id="senha-login" placeholder="123" value="123" required>
+                    </label>
+                    <button type="submit" class="btn btn-primary">Entrar</button>
+                </form>
+                <p id="login-mensagem" class="login-mensagem" aria-live="polite"></p>
+            </div>
+
+            <div id="dashboard" class="dashboard oculto">
+                <div class="dashboard-header">
+                    <div>
+                        <span>Utilizador ativo</span>
+                        <strong id="usuario-ativo">-</strong>
+                    </div>
+                    <button id="btn-logout" type="button" class="btn btn-secondary">Sair</button>
+                </div>
+
+                <div class="dashboard-tabs">
+                    <button class="dashboard-tab ativo" type="button" data-role="garcom">Garçom</button>
+                    <button class="dashboard-tab" type="button" data-role="delivery">Delivery</button>
+                    <button class="dashboard-tab" type="button" data-role="admin">Admin</button>
+                    <button class="dashboard-tab" type="button" data-role="caixa">Caixa</button>
+                </div>
+
+                <div class="dashboard-panel ativo" data-panel="garcom">
+                    <h3>Pedidos do garçom</h3>
+                    <div class="tabela-responsiva">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Mesa</th>
+                                    <th>Itens</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="garcom-lista"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="dashboard-panel" data-panel="delivery">
+                    <h3>Pedidos para delivery</h3>
+                    <div class="tabela-responsiva">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Endereço</th>
+                                    <th>Email</th>
+                                    <th>Total</th>
+                                    <th>Recibo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="delivery-lista"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="dashboard-panel" data-panel="admin">
+                    <h3>Gestão do menu</h3>
+                    <form id="form-admin-menu" class="form-admin-menu">
+                        <div class="campo-grid split-3">
+                            <label>
+                                Nome do prato
+                                <input type="text" id="admin-prato-nome" required>
+                            </label>
+                            <label>
+                                Preço (MT)
+                                <input type="number" id="admin-prato-preco" min="1" required>
+                            </label>
+                            <label>
+                                Categoria
+                                <select id="admin-prato-categoria">
+                                    <option value="pequeno-almoco">Pequeno-almoço</option>
+                                    <option value="fast-food">Fast food</option>
+                                    <option value="almoco">Almoço</option>
+                                    <option value="jantar">Jantar</option>
+                                    <option value="sobremesas">Sobremesas</option>
+                                    <option value="bebidas-sem-alcool">Bebidas sem álcool</option>
+                                    <option value="bebidas-com-alcool">Bebidas com álcool</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="admin-acoes">
+                            <button type="submit" class="btn btn-primary">Adicionar prato</button>
+                            <button type="button" id="btn-limpar-admin" class="btn btn-secondary">Limpar</button>
+                        </div>
+                    </form>
+
+                    <div class="admin-menu-lista-wrap">
+                        <h4>Itens atuais</h4>
+                        <div id="admin-menu-lista" class="admin-menu-lista"></div>
+                    </div>
+
+                    <div class="admin-relatorios">
+                        <h4>Relatório</h4>
+                        <div id="admin-relatorio" class="admin-relatorio"></div>
+                    </div>
+                </div>
+
+                <div class="dashboard-panel" data-panel="caixa">
+                    <h3>Caixa e recibos</h3>
+                    <div id="caixa-lista" class="caixa-lista"></div>
+                </div>
+            </div>
+        </section>
+
         <section id="pedido" class="conteudo-secao">
             <h2>Pedido rápido</h2>
             <div class="pedido-resumo">
@@ -119,6 +237,10 @@
                         <input type="text" id="nome-pedido" placeholder="Digite o seu nome" required>
                     </label>
                     <label>
+                        Email do cliente
+                        <input type="email" id="email-pedido" placeholder="cliente@email.com" required>
+                    </label>
+                    <label>
                         Mesa / endereço de entrega
                         <input type="text" id="local-pedido" placeholder="Mesa 5 ou endereço completo" required>
                     </label>
@@ -136,56 +258,8 @@
                     <span>Taxa de delivery:</span>
                     <strong id="taxa-delivery">0 MT</strong>
                 </div>
-            </div>
-        </section>
-
-        <section id="acessos" class="conteudo-secao">
-            <h2>Acessos do sistema</h2>
-            <p>Defina o perfil do utilizador para ver o que cada área pode controlar no restaurante.</p>
-
-            <div class="acesso-sistema">
-                <div class="acesso-botoes" role="tablist" aria-label="Perfis de acesso">
-                    <button class="acesso-btn ativo" type="button" role="tab" aria-selected="true" data-acesso="garcom">Garçom</button>
-                    <button class="acesso-btn" type="button" role="tab" aria-selected="false" data-acesso="delivery">Delivery</button>
-                    <button class="acesso-btn" type="button" role="tab" aria-selected="false" data-acesso="admin">Admin</button>
-                    <button class="acesso-btn" type="button" role="tab" aria-selected="false" data-acesso="reservas">Reservas</button>
-                </div>
-
-                <div class="acesso-painel ativo" data-painel="garcom">
-                    <h3>Garçom</h3>
-                    <ul>
-                        <li>Vê os pedidos ativos da mesa.</li>
-                        <li>Confirma o estado do atendimento.</li>
-                        <li>Atualiza pedidos em andamento.</li>
-                    </ul>
-                </div>
-
-                <div class="acesso-painel" data-painel="delivery">
-                    <h3>Delivery</h3>
-                    <ul>
-                        <li>Consulta os pedidos para entrega.</li>
-                        <li>Vê o endereço e contacto do cliente.</li>
-                        <li>Confirma a entrega finalizada.</li>
-                    </ul>
-                </div>
-
-                <div class="acesso-painel" data-painel="admin">
-                    <h3>Admin</h3>
-                    <ul>
-                        <li>Altera preços e itens do menu.</li>
-                        <li>Adiciona ou remove pratos.</li>
-                        <li>Gerencia disponibilidade e categorias.</li>
-                    </ul>
-                </div>
-
-                <div class="acesso-painel" data-painel="reservas">
-                    <h3>Reservas</h3>
-                    <ul>
-                        <li>Vê todas as reservas confirmadas.</li>
-                        <li>Controla pessoas, data e hora.</li>
-                        <li>Avisa a equipa sobre mesas agendadas.</li>
-                    </ul>
-                </div>
+                <button id="btn-confirmar-pedido" type="button" class="btn btn-primary">Confirmar pedido</button>
+                <p id="pedido-status" class="pedido-status" aria-live="polite"></p>
             </div>
         </section>
 
