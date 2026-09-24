@@ -8,7 +8,8 @@ $(function () {
         const usuariosPadrao = [
             { nome: 'Garçom', usuario: 'garcom', email: 'garcom@restaurante.com', senha: '123', role: 'garcom' },
             { nome: 'Delivery', usuario: 'delivery', email: 'delivery@restaurante.com', senha: '123', role: 'delivery' },
-            { nome: 'Admin', usuario: 'admin', email: 'admin@restaurante.com', senha: '123', role: 'admin' }
+            { nome: 'Admin', usuario: 'admin', email: 'admin@restaurante.com', senha: '123', role: 'admin' },
+            { nome: 'Caixa', usuario: 'caixa', email: 'caixa@restaurante.com', senha: '123', role: 'caixa' }
         ];
 
         if (Array.isArray(usuariosSalvos) && usuariosSalvos.length) {
@@ -589,10 +590,24 @@ $(function () {
         $('#dashboard').removeClass('oculto').show();
         $('#login-mensagem').text(`Bem-vindo(a), ${conta.nome}.`);
 
-        $('.dashboard-tab').removeClass('ativo');
+        const tabsPermitidos = {
+            admin: ['admin', 'garcom', 'delivery', 'caixa'],
+            garcom: ['garcom'],
+            delivery: ['delivery'],
+            caixa: ['caixa'],
+            cliente: ['garcom']
+        };
+
+        $('.dashboard-tab').hide().removeClass('ativo').addClass('hidden');
         $('.dashboard-panel').removeClass('ativo');
 
-        const painelInicial = conta.role === 'admin' ? 'admin' : conta.role === 'delivery' ? 'delivery' : 'garcom';
+        const tabs = tabsPermitidos[conta.role] || ['garcom'];
+        tabs.forEach((role) => {
+            const tab = $(`.dashboard-tab[data-role="${role}"]`);
+            tab.show().removeClass('hidden');
+        });
+
+        const painelInicial = tabs[0];
         $(`.dashboard-tab[data-role="${painelInicial}"]`).addClass('ativo');
         $(`.dashboard-panel[data-panel="${painelInicial}"]`).addClass('ativo');
 
