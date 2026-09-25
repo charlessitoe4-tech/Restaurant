@@ -20,6 +20,14 @@ body:not(.logado) #login-sistema {
   display: block;
 }
 
+body.logado:not(.modo-cliente) #site-aplicacao {
+  display: none;
+}
+
+body.logado.modo-cliente #site-aplicacao {
+  display: block;
+}
+
 #site-aplicacao {
   display: block;
 }

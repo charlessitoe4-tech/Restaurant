@@ -642,6 +642,8 @@ $(function () {
 
     function aplicarPermissoesAcesso(role) {
         const eCliente = role === 'cliente';
+        $('body').toggleClass('modo-cliente', eCliente).toggleClass('modo-funcionario', !eCliente);
+        $('#site-aplicacao').toggle(eCliente);
         $('#menu').toggle(eCliente);
         $('#pedido').toggle(eCliente);
         $('#btn-confirmar-pedido').prop('disabled', !eCliente);
