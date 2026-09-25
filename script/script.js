@@ -589,6 +589,7 @@ $(function () {
         $('#usuario-ativo').text(`${conta.nome} (${conta.role})`);
         $('#dashboard').removeClass('oculto').show();
         $('#login-mensagem').text(`Bem-vindo(a), ${conta.nome}.`);
+        aplicarPermissoesAcesso(conta.role);
 
         const tabsPermitidos = {
             admin: ['admin', 'garcom', 'delivery', 'caixa'],
@@ -639,6 +640,17 @@ $(function () {
         return true;
     }
 
+    function aplicarPermissoesAcesso(role) {
+        const eCliente = role === 'cliente';
+        $('#menu').toggle(eCliente);
+        $('#pedido').toggle(eCliente);
+        $('#btn-confirmar-pedido').prop('disabled', !eCliente);
+
+        if (!eCliente) {
+            $('#pedido-status').text('Apenas o cliente pode fazer pedidos e confirmar encomendas.');
+        }
+    }
+
     function sairDoSistema() {
         usuarioLogado = null;
         $('body').removeClass('logado');
@@ -646,6 +658,7 @@ $(function () {
         $('#form-login')[0].reset();
         $('#recuperar-senha-box').addClass('oculto');
         $('#form-recuperar-senha')[0].reset();
+        $('#pedido-status').text('');
         $('#login-mensagem').text('Sessão terminada.');
     }
 
@@ -755,6 +768,11 @@ $(function () {
     }
 
     function confirmarPedido() {
+        if (!usuarioLogado || usuarioLogado.role !== 'cliente') {
+            $('#pedido-status').text('Apenas o cliente pode confirmar pedidos.');
+            return;
+        }
+
         const nome = $('#nome-pedido').val().trim();
         const email = $('#email-pedido').val().trim();
         const telefone = $('#telefone-pedido').val().trim();
