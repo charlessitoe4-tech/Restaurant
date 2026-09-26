@@ -879,8 +879,16 @@ th {
   font-weight: 700;
 }
 
+.dashboard-tab.hidden {
+  display: none !important;
+}
+
 .dashboard-tab.ativo {
   background: #4b2f17;
+}
+
+.dashboard-panel {
+  display: none;
 }
 
 .dashboard-panel.ativo {
