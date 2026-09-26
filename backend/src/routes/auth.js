@@ -6,17 +6,29 @@ const { pool } = require('../config/db');
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
+<<<<<<< HEAD
   const { username, email, usuario, password } = req.body;
   const loginIdentifier = username || email || usuario;
 
   if (!loginIdentifier || !password) {
     return res.status(400).json({ message: 'Usuário/e-mail e senha são obrigatórios.' });
+=======
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Usuário e senha são obrigatórios.' });
+>>>>>>> ad27a4b82b17cbc4ab49351497f10e878cf6d7d7
   }
 
   try {
     const [rows] = await pool.query(
+<<<<<<< HEAD
       'SELECT * FROM users WHERE username = ? OR email = ? LIMIT 1',
       [loginIdentifier, loginIdentifier]
+=======
+      'SELECT * FROM users WHERE username = ? LIMIT 1',
+      [username]
+>>>>>>> ad27a4b82b17cbc4ab49351497f10e878cf6d7d7
     );
 
     if (!rows.length) {
