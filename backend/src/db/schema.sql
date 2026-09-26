@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
   username VARCHAR(80) NOT NULL UNIQUE,
   email VARCHAR(150) NOT NULL UNIQUE,
   password_hash VARCHAR(255) NOT NULL,
-  role ENUM('admin', 'garcom', 'delivery') NOT NULL,
+  role ENUM('admin', 'garcom', 'delivery', 'caixa', 'cliente') NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -52,5 +52,6 @@ INSERT INTO users (full_name, username, email, password_hash, role)
 VALUES
   ('Admin da Casa', 'admin', 'admin@restaurante.com', '$2a$10$1xDskfTQKfPBxb9R7WwI7uYgH/1n/dA0d.BzQYJ8Wb9b8yQI7LQOe', 'admin'),
   ('Garçom Principal', 'garcom', 'garcom@restaurante.com', '$2a$10$1xDskfTQKfPBxb9R7WwI7uYgH/1n/dA0d.BzQYJ8Wb9b8yQI7LQOe', 'garcom'),
-  ('Entregador', 'delivery', 'delivery@restaurante.com', '$2a$10$1xDskfTQKfPBxb9R7WwI7uYgH/1n/dA0d.BzQYJ8Wb9b8yQI7LQOe', 'delivery')
+  ('Entregador', 'delivery', 'delivery@restaurante.com', '$2a$10$1xDskfTQKfPBxb9R7WwI7uYgH/1n/dA0d.BzQYJ8Wb9b8yQI7LQOe', 'delivery'),
+  ('Caixa da Casa', 'caixa', 'caixa@restaurante.com', '$2a$10$1xDskfTQKfPBxb9R7WwI7uYgH/1n/dA0d.BzQYJ8Wb9b8yQI7LQOe', 'caixa')
 ON DUPLICATE KEY UPDATE username = username;

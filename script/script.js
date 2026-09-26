@@ -4,7 +4,6 @@ $(function () {
     let usuarioLogado = null;
 
     function carregarUsuarios() {
-        const usuariosSalvos = JSON.parse(localStorage.getItem(USERS_KEY) || 'null');
         const usuariosPadrao = [
             { nome: 'Garçom', usuario: 'garcom', email: 'garcom@restaurante.com', senha: 'G@rcom2025', role: 'garcom' },
             { nome: 'Delivery', usuario: 'delivery', email: 'delivery@restaurante.com', senha: 'D3liVery#2025', role: 'delivery' },
@@ -12,12 +11,32 @@ $(function () {
             { nome: 'Caixa', usuario: 'caixa', email: 'caixa@restaurante.com', senha: 'C@ixa2025', role: 'caixa' }
         ];
 
-        if (Array.isArray(usuariosSalvos) && usuariosSalvos.length) {
-            return usuariosSalvos;
+        const usuariosSalvos = JSON.parse(localStorage.getItem(USERS_KEY) || 'null');
+        const usuariosMesclados = [...usuariosPadrao];
+
+        if (!Array.isArray(usuariosSalvos) || !usuariosSalvos.length) {
+            localStorage.setItem(USERS_KEY, JSON.stringify(usuariosMesclados));
+            return usuariosMesclados;
         }
 
-        localStorage.setItem(USERS_KEY, JSON.stringify(usuariosPadrao));
-        return usuariosPadrao;
+        usuariosSalvos.forEach((usuario) => {
+            if (!usuario || typeof usuario !== 'object') return;
+
+            const chaveUsuario = String(usuario.usuario || '').trim().toLowerCase();
+            const chaveEmail = String(usuario.email || '').trim().toLowerCase();
+            const jaExiste = usuariosMesclados.some((item) => {
+                const itemUsuario = String(item.usuario || '').trim().toLowerCase();
+                const itemEmail = String(item.email || '').trim().toLowerCase();
+                return (itemUsuario && itemUsuario === chaveUsuario) || (itemEmail && itemEmail === chaveEmail);
+            });
+
+            if (!jaExiste) {
+                usuariosMesclados.push(usuario);
+            }
+        });
+
+        localStorage.setItem(USERS_KEY, JSON.stringify(usuariosMesclados));
+        return usuariosMesclados;
     }
 
     const USERS = carregarUsuarios();
