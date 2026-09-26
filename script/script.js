@@ -632,6 +632,9 @@ $(function () {
         const painelInicial = tabs[0];
         $(`.dashboard-tab[data-role="${painelInicial}"]`).addClass('ativo');
         $(`.dashboard-panel[data-panel="${painelInicial}"]`).addClass('ativo').show();
+        tabs.filter(role => role !== painelInicial).forEach((role) => {
+            $(`.dashboard-panel[data-panel="${role}"]`).removeClass('ativo').hide();
+        });
 
         renderGarcom();
         renderDelivery();
@@ -960,8 +963,8 @@ $(function () {
             const role = $(this).data('role');
             $('.dashboard-tab').removeClass('ativo');
             $(this).addClass('ativo');
-            $('.dashboard-panel').removeClass('ativo');
-            $(`.dashboard-panel[data-panel="${role}"]`).addClass('ativo');
+            $('.dashboard-panel').removeClass('ativo').hide();
+            $(`.dashboard-panel[data-panel="${role}"]`).addClass('ativo').show();
         });
 
         $('#form-admin-menu').on('submit', function (event) {
