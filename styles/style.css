@@ -1235,6 +1235,20 @@ section.sobre h2,
   gap: 1.1rem;
 }
 
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: .65rem 1rem;
+  border: 1px solid transparent;
+  border-radius: .65rem;
+  font-weight: 700;
+  line-height: 1.35;
+  cursor: pointer;
+  transition: background-color .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+}
+
 .prato {
   overflow: hidden;
   border: 1px solid #eee7da;
@@ -1262,6 +1276,7 @@ section.sobre h2,
 }
 
 .btn-primary {
+  border: 1px solid var(--cor-cafe);
   border-color: var(--cor-cafe);
   background: var(--cor-cafe);
   color: #fff;
@@ -1275,6 +1290,7 @@ section.sobre h2,
 }
 
 .btn-outline-secondary {
+  border: 1px solid #b8aa94;
   border-color: #b8aa94;
   color: var(--cor-cafe);
 }
