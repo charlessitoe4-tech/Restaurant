@@ -1068,11 +1068,11 @@ footer a {
 }
 
 :root {
-  --cor-escura: #21170f;
-  --cor-cafe: #3d2a1b;
-  --cor-dourada: #c69a4a;
-  --cor-fundo: #fbf8f2;
-  --cor-texto: #45392d;
+  --cor-escura: #654321;
+  --cor-cafe: #654321;
+  --cor-dourada: #d4af37;
+  --cor-fundo: #fffaf0;
+  --cor-texto: #3d2d1f;
 }
 
 html {
@@ -1090,18 +1090,18 @@ body {
 header {
   min-height: 42rem;
   height: min(92vh, 58rem);
-  background-image: linear-gradient(90deg, rgba(23, 16, 10, .72), rgba(23, 16, 10, .14)),
+  background-image: linear-gradient(rgba(242, 191, 128, .72), rgba(242, 191, 128, .06)),
     url("../images/header capa.jpg");
 }
 
 header nav#nav-esquerda {
   top: .8rem;
   padding: .6rem 1rem;
-  border: 1px solid rgba(255, 255, 255, .16);
-  border-radius: 1rem;
-  background: rgba(33, 23, 15, .58);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 header nav#nav-esquerda div#logo {
@@ -1120,7 +1120,7 @@ header nav#nav-esquerda ul.menu-principal li a {
 }
 
 header nav#nav-esquerda ul.menu-principal li a:hover {
-  background: rgba(255, 255, 255, .14);
+  background: rgba(255, 255, 255, .06);
 }
 
 header div.chamada {
@@ -1156,21 +1156,21 @@ header div.chamada h2 {
 }
 
 .chamada-etiqueta {
-  color: #f0d9ad;
+  color: #fff;
 }
 
 div.chamada a.btn-pedir-prato {
   padding: .95rem 1.65rem;
-  border: 1px solid rgba(255, 255, 255, .5);
-  background: var(--cor-dourada);
-  color: var(--cor-escura);
+  border: none;
+  background: linear-gradient(rgba(242, 191, 128, .5), rgba(242, 191, 128, .5));
+  color: #fff;
   font-size: 1rem;
   box-shadow: 0 12px 30px rgba(0, 0, 0, .22);
 }
 
 div.chamada a.btn-pedir-prato:hover {
   opacity: 1;
-  background: #dfb968;
+  background: rgba(242, 191, 128, .8);
   transform: translateY(-2px);
 }
 
@@ -1212,23 +1212,23 @@ section.sobre h2,
 }
 
 .secao-destaque {
-  background: #f2ede4;
+  background: #fffaf0;
 }
 
 .categoria-btn {
-  border: 1px solid #e5d4b0;
-  background: #fff;
-  color: var(--cor-cafe);
-  box-shadow: none;
+  border: 1px solid #d4af37;
+  background: #654321;
+  color: #d4af37;
+  box-shadow: 0 3px 8px rgba(101, 67, 33, .25);
 }
 
 .categoria-btn:hover,
 .categoria-btn:focus-visible,
 .categoria-btn.ativo {
-  border-color: var(--cor-cafe);
-  background: var(--cor-cafe);
-  color: #fff;
-  box-shadow: 0 7px 16px rgba(61, 42, 27, .16);
+  border-color: #d4af37;
+  background: #4b2f17;
+  color: #ffd700;
+  box-shadow: 0 5px 12px rgba(101, 67, 33, .35);
 }
 
 .menu-pratos {
@@ -1272,33 +1272,33 @@ section.sobre h2,
 }
 
 .prato-conteudo strong {
-  color: #a8782c;
+  color: #654321;
 }
 
 .btn-primary {
-  border: 1px solid var(--cor-cafe);
-  border-color: var(--cor-cafe);
-  background: var(--cor-cafe);
-  color: #fff;
+  border: 1px solid #d4af37;
+  border-color: #d4af37;
+  background: #d4af37;
+  color: #4b2f17;
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
-  border-color: var(--cor-escura);
-  background: var(--cor-escura);
-  color: #fff;
+  border-color: #b99325;
+  background: #b99325;
+  color: #4b2f17;
 }
 
 .btn-outline-secondary {
-  border: 1px solid #b8aa94;
-  border-color: #b8aa94;
-  color: var(--cor-cafe);
+  border: 1px solid #d4af37;
+  border-color: #d4af37;
+  color: #654321;
 }
 
 .btn-outline-secondary:hover {
-  border-color: var(--cor-cafe);
-  background: var(--cor-cafe);
-  color: #fff;
+  border-color: #d4af37;
+  background: #fff7df;
+  color: #4b2f17;
 }
 
 .pedido-resumo,
@@ -1378,13 +1378,13 @@ section.sobre h2,
 }
 
 #contato {
-  background: #f2ede4;
+  background: #fffaf0;
 }
 
 .contacto-telefone {
   display: inline-block;
   margin-top: .5rem;
-  color: #8c6425;
+  color: #654321;
   font-size: 1.3rem;
   font-weight: 700;
 }
@@ -1542,17 +1542,17 @@ footer a {
 
 @media (max-width: 970px) {
   header nav#nav-esquerda {
-    background: rgba(33, 23, 15, .82);
+    background: transparent;
   }
 
   header nav#nav-esquerda ul.menu-principal {
-    background: rgba(33, 23, 15, .96);
+    background: rgba(23, 16, 10, .82);
   }
 
   header nav#nav-esquerda ul.menu-principal li a {
     width: 100%;
     padding: .7rem 1.5rem;
-    color: #f0d9ad !important;
+    color: #d4af37 !important;
     text-shadow: none;
   }
 
