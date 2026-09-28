@@ -4,10 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fast Food</title>
+    <meta name="theme-color" content="#21170f">
+    <meta name="description" content="Peça os seus pratos favoritos e reserve uma mesa no restaurante.">
+    <title>Restaurante — Sabores da Casa</title>
 
 
-    <link rel="stylesheet" href="./bootstrap-5.3.8-dist/bootstrap-5.3.8-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="./bootstrap-5.3.8-dist/css/bootstrap.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,18 +35,21 @@
             </ul>
 
             <ul class="menu-principal">
-                <li><a href="#inicio">Home</a></li>
+                <li><a href="#inicio">Início</a></li>
                 <li><a href="#sobre">Sobre</a></li>
                 <li><a href="#menu">Menu</a></li>
+                <li><a href="#pedido">Pedidos</a></li>
+                <li><a href="#reservas">Reservas</a></li>
                 <li><a href="#galeria">Galeria</a></li>
-                <li><a href="#contato">Contacto</a></li>
+                <li><a href="#acesso">Acesso da equipa</a></li>
             </ul>
         </nav>
 
         <div class="chamada">
-            <h1>Fast Food</h1>
-            <h2>O sabor que você ama</h2>
-            <a href="#menu" class="btn-pedir-prato">Quero pedir um prato</a>
+            <span class="chamada-etiqueta">Feito na hora, com sabor de casa</span>
+            <h1>Sabores da Casa</h1>
+            <h2>Uma boa refeição começa aqui.</h2>
+            <a href="#pedido" class="btn-pedir-prato">Fazer um pedido</a>
         </div>
     </header>
 
@@ -81,7 +86,7 @@
         </section>
         <section id="menu" class="conteudo-secao">
             <h2>Menu</h2>
-            <p>Explore as nossas opções e peça pelo telefone <strong>+258 87 6964 663</strong>.</p>
+            <p>Explore o menu, escolha os seus favoritos e peça online.</p>
             <div class="categorias-menu" role="tablist" aria-label="Categorias do menu">
                 <button class="categoria-btn ativo" type="button" role="tab" aria-selected="true" data-categoria="pequeno-almoco">Pequeno-almoço</button>
                 <button class="categoria-btn" type="button" role="tab" aria-selected="false" data-categoria="fast-food">Fast food</button>
@@ -93,7 +98,77 @@
             </div>
             <p id="categoria-descricao" class="categoria-descricao" aria-live="polite"></p>
             <div id="menu-pratos" class="menu-pratos" aria-live="polite"></div>
-            <a class="btn btn-secondary" href="#contato">Ver opções de contacto</a>
+        </section>
+
+        <section id="pedido" class="conteudo-secao secao-destaque">
+            <div class="secao-cabecalho">
+                <span class="sobretitulo">Para levar ou saborear aqui</span>
+                <h2>O seu pedido</h2>
+                <p>Adicione pratos pelo menu e escolha se prefere mesa ou entrega.</p>
+            </div>
+            <div class="pedido-resumo">
+                <div class="pedido-opcoes-entrega" role="radiogroup" aria-label="Tipo de pedido">
+                    <label for="tipo-pedido-mesa">
+                        <input id="tipo-pedido-mesa" type="radio" name="tipo-pedido" value="mesa" checked>
+                        Consumir no restaurante
+                    </label>
+                    <label for="tipo-pedido-delivery">
+                        <input id="tipo-pedido-delivery" type="radio" name="tipo-pedido" value="delivery">
+                        Entrega ao domicílio
+                    </label>
+                </div>
+                <div class="pedido-campos">
+                    <label for="nome-pedido">Nome completo
+                        <input id="nome-pedido" type="text" autocomplete="name" placeholder="Como podemos chamar-lhe?" required>
+                    </label>
+                    <label for="email-pedido">E-mail
+                        <input id="email-pedido" type="email" autocomplete="email" placeholder="voce@email.com" required>
+                    </label>
+                    <label for="telefone-pedido">Telefone
+                        <input id="telefone-pedido" type="tel" autocomplete="tel" placeholder="+258 84 000 0000" required>
+                    </label>
+                    <label for="local-pedido">Mesa ou endereço de entrega
+                        <input id="local-pedido" type="text" autocomplete="street-address" placeholder="Ex.: Mesa 4 ou Bairro Central" required>
+                    </label>
+                </div>
+                <button id="btn-localizacao" type="button" class="btn btn-outline-secondary">Usar a minha localização</button>
+                <p id="localizacao-status" class="localizacao-status" aria-live="polite"></p>
+                <h3 class="resumo-titulo">Resumo do pedido</h3>
+                <ul id="pedido-resumo-lista" class="pedido-resumo-lista" aria-live="polite"></ul>
+                <div class="pedido-total"><span>Subtotal</span><strong id="pedido-total">0 MT</strong></div>
+                <div class="pedido-entrega-total"><span>Taxa de entrega</span><strong id="taxa-delivery">0 MT</strong></div>
+                <button id="btn-confirmar-pedido" type="button" class="btn btn-primary btn-confirmar">Confirmar pedido</button>
+                <p id="pedido-status" class="pedido-status" role="status" aria-live="polite"></p>
+            </div>
+        </section>
+
+        <section id="reservas" class="conteudo-secao">
+            <div class="secao-cabecalho">
+                <span class="sobretitulo">Um lugar à sua espera</span>
+                <h2>Reserve uma mesa</h2>
+                <p>Preencha os seus dados. A equipa confirmará a reserva.</p>
+            </div>
+            <form id="form-reserva" class="form-reserva">
+                <div class="campo-grid split-3">
+                    <label for="nome-reserva">Nome completo
+                        <input id="nome-reserva" type="text" autocomplete="name" placeholder="O seu nome" required>
+                    </label>
+                    <label for="telefone-reserva">Telefone
+                        <input id="telefone-reserva" type="tel" autocomplete="tel" placeholder="+258 84 000 0000" required>
+                    </label>
+                    <label for="pessoas-reserva">Número de pessoas
+                        <input id="pessoas-reserva" type="number" min="1" max="20" value="2" required>
+                    </label>
+                    <label for="data-reserva">Data
+                        <input id="data-reserva" type="date" required>
+                    </label>
+                    <label for="hora-reserva">Hora
+                        <input id="hora-reserva" type="time" required>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary">Solicitar reserva</button>
+                <p id="reserva-mensagem" class="reserva-mensagem" role="status" aria-live="polite"></p>
+            </form>
         </section>
 
         <section id="galeria" class="conteudo-secao">
@@ -107,10 +182,146 @@
 
         <section id="contato" class="conteudo-secao">
             <h2>Contacto</h2>
-            <p>Faça a sua encomenda pelo telefone <a href="tel:+258876964663">+258 87 6964 663</a>.</p>
+            <p>Estamos disponíveis para ajudar com o seu pedido ou reserva.</p>
+            <a class="contacto-telefone" href="tel:+258876964663">+258 87 6964 663</a>
+        </section>
+
+        <section id="acesso" class="conteudo-secao secao-acesso">
+            <div class="secao-cabecalho">
+                <span class="sobretitulo">Área reservada</span>
+                <h2>Acesso da equipa</h2>
+                <p>Entre com a sua conta para abrir as ferramentas do seu perfil.</p>
+            </div>
+            <div id="login-sistema" class="login-container">
+                <form id="form-login" class="form-login">
+                    <label for="usuario-login">Utilizador ou e-mail
+                        <input id="usuario-login" type="text" autocomplete="username" placeholder="O seu utilizador" required>
+                    </label>
+                    <label for="senha-login">Palavra-passe
+                        <input id="senha-login" type="password" autocomplete="current-password" placeholder="A sua palavra-passe" required>
+                    </label>
+                    <div class="login-actions">
+                        <button type="submit" class="btn btn-primary">Entrar</button>
+                        <button id="btn-criar-conta" type="button" class="btn btn-outline-secondary">Criar conta de cliente</button>
+                    </div>
+                    <p id="login-mensagem" class="login-mensagem" role="status" aria-live="polite"></p>
+                    <div class="login-extra">
+                        <button id="btn-recuperar-senha" type="button" class="btn-link">Recuperar palavra-passe</button>
+                    </div>
+                </form>
+                <div id="cadastro-box" class="recuperar-senha-box oculto">
+                    <form id="form-cadastro" class="form-login form-recuperacao">
+                        <h3>Criar conta de cliente</h3>
+                        <label for="nome-cadastro">Nome completo
+                            <input id="nome-cadastro" type="text" autocomplete="name" required>
+                        </label>
+                        <label for="email-cadastro">E-mail
+                            <input id="email-cadastro" type="email" autocomplete="email" required>
+                        </label>
+                        <label for="telefone-cadastro">Telefone
+                            <input id="telefone-cadastro" type="tel" autocomplete="tel" required>
+                        </label>
+                        <label for="senha-cadastro">Criar palavra-passe
+                            <input id="senha-cadastro" type="password" autocomplete="new-password" minlength="4" required>
+                        </label>
+                        <div class="login-actions">
+                            <button type="submit" class="btn btn-primary">Criar conta</button>
+                            <button id="btn-cancelar-cadastro" type="button" class="btn btn-outline-secondary">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="recuperar-senha-box" class="recuperar-senha-box oculto">
+                    <form id="form-recuperar-senha" class="form-login form-recuperacao">
+                        <h3>Recuperar palavra-passe</h3>
+                        <label for="usuario-recuperar">Utilizador ou e-mail
+                            <input id="usuario-recuperar" type="text" autocomplete="username" required>
+                        </label>
+                        <label for="nova-senha">Nova palavra-passe
+                            <input id="nova-senha" type="password" autocomplete="new-password" minlength="4" required>
+                        </label>
+                        <div class="login-actions">
+                            <button type="submit" class="btn btn-primary">Guardar palavra-passe</button>
+                            <button id="btn-cancelar-recuperacao" type="button" class="btn btn-outline-secondary">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <section id="dashboard" class="dashboard oculto" aria-label="Painel da equipa">
+                <div class="dashboard-header">
+                    <div><span>Sessão iniciada</span><strong id="usuario-ativo"></strong></div>
+                    <button id="btn-logout" type="button" class="btn btn-outline-secondary">Terminar sessão</button>
+                </div>
+                <div class="dashboard-tabs" role="tablist" aria-label="Painéis por função">
+                    <button class="dashboard-tab" type="button" role="tab" data-role="admin">Admin</button>
+                    <button class="dashboard-tab" type="button" role="tab" data-role="caixa">Caixa</button>
+                    <button class="dashboard-tab" type="button" role="tab" data-role="garcom">Garçom</button>
+                    <button class="dashboard-tab" type="button" role="tab" data-role="delivery">Delivery</button>
+                </div>
+                <section class="dashboard-panel" data-panel="admin">
+                    <h3>Gestão do restaurante</h3>
+                    <form id="form-admin-menu" class="form-admin-menu">
+                        <label for="admin-prato-nome">Nome do prato
+                            <input id="admin-prato-nome" type="text" required>
+                        </label>
+                        <label for="admin-prato-preco">Preço (MT)
+                            <input id="admin-prato-preco" type="number" min="1" step="1" required>
+                        </label>
+                        <label for="admin-prato-categoria">Categoria
+                            <select id="admin-prato-categoria" required>
+                                <option value="">Escolha uma categoria</option>
+                                <option value="pequeno-almoco">Pequeno-almoço</option>
+                                <option value="fast-food">Fast food</option>
+                                <option value="almoco">Almoço</option>
+                                <option value="jantar">Jantar</option>
+                                <option value="sobremesas">Sobremesas</option>
+                                <option value="bebidas-sem-alcool">Bebidas sem álcool</option>
+                                <option value="bebidas-com-alcool">Bebidas com álcool</option>
+                            </select>
+                        </label>
+                        <div class="admin-acoes">
+                            <button type="submit" class="btn btn-primary">Guardar prato</button>
+                            <button id="btn-limpar-admin" type="button" class="btn btn-outline-secondary">Limpar</button>
+                        </div>
+                    </form>
+                    <div class="admin-menu-lista-wrap">
+                        <h4>Pratos do menu</h4>
+                        <div id="admin-menu-lista" class="admin-menu-lista"></div>
+                    </div>
+                    <div class="admin-relatorios">
+                        <h4>Resumo do restaurante</h4>
+                        <div id="admin-relatorio" class="admin-relatorio"></div>
+                    </div>
+                </section>
+                <section class="dashboard-panel" data-panel="caixa">
+                    <h3>Caixa e confirmações</h3>
+                    <p>Confirme pagamentos de pedidos e reservas.</p>
+                    <div id="caixa-lista" class="caixa-lista"></div>
+                </section>
+                <section class="dashboard-panel" data-panel="garcom">
+                    <h3>Pedidos para atendimento no restaurante</h3>
+                    <div class="tabela-responsiva">
+                        <table>
+                            <thead><tr><th>Cliente</th><th>Mesa</th><th>Itens</th><th>Total</th><th>Estado</th></tr></thead>
+                            <tbody id="garcom-lista"></tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="dashboard-panel" data-panel="delivery">
+                    <h3>Pedidos para entrega</h3>
+                    <div class="tabela-responsiva">
+                        <table>
+                            <thead><tr><th>Cliente</th><th>Endereço</th><th>E-mail</th><th>Total</th><th>Ações</th></tr></thead>
+                            <tbody id="delivery-lista"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </section>
         </section>
     </main>
-    <footer><a href="#inicio">Voltar ao início</a></footer>
+    <footer>
+        <a href="#inicio">Voltar ao início</a>
+        <span>Sabores da Casa · Boa comida, bons momentos.</span>
+    </footer>
 
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -118,7 +329,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/shortcuts/sticky.min.js"></script>
 
 
-    <script src="./bootstrap-5.3.8-dist/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
