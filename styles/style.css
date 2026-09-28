@@ -1264,12 +1264,14 @@ section.sobre h2,
 .btn-primary {
   border-color: var(--cor-cafe);
   background: var(--cor-cafe);
+  color: #fff;
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
   border-color: var(--cor-escura);
   background: var(--cor-escura);
+  color: #fff;
 }
 
 .btn-outline-secondary {
