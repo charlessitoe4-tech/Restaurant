@@ -5,10 +5,10 @@ $(function () {
 
     function carregarUsuarios() {
         const usuariosPadrao = [
-            { nome: 'Garçom', usuario: 'garcom', email: 'garcom@restaurante.com', senha: 'G@rcom2025', role: 'garcom' },
-            { nome: 'Delivery', usuario: 'delivery', email: 'delivery@restaurante.com', senha: 'D3liVery#2025', role: 'delivery' },
-            { nome: 'Admin', usuario: 'admin', email: 'admin@restaurante.com', senha: 'Adm!nRest2025', role: 'admin' },
-            { nome: 'Caixa', usuario: 'caixa', email: 'caixa@restaurante.com', senha: 'C@ixa2025', role: 'caixa' }
+            { nome: 'Garçom', usuario: 'garcom', email: 'garcom@restaurante.com', senha: 'Garcom2025', role: 'garcom' },
+            { nome: 'Delivery', usuario: 'delivery', email: 'delivery@restaurante.com', senha: 'D3liVery2025', role: 'delivery' },
+            { nome: 'Admin', usuario: 'admin', email: 'admin@restaurante.com', senha: 'AdminRest2025', role: 'admin' },
+            { nome: 'Caixa', usuario: 'caixa', email: 'caixa@restaurante.com', senha: 'Caixa2025', role: 'caixa' }
         ];
 
         const usuariosSalvos = JSON.parse(localStorage.getItem(USERS_KEY) || 'null');
