@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
   email VARCHAR(150) NOT NULL UNIQUE,
   password_hash VARCHAR(255) NOT NULL,
   role ENUM('admin', 'garcom', 'delivery', 'caixa', 'cliente') NOT NULL,
+>>>>>>> main
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -54,4 +55,5 @@ VALUES
   ('Garçom Principal', 'garcom', 'garcom@restaurante.com', '$2a$10$1xDskfTQKfPBxb9R7WwI7uYgH/1n/dA0d.BzQYJ8Wb9b8yQI7LQOe', 'garcom'),
   ('Entregador', 'delivery', 'delivery@restaurante.com', '$2a$10$1xDskfTQKfPBxb9R7WwI7uYgH/1n/dA0d.BzQYJ8Wb9b8yQI7LQOe', 'delivery'),
   ('Caixa da Casa', 'caixa', 'caixa@restaurante.com', '$2a$10$1xDskfTQKfPBxb9R7WwI7uYgH/1n/dA0d.BzQYJ8Wb9b8yQI7LQOe', 'caixa')
+>>>>>>> main
 ON DUPLICATE KEY UPDATE username = username;

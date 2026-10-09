@@ -773,9 +773,11 @@ $(function () {
             $('#pedido-resumo-lista').html('<li>Nenhum prato adicionado ainda.</li>');
             $('#pedido-total').text('0 MT');
             $('#taxa-delivery').text('0 MT');
+            $('#total-pedido-final').text('0 MT');
             return;
         }
 
+        const taxa = $('input[name="tipo-pedido"]:checked').val() === 'delivery' ? 150 : 0;
         let total = 0;
         $('#pedido-resumo-lista').empty();
 
@@ -786,9 +788,8 @@ $(function () {
         });
 
         $('#pedido-total').text(`${total} MT`);
-        const tipoPedido = $('input[name="tipo-pedido"]:checked').val();
-        const taxa = tipoPedido === 'delivery' ? 150 : 0;
         $('#taxa-delivery').text(`${taxa} MT`);
+        $('#total-pedido-final').text(`${total + taxa} MT`);
     }
 
     function confirmarPedido() {
@@ -813,6 +814,11 @@ $(function () {
             return;
         }
 
+        if (!$('#email-pedido')[0].checkValidity()) {
+            $('#pedido-status').text('Introduza um endereço de e-mail válido.');
+            return;
+        }
+
         const taxaEntrega = tipoPedido === 'delivery' ? 150 : 0;
         const totalPedido = pedido.reduce((soma, item) => soma + (item.preco * item.quantidade), 0) + taxaEntrega;
         const novoPedido = {
@@ -834,7 +840,7 @@ $(function () {
         renderDelivery();
         renderRelatorio();
 
-        const recibo = gerarRecibo(novoPedido);
+        gerarRecibo(novoPedido);
         $('#pedido-status').text(`Pedido confirmado para ${nome}. Recibo gerado e pronto para envio.`);
         $('#nome-pedido').val('');
         $('#email-pedido').val('');
@@ -842,7 +848,6 @@ $(function () {
         $('#local-pedido').val('');
         pedido.length = 0;
         atualizarResumoPedido();
-        enviarReciboPorEmail(email, nome, recibo);
     }
 
     function inicializarEventos() {
@@ -851,6 +856,9 @@ $(function () {
         const btnClose = $('#menu-close');
         const nav = $('#nav-esquerda');
         let ultimoScroll = 0;
+        const hoje = new Date();
+        const dataMinima = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}-${String(hoje.getDate()).padStart(2, '0')}`;
+        $('#data-reserva').attr('min', dataMinima);
 
         function atualizarPosicaoNav() {
             const scrollAtual = $(window).scrollTop();
@@ -866,6 +874,7 @@ $(function () {
 
         btnMenu.on('click', mostrarMenu);
         btnClose.on('click', esconderMenu);
+        menu.find('a').on('click', esconderMenu);
 
         $('.categoria-btn').on('click', function () {
             $('.categoria-btn').removeClass('ativo').attr('aria-selected', 'false');

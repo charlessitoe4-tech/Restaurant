@@ -10,13 +10,15 @@ router.post('/login', async (req, res) => {
   const loginIdentifier = username || email || usuario;
 
   if (!loginIdentifier || !password) {
-    return res.status(400).json({ message: 'Usuário/e-mail e senha são obrigatórios.' });
+    return res.status(400).json({ message: 'Usuário/e-mail/usuário e senha são obrigatórios.' });
+>>>>>>> main
   }
 
   try {
     const [rows] = await pool.query(
-      'SELECT * FROM users WHERE username = ? OR email = ? LIMIT 1',
-      [loginIdentifier, loginIdentifier]
+      'SELECT * FROM users WHERE username = ? OR email = ? OR usuario = ? LIMIT 1',
+      [loginIdentifier, loginIdentifier, loginIdentifier]
+>>>>>>> main
     );
 
     if (!rows.length) {
